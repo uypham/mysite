@@ -1,13 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <!-- SEO -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Uy Pham - uypham.com</title>
-</head>
-<body>
-    <h1>Uy Pham - uypham.com</h1>
-    <p>new site / new inspire / new release</p>
-</body>
+
+    <!-- STYLES -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.1.0/modern-normalize.min.css"
+      integrity="sha512-wpPYUAdjBVSE4KJnH1VR1HeZfpl1ub8YT/NKx4PuQ5NmX2tKuGu6U/JRp5y+Y8XG2tV+wKQpNHVUX03MfMFn9Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      :root {
+        --base: #1d1d1f;
+        --gray: #6e6e73;
+        --bg: #ffffff;
+        --radius: 18px;
+        --gap: 20px;
+        --xs: 450px;
+        --lg: 980px;
+      }
+      body {
+        color: var(--base);
+        background-color: var(--bg);
+      }
+      .title {
+        color: var(--gray);
+      }
+      .title span {
+        color: var(--base);
+      }
+      .title.lg {
+        font-size: 300%;
+        max-width: var(--xs);
+      }
+      .container {
+        max-width: var(--lg);
+        margin: 0 auto;
+        padding-left: var(--gap);
+        padding-right: var(--gap);
+      }
+      .list {
+        padding-left: var(--gap);
+        line-height: 1.6;
+      }
+      .avatar {
+        border-radius: var(--radius);
+        float: right;
+        margin-left: calc(var(--gap) * 2);
+        overflow: hidden;
+        display: flex;
+      }
+      .avatar img {
+        max-width: 300px;
+        height: auto;
+      }
+      @media screen and (max-width: 768px) {
+        .title.lg{
+          font-size: 200%;
+        }
+        .avatar img{
+          max-width: 100px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <div class="container">
+        <div class="avatar">
+          <img src="images/avatar.jpeg" width="500" height="500" />
+        </div>
+        <h1 class="title lg">
+          <span>Hi, I'm Uy</span> - <br />a developer from Ho Chi Minh City.
+        </h1>
+        <ul class="list">
+          <li>
+            10+ years of experience in web application development HTML5, CSS3,
+            JavaScript
+          </li>
+          <li>
+            Good experience with JavaScript frameworks/libraries such as
+            ReactJS, NextJS, Gatsby, etc
+          </li>
+          <li>Experience in JSON-based RESTful APIs and Headless concepts.</li>
+          <li>Experience with PHP, NodeJs, #C, Laravel, CodeIgniter, etc.</li>
+          <li>Understanding of object-oriented programming/design.</li>
+          <li>Service Design Thinking</li>
+        </ul>
+      </div>
+    </section>
+  </body>
 </html>
