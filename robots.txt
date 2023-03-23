@@ -1,0 +1,6 @@
+User-agent: * 
+Disallow: /*_escaped_fragment_
+Disallow: /*fb_comment_id
+Disallow: /*ArticleID 
+Disallow: /*tagid 
+Allow: /
