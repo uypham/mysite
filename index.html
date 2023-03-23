@@ -19,24 +19,47 @@
     <link rel="canonical" href="https://uypham.com" />
     <meta name="publisher" content="Uy Pham" />
     <!-- Facebook Meta Tags -->
-    <meta property="og:url" content="https://uypham.com">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Uy Pham • Web Developer • 2023">
-    <meta property="og:description" content="Information about programmer Pham Vuong Uy, includes a blog, photos, projects released, contact info, my soul, and new inspiration.">
-    <meta property="og:image" content="https://uypham.com/images/feature.jpg">
+    <meta property="og:url" content="https://uypham.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Uy Pham • Web Developer • 2023" />
+    <meta
+      property="og:description"
+      content="Information about programmer Pham Vuong Uy, includes a blog, photos, projects released, contact info, my soul, and new inspiration."
+    />
+    <meta property="og:image" content="https://uypham.com/images/feature.jpg" />
     <!-- Twitter Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="uypham.com">
-    <meta property="twitter:url" content="https://uypham.com">
-    <meta name="twitter:title" content="Uy Pham • Web Developer • 2023">
-    <meta name="twitter:description" content="Information about programmer Pham Vuong Uy, includes a blog, photos, projects released, contact info, my soul, and new inspiration.">
-    <meta name="twitter:image" content="https://uypham.com/images/feature.jpg">
-    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="uypham.com" />
+    <meta property="twitter:url" content="https://uypham.com" />
+    <meta name="twitter:title" content="Uy Pham • Web Developer • 2023" />
+    <meta
+      name="twitter:description"
+      content="Information about programmer Pham Vuong Uy, includes a blog, photos, projects released, contact info, my soul, and new inspiration."
+    />
+    <meta
+      name="twitter:image"
+      content="https://uypham.com/images/feature.jpg"
+    />
+
     <!-- ICONS -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/images/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- STYLES -->
     <link
@@ -120,6 +143,9 @@
         padding: calc(var(--gap) * 1.5);
         box-shadow: var(--shadow);
       }
+      .card:not(:last-child) {
+        margin-right: var(--gap);
+      }
       .card.white {
         background-color: var(--white);
       }
@@ -131,12 +157,14 @@
       }
       .flex {
         display: flex;
-        gap: var(--gap);
         flex-wrap: wrap;
       }
       @media screen and (max-width: 768px) {
         .title.lg {
           font-size: 180%;
+        }
+        .title.mb {
+          line-height: 1.6;
         }
         .avatar {
           margin-left: calc(var(--gap) * 0.75);
@@ -147,6 +175,10 @@
         }
         .section {
           margin-top: calc(var(--section-gap) * 0.75);
+        }
+        .card:not(:last-child) {
+          margin-right: 0;
+          margin-bottom: var(--gap);
         }
         .card.split-4 {
           width: 100%;
@@ -241,7 +273,7 @@
     </section>
     <section class="section white gap">
       <div class="container">
-        <h2 class="title">
+        <h2 class="title mb">
           <span>Get in touch</span> at
           <a href="mailto:uyphamvuong@gmail.com">uyphamvuong@gmail.com</a> or
           <a href="tel:+84934770926">+84934770926</a>
