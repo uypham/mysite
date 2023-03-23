@@ -5,15 +5,18 @@
     {
       "src": "images/android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "images/android-chrome-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
-  "theme_color": "#B48",
-  "background_color": "#B48",
-  "display": "standalone"
+  "theme_color": "#f5f5f7",
+  "background_color": "#f5f5f7",
+  "display": "standalone",
+  "start_url": "/"
 }
