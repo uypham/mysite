@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="0; url=https://uypham.com/" />
     <title>Uy Pham • Web Developer • 2025</title>
     <meta
       name="description"
@@ -220,6 +221,13 @@
       .section {
         margin-top: var(--section-gap);
       }
+      .vcard {
+        background: linear-gradient(to right, #911a80, #d42b45);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        white-space: nowrap;
+      }
       @media screen and (max-width: 768px) {
         .title.lg {
           font-size: 180%;
@@ -233,8 +241,11 @@
   <body>
     <section class="section">
       <div class="container">
-        <h1 class="title lg">404</h1>
-        <h2 class="title"><span>Page</span> not found 😘</h2>
+        <h1 class="title lg">Bio</h1>
+        <h2 class="title"><span>Page</span> redirecting...</h2>
+        <h2>
+          or <a href="/uy-vcard.vcf" download class="vcard">+Add To Contact</a>
+        </h2>
       </div>
     </section>
     <!-- Google tag (gtag.js) -->
@@ -243,6 +254,12 @@
       src="https://www.googletagmanager.com/gtag/js?id=G-7QVMVNBS8D"
     ></script>
     <script>
+      function redirect() {
+        setTimeout(function () {
+          window.location = "https://uypham.com";
+        }, 50);
+      }
+      window.onload = redirect;
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
