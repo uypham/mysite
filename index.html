@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Uy Pham • Web Developer • 2023</title>
+    <title>Uy Pham • Web Developer • 2025</title>
     <meta
       name="description"
       content="Information about programmer Pham Vuong Uy, includes a blog, photos, projects released, contact info, my soul, and new inspiration."
@@ -215,6 +215,9 @@
         font-size: 300%;
         max-width: var(--xs);
       }
+      .title.mb {
+        line-height: 1.6;
+      }
       a {
         color: var(--gray);
         text-decoration: none;
@@ -283,6 +286,13 @@
         display: flex;
         flex-wrap: wrap;
       }
+      .vcard {
+        background: linear-gradient(to right, #911a80, #d42b45);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        white-space: nowrap;
+      }
       @media screen and (min-width: 600.1px) and (max-width: 992px) {
         .title.lg {
           font-size: 180%;
@@ -303,7 +313,6 @@
           font-size: 160%;
         }
         .title.mb {
-          line-height: 1.6;
           font-size: 1.3em;
         }
         .avatar {
@@ -423,8 +432,14 @@
         <div class="container">
           <h2 class="title mb">
             <span>Get in touch</span> at
-            <a href="mailto:uyphamvuong@gmail.com">uyphamvuong@gmail.com</a> or
-            <a href="tel:+84934770926">+84934770926</a>
+            <a href="mailto:uyphamvuong@gmail.com">uyphamvuong@gmail.com</a>
+            <br />
+            or <a href="tel:+84934770926">+84934770926</a> or
+            <a href="https://www.linkedin.com/in/uypham/" target="_blank"
+              >LinkedIn</a
+            >
+            or
+            <a href="/uy-vcard.vcf" download class="vcard">+Add To Contact</a>
           </h2>
         </div>
       </section>
