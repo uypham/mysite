@@ -8,7 +8,8 @@
   "private": false,
   "scripts": {
     "start": "webpack serve",
-    "build": "echo 'nothing :)'"
+    "build": "echo 'nothing :)'",
+    "clean": "rm -rf node_modules package-lock.json"
   },
   "devDependencies": {
     "webpack": "^5.76.2",
