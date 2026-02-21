@@ -1,21 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <!-- SEO -->
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Uy Pham • Web Developer • 2025</title>
+    <title>Uy Pham • Web Developer • 2026</title>
     <meta
       name="description"
       content="Information about programmer Pham Vuong Uy, includes a blog, photos, projects released, contact info, my soul, and new inspiration."
     />
     <meta
       name="keywords"
-      content="Uy Pham, 2023, Pham Vuong Uy, blog, photos, new inspiration"
+      content="Uy Pham, 2026, Pham Vuong Uy, blog, photos, new inspiration, experience, expertise, javascript, based, programming"
     />
     <meta name="author" content="Uy Pham - uyphamvuong@gmail.com" />
-    <meta name="robots" content="noindex nofollow" />
+    <meta name="robots" content="index" />
     <meta name="theme-color" content="#f5f5f7" />
     <meta name="publisher" content="Uy Pham" />
     <link rel="canonical" href="https://uypham.com" />
@@ -23,7 +23,7 @@
     <!-- Facebook Meta Tags -->
     <meta property="og:url" content="https://uypham.com" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Uy Pham • Web Developer • 2023" />
+    <meta property="og:title" content="Uy Pham • Web Developer • 2026" />
     <meta
       property="og:description"
       content="Information about programmer Pham Vuong Uy, includes a blog, photos, projects released, contact info, my soul, and new inspiration."
@@ -33,7 +33,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta property="twitter:domain" content="uypham.com" />
     <meta property="twitter:url" content="https://uypham.com" />
-    <meta name="twitter:title" content="Uy Pham • Web Developer • 2023" />
+    <meta name="twitter:title" content="Uy Pham • Web Developer • 2026" />
     <meta
       name="twitter:description"
       content="Information about programmer Pham Vuong Uy, includes a blog, photos, projects released, contact info, my soul, and new inspiration."
@@ -83,8 +83,16 @@
         margin: 0;
       }
       body {
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
-          Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif,
+          "Apple Color Emoji",
+          "Segoe UI Emoji";
       }
       hr {
         height: 0;
@@ -101,8 +109,9 @@
       kbd,
       pre,
       samp {
-        font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono",
-          Menlo, monospace;
+        font-family:
+          ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo,
+          monospace;
         font-size: 1em;
       }
       small {
@@ -200,6 +209,11 @@
         color: var(--base);
         background-color: var(--bg);
       }
+      #page {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
       .title {
         color: var(--gray);
       }
@@ -210,6 +224,16 @@
         font-size: 300%;
         max-width: var(--xs);
       }
+      .title.mb {
+        line-height: 1.6;
+      }
+      a {
+        color: var(--gray);
+        text-decoration: none;
+      }
+      a:hover {
+        color: var(--base);
+      }
       .container {
         max-width: var(--lg);
         margin: 0 auto;
@@ -217,15 +241,105 @@
         padding-right: var(--gap);
         min-width: var(--min);
       }
+      .list {
+        padding-left: var(--gap);
+        line-height: 1.6;
+      }
+      .avatar {
+        border-radius: var(--radius);
+        float: right;
+        margin-left: calc(var(--gap) * 2);
+        overflow: hidden;
+        display: flex;
+      }
+      .avatar img {
+        max-width: 300px;
+        height: auto;
+      }
+      .shadow {
+        box-shadow: var(--shadow);
+      }
       .section {
         margin-top: var(--section-gap);
       }
-      @media screen and (max-width: 768px) {
+      .section.white {
+        background-color: var(--white);
+      }
+      .section.gap {
+        padding: var(--gap);
+      }
+      .section.my-work {
+        margin-bottom: var(--section-gap);
+      }
+      .section.bottom {
+        margin-top: auto;
+      }
+      .card {
+        border-radius: var(--radius);
+        padding: calc(var(--gap) * 1.5);
+        box-shadow: var(--shadow);
+      }
+      .card:not(:last-child) {
+        margin-right: var(--gap);
+      }
+      .card.white {
+        background-color: var(--white);
+      }
+      .card.split-4 {
+        width: calc(25% - (var(--gap) * 3 / 4));
+      }
+      .card p:last-child {
+        margin-bottom: 0;
+      }
+      .flex {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .vcard {
+        background: linear-gradient(to right, #911a80, #d42b45);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        white-space: nowrap;
+      }
+      @media screen and (min-width: 600.1px) and (max-width: 992px) {
         .title.lg {
           font-size: 180%;
         }
+        .card.split-4 {
+          width: calc(50% - (var(--gap)));
+        }
+        .card.split-4:nth-child(3),
+        .card.split-4:nth-child(4) {
+          margin-top: var(--gap);
+        }
+      }
+      @media screen and (max-width: 600px) {
+        :root {
+          --section-gap: 66px;
+        }
+        .title.lg {
+          font-size: 160%;
+        }
+        .title.mb {
+          font-size: 1.3em;
+        }
+        .avatar {
+          margin-left: calc(var(--gap) * 0.75);
+          margin-bottom: calc(var(--gap) * 0.75);
+        }
+        .avatar img {
+          max-width: 130px;
+        }
         .section {
           margin-top: calc(var(--section-gap) * 0.75);
+        }
+        .card:not(:last-child) {
+          margin-right: 0;
+          margin-bottom: var(--gap);
+        }
+        .card.split-4 {
+          width: 100%;
         }
       }
     </style>
