@@ -1,0 +1,39 @@
+---
+import BlogLayout from "../../layouts/BlogLayout.astro";
+const modules = import.meta.glob("./*.{md,mdx,astro}", { eager: true });
+
+const posts = Object.entries(modules)
+  .filter(([path]) => path !== "./index.astro")
+  .map(([path, mod]: [string, any]) => {
+    const fm = mod.frontmatter ?? mod.metadata ?? {};
+    const href = path.replace("./", "/blog/").replace(/\.(md|mdx|astro)$/, "");
+    return {
+      title: fm.title ?? fm.slug ?? href.split("/").pop(),
+      href,
+      tags: Array.isArray(fm.tags) ? fm.tags : fm.tags ? [fm.tags] : [],
+      date: fm.pubDate ? new Date(fm.pubDate) : undefined,
+    };
+  })
+  .sort((a, b) => {
+    if (a.date && b.date) return b.date.getTime() - a.date.getTime();
+    if (a.date) return -1;
+    if (b.date) return 1;
+    return 0;
+  });
+
+export function filterPostsByTag(tag: string | undefined) {
+  if (!tag) return posts;
+  return posts.filter((p) => p.tags && p.tags.includes(tag));
+}
+---
+
+<BlogLayout title="Blog">
+  <h2>Blog</h2>
+  <ul class="post-list">
+    {posts.map((p) => (
+      <li>
+        <a href={p.href}>{p.title}</a>
+      </li>
+    ))}
+  </ul>
+</BlogLayout>

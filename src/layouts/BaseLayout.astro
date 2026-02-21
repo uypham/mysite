@@ -1,0 +1,46 @@
+---
+const { title = "MySite", styles, scripts } = Astro.props;
+---
+
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    {
+      styles
+        ? styles.map((href: string) => <link rel="stylesheet" href={href} />)
+        : null
+    }
+    <style is:global lang="scss">
+      @use "../styles/global.scss";
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <h1 class="site-title"><a href="/">MySite</a></h1>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/blog/">Blog</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">© {new Date().getFullYear()} MySite</div>
+    </footer>
+
+    {
+      scripts
+        ? scripts.map((src: string) => <script is:inline src={src} />)
+        : null
+    }
+  </body>
+</html>

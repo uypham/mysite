@@ -7,13 +7,19 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "webpack serve",
-    "build": "echo 'nothing :)'",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
     "clean": "rm -rf node_modules package-lock.json"
   },
   "devDependencies": {
-    "webpack": "^5.76.2",
-    "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.12.0"
-  }
+    "astro": "^5.17.3",
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1",
+    "sass": "^1.66.1"
+  },
+  "dependencies": {
+    "highlight.js": "^11.8.0"
+  },
+  "type": "module"
 }
