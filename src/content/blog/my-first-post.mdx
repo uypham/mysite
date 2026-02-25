@@ -3,8 +3,9 @@ title: "My First Post"
 pubDate: 2026-02-20
 description: "Example blog post showing React code highlighting"
 tags: ["abc", "ncd"]
-layout: ../../layouts/BlogLayout.astro
 ---
+
+import HighlightModule from "@/components/highlight-module.astro";
 
 This is an example post written in Markdown. Below is a React snippet; Highlight.js will style it on the client.
 
@@ -24,7 +25,11 @@ export default function Hello() {
 
 You can also include plain text code blocks.
 
-```text
-This is a plain text block.
-Line two.
+```json
+{
+  "acb": 1,
+  "abc": [{ "a": 0 }, { "a": 2 }]
+}
 ```
+
+<HighlightModule />

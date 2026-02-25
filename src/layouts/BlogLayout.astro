@@ -8,12 +8,7 @@ const description = fm?.description ?? Astro.props.description;
 const tags = fm?.tags ?? Astro.props.tags;
 ---
 
-<BaseLayout
-  title={title}
-  styles={[
-    "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css",
-  ]}
->
+<BaseLayout title={title}>
   {
     title && title !== "Blog" ? (
       <article class="post">
@@ -40,11 +35,4 @@ const tags = fm?.tags ?? Astro.props.tags;
       <slot />
     )
   }
-  <script
-    is:inline
-    src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
-  ></script>
-  <script is:inline>
-    if (typeof hljs !== "undefined") hljs.highlightAll();
-  </script>
 </BaseLayout>

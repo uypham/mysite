@@ -1,0 +1,20 @@
+---
+import { getCollection } from "astro:content";
+
+const { tag } = Astro.params;
+if (!tag) return Astro.redirect("/404");
+
+const posts = (await getCollection("blog")).filter((p) =>
+  p.data.tags.includes(tag),
+);
+---
+
+<h1>Tag: {tag}</h1>
+
+{
+  posts.map((post) => (
+    <a href={`/blog/${post.slug}`}>
+      <h2>{post.data.title}</h2>
+    </a>
+  ))
+}
