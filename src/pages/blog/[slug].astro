@@ -17,6 +17,15 @@ const post = await getEntry("blog", slug);
 if (!post) return Astro.redirect("/404");
 
 const { Content } = await post.render();
+
+const allPosts = await getCollection("blog");
+const related = allPosts
+  .filter(
+    (p) =>
+      p.slug !== slug &&
+      p.data.tags.some((tag) => post.data.tags.includes(tag)),
+  )
+  .slice(0, 3);
 ---
 
 <BlogLayout
@@ -25,4 +34,6 @@ const { Content } = await post.render();
   tags={post.data.tags}
 >
   <Content />
+  <h3>Bài liên quan</h3>
+  {related.map((p) => <a href={`/blog/${p.slug}`}>{p.data.title}</a>)}
 </BlogLayout>

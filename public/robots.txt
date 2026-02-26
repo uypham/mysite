@@ -4,3 +4,4 @@ Disallow: /*fb_comment_id
 Disallow: /*ArticleID 
 Disallow: /*tagid 
 Allow: /
+Sitemap: https://uypham.com/sitemap.xml

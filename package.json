@@ -20,7 +20,10 @@
     "sass": "^1.66.1"
   },
   "dependencies": {
+    "@astrojs/image": "^0.18.0",
     "@astrojs/mdx": "^4.3.13",
+    "@astrojs/rss": "^4.0.15",
+    "@astrojs/sitemap": "^3.7.0",
     "highlight.js": "^11.8.0"
   },
   "type": "module"

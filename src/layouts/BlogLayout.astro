@@ -6,9 +6,28 @@ const title = fm?.title ?? Astro.props.title ?? "Blog";
 const pubDate = fm?.pubDate ?? Astro.props.pubDate;
 const description = fm?.description ?? Astro.props.description;
 const tags = fm?.tags ?? Astro.props.tags;
+const slug = fm?.slug ?? Astro.props.slug;
+const url = `https://uypham.com/blog/${slug}`;
 ---
 
-<BaseLayout title={title}>
+<BaseLayout
+  title={title}
+  metas={[
+    { property: "og:type", content: "article" },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:url", content: url },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: title },
+    { name: "twitter:description", content: description },
+    { name: "twitter:url", content: url },
+    { name: "twitter:image", content: "/og-default.png" },
+  ]}
+  links={[
+    { rel: "canonical", href: url },
+    { rel: "alternate", type: "application/rss+xml", href: "/rss.xml" },
+  ]}
+>
   {
     title && title !== "Blog" ? (
       <article class="post">
@@ -19,7 +38,7 @@ const tags = fm?.tags ?? Astro.props.tags;
               {new Date(pubDate).toLocaleDateString()}
             </time>
           ) : null}
-          {tags && (
+          {tags ? (
             <ul class="post-tags">
               {tags.map((tag: string) => (
                 <li>
@@ -27,7 +46,7 @@ const tags = fm?.tags ?? Astro.props.tags;
                 </li>
               ))}
             </ul>
-          )}
+          ) : null}
           {description ? <p class="post-desc">{description}</p> : null}
         </header>
 

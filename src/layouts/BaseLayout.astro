@@ -1,5 +1,5 @@
 ---
-const { title = "MySite", styles, scripts } = Astro.props;
+const { title = "MySite", styles, scripts, metas, links } = Astro.props;
 ---
 
 <!doctype html>
@@ -10,8 +10,18 @@ const { title = "MySite", styles, scripts } = Astro.props;
     <title>{title}</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
     {
+      metas
+        ? metas.map((meta: { [key: string]: string }) => <meta {...meta} />)
+        : null
+    }
+    {
       styles
         ? styles.map((href: string) => <link rel="stylesheet" href={href} />)
+        : null
+    }
+    {
+      links
+        ? links.map((link: { [key: string]: string }) => <link {...link} />)
         : null
     }
     <style is:global lang="scss">

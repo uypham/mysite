@@ -6,4 +6,17 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   <h2>Welcome</h2>
   <p>This site is migrated to Astro with Markdown, SCSS and Highlight.js.</p>
   <p><a href="/blog/">Read the blog</a></p>
+  <script is:inline type="application/ld+json">
+  JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Uy Pham",
+    "url": "https://uypham.com",
+    "sameAs": [
+      "https://github.com/uyphvg",
+      "https://linkedin.com/in/uypham"
+    ],
+    "jobTitle": "Web Developer"
+  })
+</script>
 </BaseLayout>

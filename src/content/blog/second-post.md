@@ -3,6 +3,7 @@ title: "Second Post"
 pubDate: 2026-02-21
 description: "Example blog post showing React code highlighting"
 tags: ["abc", "ncd", "xyx", "has space"]
+lang: "en"
 ---
 
 This is an example post written in Markdown. Below is a React snippet; Highlight.js will style it on the client.
