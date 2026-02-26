@@ -19,11 +19,15 @@ const tags = fm?.tags ?? Astro.props.tags;
               {new Date(pubDate).toLocaleDateString()}
             </time>
           ) : null}
-          {tags ? (
-            <p class="post-tags">
-              {Array.isArray(tags) ? tags.join(", ") : String(tags)}
-            </p>
-          ) : null}
+          {tags && (
+            <ul class="post-tags">
+              {tags.map((tag: string) => (
+                <li>
+                  <a href={`/tags/${tag}`}>#{tag}</a>
+                </li>
+              ))}
+            </ul>
+          )}
           {description ? <p class="post-desc">{description}</p> : null}
         </header>
 

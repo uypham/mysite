@@ -24,9 +24,5 @@ const { Content } = await post.render();
   pubDate={post.data.pubDate}
   tags={post.data.tags}
 >
-  <article>
-    <h1>{post.data.title}</h1>
-    {post.data.tags.map((tag) => <a href={`/tags/${tag}`}>#{tag}</a>)}
-    <Content />
-  </article>
+  <Content />
 </BlogLayout>
