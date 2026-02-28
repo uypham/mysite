@@ -1,0 +1,6 @@
+{
+  "name": "Giá Vàng",
+  "short_name": "Giá Vàng",
+  "start_url": "/gia-vang.html",
+  "display": "standalone"
+}
