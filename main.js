@@ -22,6 +22,12 @@ const formatNumber = (num) => {
     : intWithSep;
 };
 
+const getNgay = () => {
+  const $dateEle = document.getElementById("ngay");
+  const today = new Date();
+  $dateEle.textContent = today.toLocaleDateString("vi-VN", formatDateOptions);
+};
+
 const renderInfo = async (data, fromWSS) => {
   const $goldMain = document.getElementById("gia-vang");
 
@@ -29,7 +35,7 @@ const renderInfo = async (data, fromWSS) => {
     // Last update time
     const goldTableData = data.vsg_gold_table;
     const $lastUpdateEle = document.getElementById("last-update");
-    const lastUpdate = new Date(goldTableData?.[0]?.update_at);
+    const lastUpdate = new Date(goldTableData[0] && goldTableData[0].update_at);
     $lastUpdateEle.textContent = `Cập nhật lúc ${lastUpdate.toLocaleTimeString("vi-VN", formatDateOptions)}`;
 
     // Bảng giá vàng
@@ -46,12 +52,12 @@ const renderInfo = async (data, fromWSS) => {
     const $goldTbody = document.createElement("tbody");
     goldTableData.forEach((item) => {
       const $html = `<tr>
-        <td class="bold blue">${item.name}</td>
-        <td class="right num bold">${formatNumber(item.saigon?.buy)}</td>
-        <td class="right num bold">${formatNumber(item.saigon?.sell)}</td>
-        <td class="right num bold ${item.saigon?.buy_change < 0 ? "red" : "green"}">${formatNumber(item.saigon?.buy_change)}</td>
-        <td class="right num bold ${item.gap < 0 ? "red" : "green"}">${formatNumber(item.gap)}</td>
-       </tr>`;
+          <td class="bold blue">${item.name}</td>
+          <td class="right num bold">${formatNumber(item.saigon.buy)}</td>
+          <td class="right num bold">${formatNumber(item.saigon.sell)}</td>
+          <td class="right num bold ${item.saigon.buy_change < 0 ? "red" : "green"}">${formatNumber(item.saigon.buy_change)}</td>
+          <td class="right num bold ${item.gap < 0 ? "red" : "green"}">${formatNumber(item.gap)}</td>
+         </tr>`;
       const $row = document.createElement("tr");
       $row.innerHTML = $html;
       $goldTbody.append($row);
@@ -60,7 +66,7 @@ const renderInfo = async (data, fromWSS) => {
     $goldMain.innerHTML = "";
     $goldMain.append($goldTable);
 
-    // Bảng ngoại tệ
+    // // Bảng ngoại tệ
     const $forexMain = document.getElementById("ngoai-te");
     const forexTableData = data.currencyNationWide;
     const $forexTable = document.createElement("table");
@@ -76,9 +82,9 @@ const renderInfo = async (data, fromWSS) => {
     forexTableData.forEach((item) => {
       const $html = `<tr>
         <td class="bold blue">${item.name}</td>
-        <td class="right num bold">${formatNumber(item.saigon?.buy)}</td>
-        <td class="right num bold">${formatNumber(item.saigon?.sell)}</td>
-        <td class="right num bold ${item.saigon?.buy_change < 0 ? "red" : "green"}">${formatNumber(item.saigon?.buy_change)}</td>
+        <td class="right num bold">${formatNumber(item.saigon.buy)}</td>
+        <td class="right num bold">${formatNumber(item.saigon.sell)}</td>
+        <td class="right num bold ${item.saigon.buy_change < 0 ? "red" : "green"}">${formatNumber(item.saigon.buy_change)}</td>
        </tr>`;
       const $row = document.createElement("tr");
       $row.innerHTML = $html;
@@ -104,9 +110,9 @@ const renderInfo = async (data, fromWSS) => {
     silverTableData.forEach((item) => {
       const $html = `<tr>
         <td class="bold blue">${item.name}</td>
-        <td class="right num bold">${formatNumber(item.saigon?.buy)}</td>
-        <td class="right num bold">${formatNumber(item.saigon?.sell)}</td>
-        <td class="right num bold ${item.saigon?.buy_change < 0 ? "red" : "green"}">${formatNumber(item.saigon?.buy_change)}</td>
+        <td class="right num bold">${formatNumber(item.saigon.buy)}</td>
+        <td class="right num bold">${formatNumber(item.saigon.sell)}</td>
+        <td class="right num bold ${item.saigon.buy_change < 0 ? "red" : "green"}">${formatNumber(item.saigon.buy_change)}</td>
        </tr>`;
       const $row = document.createElement("tr");
       $row.innerHTML = $html;
@@ -148,14 +154,9 @@ const renderInfo = async (data, fromWSS) => {
     $calendarMain.innerHTML = "";
     $calendarMain.append($calendarList);
   } catch (error) {
+    const $goldMain = document.getElementById("gia-vang");
     $goldMain.innerHTML = `<span class='red'>${error.message || "Không thể lấy giá vàng, thử lại sau nhé!"}</span>`;
   }
-};
-
-const getNgay = () => {
-  const $dateEle = document.getElementById("ngay");
-  const today = new Date();
-  $dateEle.textContent = today.toLocaleDateString("vi-VN", formatDateOptions);
 };
 
 const connectWSS = () => {
@@ -192,7 +193,7 @@ const getGiaVang = async () => {
 
 // Khởi chạy lần đầu
 getNgay();
-setInterval(getNgay, 1_000);
+setInterval(getNgay, 1000);
 getGiaVang();
 
 // Kết nối WebSocket để nhận cập nhật giá vàng theo thời gian thực
