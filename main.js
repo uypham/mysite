@@ -45,7 +45,7 @@ const renderInfo = async (data, fromWSS) => {
       <th>Tổ chức</th>
       <th class="right">Giá mua</th>
       <th class="right">Giá bán</th>
-      <th class="right">Thay đổi mua</th>
+      <th class="right">+/-</th>
       <th class="right">Chênh lệch</th>
     </tr>`;
     $goldTable.append($goldThead);
@@ -59,6 +59,7 @@ const renderInfo = async (data, fromWSS) => {
           <td class="right num bold ${item.gap < 0 ? "red" : "green"}">${formatNumber(item.gap)}</td>
          </tr>`;
       const $row = document.createElement("tr");
+      $row.classList.add(item.saigon.buy_change < 0 ? "bg-red" : "bg-green");
       $row.innerHTML = $html;
       $goldTbody.append($row);
     });
@@ -87,6 +88,7 @@ const renderInfo = async (data, fromWSS) => {
         <td class="right num bold ${item.saigon.buy_change < 0 ? "red" : "green"}">${formatNumber(item.saigon.buy_change)}</td>
        </tr>`;
       const $row = document.createElement("tr");
+      $row.classList.add(item.saigon.buy_change < 0 ? "bg-red" : "bg-green");
       $row.innerHTML = $html;
       $forexTbody.append($row);
     });
@@ -115,6 +117,7 @@ const renderInfo = async (data, fromWSS) => {
         <td class="right num bold ${item.saigon.buy_change < 0 ? "red" : "green"}">${formatNumber(item.saigon.buy_change)}</td>
        </tr>`;
       const $row = document.createElement("tr");
+      $row.classList.add(item.saigon.buy_change < 0 ? "bg-red" : "bg-green");
       $row.innerHTML = $html;
       $silverTbody.append($row);
     });
