@@ -34,9 +34,17 @@ const renderInfo = async (data, fromWSS) => {
   try {
     // Last update time
     const goldTableData = data.vsg_gold_table;
-    const $lastUpdateEle = document.getElementById("last-update");
-    const lastUpdate = new Date(goldTableData[0] && goldTableData[0].update_at);
-    $lastUpdateEle.textContent = `Cập nhật lúc ${lastUpdate.toLocaleTimeString("vi-VN", formatDateOptions)}`;
+    if (goldTableData) {
+      const $lastUpdateEle = document.getElementById("last-update");
+      const lastUpdate = new Date(
+        goldTableData[0] && goldTableData[0].update_at,
+      );
+      $lastUpdateEle.textContent = `Cập nhật lúc ${lastUpdate.toLocaleTimeString("vi-VN", formatDateOptions)}`;
+    } else if (!fromWSS) {
+      const $goldMain = document.getElementById("gia-vang");
+      $goldMain.innerHTML = `<span class='red'>Không thể lấy giá vàng từ API, đợi WSS cập nhật!</span>`;
+      return;
+    }
 
     // Bảng giá vàng
     const $goldTable = document.createElement("table");
@@ -124,8 +132,6 @@ const renderInfo = async (data, fromWSS) => {
     $silverTable.append($silverTbody);
     $silverMain.innerHTML = "";
     $silverMain.append($silverTable);
-
-    if (fromWSS) return;
 
     // Tin tức
     const $newsMain = document.getElementById("tin-tuc");
