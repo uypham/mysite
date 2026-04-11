@@ -128,16 +128,14 @@ const getGiaNgoaiTe = () => {
     2,
     "0",
   )}/${String(today.getMonth() + 1).padStart(2, "0")}/${today.getFullYear()}`;
-  fetch(
-    `https://cafef.vn/du-lieu//ajax/exchangerate/ajaxratecurrency.ashx?time=${dateStr}`,
-  )
+  fetch(`https://bidv.com.vn/ServicesBIDV/ExchangeDetailServlet`)
     .then((res) => res.json())
     .then((data) => {
-      const currencyTableData = data.Data;
+      const currencyTableData = data.data;
 
-      const usd = currencyTableData.find((item) => item.currencyName === "USD");
-      $currencyAnalytic.innerHTML = `<h2>USD</h2><div>Mua: <span>${formatNumber(usd.buyCash)} đ</span></div>
-        <div>Bán: <span>${formatNumber(usd.price)} đ</span></div>`;
+      const usd = currencyTableData.find((item) => item.currency === "USD");
+      $currencyAnalytic.innerHTML = `<h2>USD</h2><div>Mua: <span>${formatNumber(usd.muaTm)} đ</span></div>
+        <div>Bán: <span>${formatNumber(usd.ban)} đ</span></div>`;
 
       // Bảng giá ngoại tệ
       const $currencyTable = document.createElement("table");
@@ -153,11 +151,11 @@ const getGiaNgoaiTe = () => {
       const $currencyTbody = document.createElement("tbody");
       currencyTableData.forEach((item) => {
         const $html = `<tr>
-          <td class="bold blue">${item.currencyName}</td>
-          <td class="bold">${item.name}</td>
-          <td class="right num bold red">${formatNumber(item.buyCash)}</td>
-          <td class="right num bold green">${formatNumber(item.price)}</td>
-          <td class="right num bold blue">${formatNumber(item.purchaseTransfer)}</td>
+          <td class="bold blue">${item.currency}</td>
+          <td class="bold">${item.nameVI}</td>
+          <td class="right num bold red">${formatNumber(item.muaTm)}</td>
+          <td class="right num bold green">${formatNumber(item.ban)}</td>
+          <td class="right num bold blue">${formatNumber(item.muaCk)}</td>
          </tr>`;
         const $row = document.createElement("tr");
         $row.innerHTML = $html;
