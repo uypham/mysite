@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Giá Vàng</title>
+    <title>Thông tin thị trường</title>
     <meta
       name="description"
       content="Information about the gold price, includes charts, trends, and updates."
@@ -276,7 +276,7 @@
         box-shadow: var(--shadow);
       }
       .section {
-        margin-top: calc(var(--section-gap) * 0.75);
+        margin-top: calc(var(--section-gap) * 0.3);
       }
       .section.white {
         background-color: var(--white);
@@ -413,6 +413,35 @@
       #ngay {
         white-space: nowrap;
       }
+      #quick-summary {
+        display: flex;
+        gap: var(--gap);
+        flex-wrap: wrap;
+        margin-bottom: var(--gap);
+      }
+      .summary-card {
+        flex: 1;
+        min-width: 150px;
+        background: var(--white);
+        border-radius: var(--radius);
+        padding: calc(var(--gap) * 0.75);
+        box-shadow: var(--shadow);
+        font-size: 130%;
+        font-weight: 700;
+      }
+      .summary-card h2 {
+        margin-top: 0;
+        margin-bottom: calc(var(--base) * 0.5);
+        color: var(--blue);
+        line-height: 1.5;
+      }
+      .summary-card div {
+        display: flex;
+        justify-content: space-between;
+      }
+      .summary-card div:nth-child(even) span {
+        color: var(--red) !important;
+      }
       @media screen and (min-width: 600.1px) and (max-width: 992px) {
         .title.lg {
           font-size: 180%;
@@ -471,6 +500,16 @@
         td {
           padding: calc(var(--gap) * 0.25) calc(var(--gap) * 0.25);
         }
+        #quick-summary {
+          gap: calc(var(--gap) * 0.5);
+        }
+        .summary-card {
+          padding: calc(var(--gap) * 0.5);
+          font-size: 90%;
+        }
+        .summary-card h2 {
+          font-size: 110%;
+        }
       }
     </style>
   </head>
@@ -481,7 +520,20 @@
           <h2 class="title">
             <span>Giá vàng 👑</span> hôm nay (<span id="ngay"></span>)
           </h2>
-          <div id="last-update"></div>
+          <div id="quick-summary">
+            <div class="summary-card" id="gia-vang-analytic">
+              <h2>Vàng</h2>
+              <div>Đang tải...</div>
+            </div>
+            <div class="summary-card" id="gia-bac-analytic">
+              <h2>Bạc</h2>
+              <div>Đang tải...</div>
+            </div>
+            <div class="summary-card" id="gia-usd-analytic">
+              <h2>USD</h2>
+              <div>Đang tải...</div>
+            </div>
+          </div>
           <div id="gia-vang" class="vang-card">
             <span>Đang tải, đợi tí...</span>
           </div>
@@ -495,7 +547,7 @@
           </div>
 
           <h2 class="title"><span>Ngoại tệ</span></h2>
-          <div id="ngoai-te" class="vang-card">
+          <div id="gia-ngoai-te" class="vang-card">
             <span>Đang tải, đợi tí...</span>
           </div>
         </div>
@@ -545,6 +597,11 @@
               </script>
             </div>
             <!-- TradingView Widget END -->
+          </div>
+
+          <h2 class="title mb"><span>Tin tức</span> thị trường</h2>
+          <div id="tin-tuc" class="news-list">
+            <span>Đang tải, đợi tí...</span>
           </div>
 
           <h2 class="title mb"><span>#fromUy</span>withlove♥️</h2>
