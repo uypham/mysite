@@ -203,15 +203,15 @@
     </style>
     <style>
       :root {
-        --base: #1d1d1f;
-        --gray: #6e6e73;
-        --bg: #f5f5f7;
-        --white: #fff;
-        --note: #fbd994;
-        --blue: #065eb1;
-        --red: #d42b45;
-        --green: #1a911a;
-        --yellow: #fec146;
+        --base: #18181b;
+        --gray: #71717a;
+        --bg: #f8f7ff;
+        --white: #ffffff;
+        --note: #fde68a;
+        --blue: #6366f1;
+        --red: #f43f5e;
+        --green: #10b981;
+        --yellow: #fbbf24;
         --radius: 18px;
         --gap: 20px;
         --xs: 430px;
@@ -352,9 +352,6 @@
       .vang-card.split-2 {
         width: calc(50% - (var(--gap)));
       }
-      .vang-card:not(:last-child) {
-        margin-right: var(--gap);
-      }
       table {
         width: 100%;
         border-collapse: collapse;
@@ -442,6 +439,9 @@
       .summary-card div:nth-child(even) span {
         color: var(--red) !important;
       }
+      .summary-card div:nth-child(odd) span {
+        color: var(--green) !important;
+      }
       @media screen and (min-width: 600.1px) and (max-width: 992px) {
         .title.lg {
           font-size: 180%;
@@ -491,10 +491,6 @@
         }
         .vang-card.split-2 {
           width: 100%;
-        }
-        .vang-card:not(:last-child) {
-          margin-right: 0;
-          margin-bottom: var(--gap);
         }
         th,
         td {

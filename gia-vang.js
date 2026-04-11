@@ -54,9 +54,9 @@ const getGiaVang = () => {
       goldTableData.forEach((item) => {
         const $html = `<tr>
           <td class="bold blue">${item.masp}</td>
-          <td class="bold blue">${item.tensp}</td>
-          <td class="right num bold">${formatNumber(item.giamua)}</td>
-          <td class="right num bold">${formatNumber(item.giaban)}</td>
+          <td class="bold">${item.tensp}</td>
+          <td class="right num bold red">${formatNumber(item.giamua)}</td>
+          <td class="right num bold green">${formatNumber(item.giaban)}</td>
          </tr>`;
         const $row = document.createElement("tr");
         $row.innerHTML = $html;
@@ -100,8 +100,8 @@ const getGiaBac = () => {
       silverTableData.forEach((item) => {
         const $html = `<tr>
           <td class="bold blue">${item.name}</td>
-          <td class="right num bold">${formatNumber(item.buyPrice / 1000)}</td>
-          <td class="right num bold">${formatNumber(item.sellPrice / 1000)}</td>
+          <td class="right num bold red">${formatNumber(item.buyPrice / 1000)}</td>
+          <td class="right num bold green">${formatNumber(item.sellPrice / 1000)}</td>
          </tr>`;
         const $row = document.createElement("tr");
         $row.innerHTML = $html;
@@ -154,10 +154,10 @@ const getGiaNgoaiTe = () => {
       currencyTableData.forEach((item) => {
         const $html = `<tr>
           <td class="bold blue">${item.currencyName}</td>
-          <td class="bold blue">${item.name}</td>
-          <td class="right num bold">${formatNumber(item.buyCash)}</td>
-          <td class="right num bold">${formatNumber(item.price)}</td>
-          <td class="right num bold">${formatNumber(item.purchaseTransfer)}</td>
+          <td class="bold">${item.name}</td>
+          <td class="right num bold red">${formatNumber(item.buyCash)}</td>
+          <td class="right num bold green">${formatNumber(item.price)}</td>
+          <td class="right num bold blue">${formatNumber(item.purchaseTransfer)}</td>
          </tr>`;
         const $row = document.createElement("tr");
         $row.innerHTML = $html;
