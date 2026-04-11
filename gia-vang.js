@@ -226,4 +226,5 @@ setInterval(() => {
   getGiaVang();
   getGiaBac();
   getGiaNgoaiTe();
+  getTinTuc();
 }, 30000);
