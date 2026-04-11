@@ -177,12 +177,23 @@ const getGiaNgoaiTe = () => {
 const getTinTuc = () => {
   const $newsMain = document.getElementById("tin-tuc");
   fetch(
-    "https://cafef.vn/du-lieu/ajax/GoldNews/GoldRelNews.ashx?Type=NEWS&PageIndex=1&PageSize=10",
+    "https://api.allorigins.win/raw?url=https://vietstock.vn/759/hang-hoa/vang-va-kim-loai-quy.rss",
   )
-    .then((res) => res.json())
-    .then((data) => {
-      const newsData = data.Data;
+    .then((res) => res.text())
+    .then((xmlText) => {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlText, "text/xml");
 
+      const items = Array.from(xmlDoc.querySelectorAll("item"));
+      const data = {
+        Data: items.map((item) => ({
+          Title: item.querySelector("title")?.textContent?.trim() || "",
+          SubContent:
+            item.querySelector("description")?.textContent?.trim() || "",
+        })),
+      };
+
+      const newsData = data.Data;
       const $newsList = document.createElement("div");
       newsData.forEach((item) => {
         const $html = `<details>

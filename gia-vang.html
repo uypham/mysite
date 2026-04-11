@@ -392,15 +392,26 @@
         background-color: var(--note);
       }
       .news-list details {
-        margin-bottom: calc(var(--gap) * 0.5);
         color: var(--gray);
         font-size: 14px;
+        clear: both;
+        padding-bottom: calc(var(--gap) * 0.5);
+        display: block;
+        overflow: hidden;
       }
       .news-list details summary {
         cursor: pointer;
         font-weight: 600;
         color: var(--base);
         font-size: 100%;
+        margin-bottom: calc(var(--gap) * 0.25);
+        line-height: 1.3;
+      }
+      .news-list details img {
+        float: left;
+        margin-right: calc(var(--gap) * 0.25);
+        border-radius: calc(var(--radius) * 0.5);
+        overflow: hidden;
       }
       .calendar-list div {
         margin-bottom: calc(var(--gap) * 0.5);
@@ -501,10 +512,7 @@
         }
         .summary-card {
           padding: calc(var(--gap) * 0.5);
-          font-size: 90%;
-        }
-        .summary-card h2 {
-          font-size: 110%;
+          font-size: 95%;
         }
       }
     </style>
