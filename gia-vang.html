@@ -207,10 +207,11 @@
         --gray: #6e6e73;
         --bg: #f5f5f7;
         --white: #fff;
-        --note: #fec146;
+        --note: #fbd994;
         --blue: #065eb1;
         --red: #d42b45;
         --green: #1a911a;
+        --yellow: #fec146;
         --radius: 18px;
         --gap: 20px;
         --xs: 430px;
@@ -372,6 +373,11 @@
       tr:nth-child(even) {
         background-color: var(--bg);
       }
+      tr.yellow th,
+      tr.yellow td {
+        background-color: var(--yellow);
+        color: var(--base);
+      }
       th,
       td.bold {
         font-weight: 600;
@@ -483,29 +489,19 @@
       </section>
       <section class="section my-work">
         <div class="container">
-          <h2 class="title"><span>Ngoại tệ và</span> giá bạc</h2>
-          <div class="flex">
-            <div id="ngoai-te" class="vang-card split-2">
-              <span>Đang tải, đợi tí...</span>
-            </div>
-            <div id="gia-bac" class="vang-card split-2">
-              <span>Đang tải, đợi tí...</span>
-            </div>
+          <h2 class="title"><span>Giá</span> bạc</h2>
+          <div id="gia-bac" class="vang-card">
+            <span>Đang tải, đợi tí...</span>
+          </div>
+
+          <h2 class="title"><span>Ngoại tệ</span></h2>
+          <div id="ngoai-te" class="vang-card">
+            <span>Đang tải, đợi tí...</span>
           </div>
         </div>
       </section>
       <section class="section white gap bottom">
         <div class="container">
-          <h2 class="title mb"><span>Tin tức</span> thị trường</h2>
-          <div id="tin-tuc" class="news-list">
-            <span>Đang tải, đợi tí...</span>
-          </div>
-
-          <h2 class="title mb"><span>Lịch</span> kinh tế</h2>
-          <div id="calendar" class="calendar-list">
-            <span>Đang tải, đợi tí...</span>
-          </div>
-
           <h2 class="title mb"><span>Biểu đồ</span> giá vàng</h2>
           <div id="bien-dong" style="height: 400px">
             <!-- TradingView Widget BEGIN -->
