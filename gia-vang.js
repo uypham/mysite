@@ -36,9 +36,9 @@ const getGiaVang = () => {
     .then((res) => res.json())
     .then((data) => {
       const goldTableData = data.data;
-      const vangSjc = goldTableData.find((item) => item.masp === "999");
-      $goldAnalytic.innerHTML = `<h2>Vàng</h2><div>Mua: <span>${formatNumber(vangSjc.giamua)}</span></div>
-        <div>Bán: <span>${formatNumber(vangSjc.giaban)}</span></div>`;
+      const banVangSjc = goldTableData.find((item) => item.masp === "RAW_9999");
+      const muaVangSjc = goldTableData.find((item) => item.masp === "RAW_9900");
+      $goldAnalytic.innerHTML = `<h2>Vàng</h2><div><span>${formatNumber(muaVangSjc.giamua)}</span> / <span>${formatNumber(banVangSjc.giamua)}</span></div>`;
 
       // Bảng giá vàng
       const $goldTable = document.createElement("table");
@@ -84,8 +84,7 @@ const getGiaBac = () => {
       const bacSjc = silverTableData.find(
         (item) => item.name === "Bạc thỏi Phú Quý 999 1Kilo",
       );
-      $silverAnalytic.innerHTML = `<h2>Bạc</h2><div>Mua: <span>${formatNumber(bacSjc.buyPrice / 1000)}</span></div>
-        <div>Bán: <span>${formatNumber(bacSjc.sellPrice / 1000)}</span></div>`;
+      $silverAnalytic.innerHTML = `<h2>Bạc</h2><div><span>${formatNumber(bacSjc.buyPrice / 1000)}</span> / <span>${formatNumber(bacSjc.sellPrice / 1000)}</span></div>`;
 
       // Bảng giá bạc
       const $silverTable = document.createElement("table");
@@ -131,11 +130,12 @@ const getGiaNgoaiTe = () => {
   fetch(`https://bidv.com.vn/ServicesBIDV/ExchangeDetailServlet`)
     .then((res) => res.json())
     .then((data) => {
-      const currencyTableData = data.data;
+      const currencyTableData = data.data.filter(
+        (i) => i.muaCk && i.muaCk !== "-",
+      );
 
       const usd = currencyTableData.find((item) => item.currency === "USD");
-      $currencyAnalytic.innerHTML = `<h2>USD</h2><div>Mua: <span>${formatNumber(usd.muaTm)} đ</span></div>
-        <div>Bán: <span>${formatNumber(usd.ban)} đ</span></div>`;
+      $currencyAnalytic.innerHTML = `<h2>USD</h2><div><span>${formatNumber(usd.muaTm)} đ</span> / <span>${formatNumber(usd.ban)} đ</span></div>`;
 
       // Bảng giá ngoại tệ
       const $currencyTable = document.createElement("table");
@@ -187,9 +187,16 @@ const getTinTuc = () => {
       const items = Array.from(xmlDoc.querySelectorAll("item"));
       const data = {
         Data: items.map((item) => ({
-          Title: item.querySelector("title")?.textContent?.trim() || "",
+          Title:
+            item.querySelector("title") &&
+            item.querySelector("title").textContent
+              ? item.querySelector("title").textContent.trim()
+              : "",
           SubContent:
-            item.querySelector("description")?.textContent?.trim() || "",
+            item.querySelector("description") &&
+            item.querySelector("description").textContent
+              ? item.querySelector("description").textContent.trim()
+              : "",
         })),
       };
 
