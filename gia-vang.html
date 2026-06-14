@@ -456,6 +456,26 @@
       .summary-card span:nth-child(2n) {
         color: var(--green) !important;
       }
+      .tools {
+        position: absolute;
+        top: calc(var(--gap) * 0.5);
+        right: calc(var(--gap) * 0.5);
+      }
+      .theme {
+        display: inline-flex;
+        width: calc(var(--gap) * 1.5);
+        height: calc(var(--gap) * 1.5);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        cursor: pointer;
+      }
+      .theme.day {
+        background-image: url("./images/day.png");
+      }
+      .theme.moon {
+        background-image: url("./images/moon.png");
+      }
       @media screen and (min-width: 600.1px) and (max-width: 992px) {
         .title.lg {
           font-size: 180%;
@@ -516,6 +536,7 @@
         .summary-card {
           padding: calc(var(--gap) * 0.5);
           font-size: 95%;
+          margin-top: (var(--gap) * 0.5);
         }
       }
     </style>
@@ -544,6 +565,12 @@
 
           <h2 class="title mb"><span>Biểu đồ</span> giá vàng</h2>
           <div id="bien-dong" style="height: 400px">
+            <script>
+              let theme = localStorage.getItem("theme") || "day";
+              theme = ["moon", "day"].includes(theme) ? theme : "day";
+              const chartTheme = theme === "moon" ? "dark" : "light";
+              const bgTheme = theme === "moon" ? '"#131722"' : "#ffffff";
+            </script>
             <!-- TradingView Widget BEGIN -->
             <div
               class="tradingview-widget-container"
@@ -605,12 +632,12 @@
               >
                   {
                   "allow_symbol_change": true,
-                  "calendar": true,
-                  "details": true,
+                  "calendar": false,
+                  "details": false,
                   "hide_side_toolbar": true,
                   "hide_top_toolbar": false,
                   "hide_legend": false,
-                  "hide_volume": true,
+                  "hide_volume": false,
                   "hotlist": false,
                   "interval": "120",
                   "locale": "vi_VN",
@@ -666,6 +693,9 @@
           </p>
         </div>
       </section>
+      <div class="tools">
+        <div id="theme" class="theme moon"></div>
+      </div>
     </div>
     <!-- Delete when release -->
     <script src="./gia-vang.js"></script>
