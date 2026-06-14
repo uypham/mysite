@@ -17,9 +17,10 @@ const formatNumber = (num) => {
   const str = String(num);
   const [intPart, decPart] = str.split(".");
   const intWithSep = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  return decPart !== undefined
-    ? `${intWithSep}.${decPart.substring(0, 2)}`
-    : intWithSep;
+  return intWithSep;
+  // return decPart !== undefined
+  //   ? `${intWithSep}.${decPart.substring(0, 2)}`
+  //   : intWithSep;
 };
 
 const getNgay = () => {
@@ -213,18 +214,233 @@ const getTinTuc = () => {
     });
 };
 
-// Khởi chạy lần đầu
-getNgay();
-setInterval(getNgay, 1000);
+const renderInfo = async (data, fromWSS) => {
+  if (!data) return false;
 
-getGiaVang();
-getGiaBac();
-getGiaNgoaiTe();
-getTinTuc();
+  const $goldMain = document.getElementById("gia-vang");
+  const $goldAnalytic = document.getElementById("gia-vang-analytic");
+  const $silverAnalytic = document.getElementById("gia-bac-analytic");
+  const $currencyAnalytic = document.getElementById("gia-usd-analytic");
 
-setInterval(() => {
-  getGiaVang();
-  getGiaBac();
-  getGiaNgoaiTe();
-  getTinTuc();
-}, 30000);
+  try {
+    // Last update time
+    let goldTableData = data.vsg_gold_table;
+    if (!goldTableData) {
+      if (fromWSS) return false;
+      const $goldMain = document.getElementById("gia-vang");
+      $goldMain.innerHTML = `<span class='red'>Không thể lấy giá vàng từ API, đợi WSS cập nhật!</span>`;
+      return true;
+    }
+
+    // Bảng giá vàng
+    const $goldTable = document.createElement("table");
+    const $goldThead = document.createElement("thead");
+    $goldThead.innerHTML = `<tr class="yellow">
+      <th>Tổ chức</th>
+      <th class="right">Giá mua</th>
+      <th class="right">Giá bán</th>
+      <th class="right">+/-</th>
+      <th class="right">Chênh lệch</th>
+    </tr>`;
+    $goldTable.append($goldThead);
+    const $goldTbody = document.createElement("tbody");
+    goldTableData.forEach((item) => {
+      const $html = `<tr>
+          <td class="bold blue">${item.name}</td>
+          <td class="right num bold">${formatNumber(item.saigon.buy)}</td>
+          <td class="right num bold">${formatNumber(item.saigon.sell)}</td>
+          <td class="right num bold ${item.saigon.buy_change < 0 ? "red" : "green"}">${formatNumber(item.saigon.buy_change)}</td>
+          <td class="right num bold ${item.gap < 0 ? "red" : "green"}">${formatNumber(item.gap)}</td>
+         </tr>`;
+      const $row = document.createElement("tr");
+      $row.classList.add(item.saigon.buy_change < 0 ? "bg-red" : "bg-green");
+      $row.innerHTML = $html;
+      $goldTbody.append($row);
+    });
+    $goldTable.append($goldTbody);
+    $goldMain.innerHTML = "";
+    $goldMain.append($goldTable);
+    const vangSjc = goldTableData.find((item) => item.name === "Vàng 999.9");
+    $goldAnalytic.innerHTML = `
+      <h2>Vàng</h2>
+      <div>
+        <span>${formatNumber(vangSjc.saigon.buy)}</span> / <span>${formatNumber(vangSjc.saigon.sell)}</span>
+      </div>
+    `;
+
+    // Bảng ngoại tệ
+    const $forexMain = document.getElementById("gia-ngoai-te");
+    const forexTableData = data.currencyNationWide;
+    const $forexTable = document.createElement("table");
+    const $forexThead = document.createElement("thead");
+    $forexThead.innerHTML = `<tr>
+      <th>Tổ chức</th>
+      <th class="right">Giá mua</th>
+      <th class="right">Giá bán</th>
+      <th class="right">Tỷ giá</th>
+    </tr>`;
+    $forexTable.append($forexThead);
+    const $forexTbody = document.createElement("tbody");
+    forexTableData.forEach((item) => {
+      const $html = `<tr>
+        <td class="bold blue">${item.name}</td>
+        <td class="right num bold">${formatNumber(item.saigon.buy)}</td>
+        <td class="right num bold">${formatNumber(item.saigon.sell)}</td>
+        <td class="right num bold ${item.saigon.buy_change < 0 ? "red" : "green"}">${formatNumber(item.saigon.buy_change)}</td>
+       </tr>`;
+      const $row = document.createElement("tr");
+      $row.classList.add(item.saigon.buy_change < 0 ? "bg-red" : "bg-green");
+      $row.innerHTML = $html;
+      $forexTbody.append($row);
+    });
+    $forexTable.append($forexTbody);
+    $forexMain.innerHTML = "";
+    $forexMain.append($forexTable);
+    const usd = forexTableData.find((item) => item.name === "USD");
+    $currencyAnalytic.innerHTML = `<h2>USD</h2><div><span>${formatNumber(usd.saigon.buy)}</span> / 
+        <span>${formatNumber(usd.saigon.sell)}</span></div>`;
+
+    // Bảng bạc
+    const $silverMain = document.getElementById("gia-bac");
+    const silverTableData = data.silver_price;
+    const $silverTable = document.createElement("table");
+    const $silverThead = document.createElement("thead");
+    $silverThead.innerHTML = `<tr>
+      <th>Tổ chức</th>
+      <th class="right">Giá mua</th>
+      <th class="right">Giá bán</th>
+      <th class="right">+/-</th>
+    </tr>`;
+    $silverTable.append($silverThead);
+    const $silverTbody = document.createElement("tbody");
+    silverTableData.forEach((item) => {
+      const $html = `<tr>
+        <td class="bold blue">${item.name}</td>
+        <td class="right num bold">${formatNumber(item.saigon.buy)}</td>
+        <td class="right num bold">${formatNumber(item.saigon.sell)}</td>
+        <td class="right num bold ${item.saigon.buy_change < 0 ? "red" : "green"}">${formatNumber(item.saigon.buy_change)}</td>
+       </tr>`;
+      const $row = document.createElement("tr");
+      $row.classList.add(item.saigon.buy_change < 0 ? "bg-red" : "bg-green");
+      $row.innerHTML = $html;
+      $silverTbody.append($row);
+    });
+    $silverTable.append($silverTbody);
+    $silverMain.innerHTML = "";
+    $silverMain.append($silverTable);
+    const bacSjc = silverTableData.find((i) => i.name === "PHUQUY_1KG");
+    $silverAnalytic.innerHTML = `<h2>Bạc</h2><div><span>${formatNumber(bacSjc.saigon.buy)}</span>
+        / <span>${formatNumber(bacSjc.saigon.sell)}</span></div>`;
+
+    // Tin tức
+    const $newsMain = document.getElementById("tin-tuc");
+    const newsData = data.ContentNew;
+    const $newsList = document.createElement("div");
+    newsData.forEach((item) => {
+      const $html = `<details>
+        <summary>${item.title}</summary>
+        ${item.content}
+      </details>`;
+      const $row = document.createElement("div");
+      $row.innerHTML = $html;
+      $newsList.append($row);
+    });
+    $newsMain.innerHTML = "";
+    $newsMain.append($newsList);
+    return true;
+  } catch (error) {
+    const $goldMain = document.getElementById("gia-vang");
+    $goldMain.innerHTML = `<span class='red'>${error.message || "Không thể lấy giá vàng, thử lại sau nhé!"}</span>`;
+    return false;
+  }
+};
+
+const connectWSS = () => {
+  const ws = new WebSocket("wss://vangsaigon.vn/ws-prices/ws/v1/prices");
+  ws.onopen = () => {
+    console.log("WebSocket connected");
+  };
+  ws.onmessage = (event) => {
+    // Mỗi khi có tin nhắn mới, mình sẽ gọi lại API để lấy dữ liệu mới nhất
+    renderInfo(JSON.parse(event.data), true);
+  };
+  ws.onerror = (error) => {
+    console.error("WebSocket error:", error);
+  };
+  ws.onclose = () => {
+    console.log("WebSocket disconnected, reconnecting in 5 seconds...");
+    setTimeout(connectWSS, 5000); // Thử kết nối lại sau 5 giây nếu bị ngắt
+  };
+};
+
+const getTongHop = async () => {
+  try {
+    const res = await fetch(
+      "https://services.vang247.vn/ws-prices/api/v1/c_prices",
+    );
+    const data = await res.json();
+    return renderInfo(data);
+  } catch (error) {
+    console.error("Error fetching gold prices:", error);
+    const $goldMain = document.getElementById("gia-vang");
+    $goldMain.innerHTML = `<span class='red'>${error.message || "Không thể lấy giá vàng, thử lại sau nhé!"}</span>`;
+    return false;
+  }
+};
+
+const initTools = () => {
+  let theme = localStorage.getItem("theme") || "day";
+  theme = ["moon", "day"].includes(theme) ? theme : "day";
+  const $theme = document.getElementById("theme");
+
+  const setTheme = (value) => {
+    if (theme === "moon") {
+      localStorage.setItem("theme", "moon");
+      $theme.classList.remove("moon");
+      $theme.classList.add("day");
+    } else {
+      localStorage.setItem("theme", "day");
+      $theme.classList.remove("day");
+      $theme.classList.add("moon");
+    }
+  };
+  setTheme(theme);
+
+  $theme.addEventListener("click", (event) => {
+    theme = localStorage.getItem("theme") || "day";
+    theme = ["moon", "day"].includes(theme) ? theme : "day";
+    theme = theme === "day" ? "moon" : "day";
+    setTheme(theme);
+    location.reload();
+  });
+};
+
+const initApp = async () => {
+  initTools();
+
+  // Khởi chạy lần đầu
+  getNgay();
+  setInterval(getNgay, 1000);
+
+  // Chạy tổng hợp trước
+  const can = await getTongHop();
+  console.log("CAN: ", can);
+
+  if (can) {
+    // Kết nối WebSocket để nhận cập nhật giá vàng theo thời gian thực
+    // connectWSS();
+  } else {
+    getGiaVang_Server2();
+    getGiaBac_Server2();
+    getGiaNgoaiTe_Server2();
+    getTinTuc_Server2();
+    setInterval(() => {
+      getGiaVang_Server2();
+      getGiaBac_Server2();
+      getGiaNgoaiTe_Server2();
+      getTinTuc_Server2();
+    }, 30000);
+  }
+};
+
+initApp();
