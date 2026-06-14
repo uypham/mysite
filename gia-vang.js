@@ -17,9 +17,10 @@ const formatNumber = (num) => {
   const str = String(num);
   const [intPart, decPart] = str.split(".");
   const intWithSep = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  return decPart !== undefined
-    ? `${intWithSep}.${decPart.substring(0, 2)}`
-    : intWithSep;
+  return intWithSep;
+  // return decPart !== undefined
+  //   ? `${intWithSep}.${decPart.substring(0, 2)}`
+  //   : intWithSep;
 };
 
 const getNgay = () => {
