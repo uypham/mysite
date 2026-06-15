@@ -221,6 +221,55 @@ const getTinTuc = () => {
     });
 };
 
+const renderChart = (theme) => {
+  const chartTheme = theme === "moon" ? "dark" : "light";
+  const bgTheme = theme === "moon" ? "#131722" : "#ffffff";
+  const api =
+    "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+  const json = {
+    allow_symbol_change: true,
+    calendar: false,
+    details: false,
+    hide_side_toolbar: true,
+    hide_top_toolbar: false,
+    hide_legend: false,
+    hide_volume: false,
+    hotlist: false,
+    interval: "120",
+    locale: "vi_VN",
+    save_image: true,
+    style: "1",
+    symbol: "PEPPERSTONE:XAUUSD",
+    theme: chartTheme,
+    timezone: "Asia/Ho_Chi_Minh",
+    backgroundColor: bgTheme,
+    gridColor: "rgba(46, 46, 46, 0.06)",
+    watchlist: [],
+    withdateranges: false,
+    compareSymbols: [],
+    studies: [],
+    autosize: true,
+  };
+
+  const getElementChart = ($chartEle, json) => {
+    const $widget = document.createElement("div");
+    $widget.setAttribute("class", "tradingview-widget-container__widget");
+    $widget.setAttribute("class", "height: calc(100% - 32px); width: 100%");
+    const $script = document.createElement("script");
+    $script.setAttribute("src", api);
+    $script.innerHTML = JSON.stringify(json);
+    $chartEle.innerHTML = "";
+    $chartEle.append($widget);
+    $chartEle.append($script);
+  };
+
+  const $chartGold = document.getElementById("chart-gold");
+  getElementChart($chartGold, json);
+
+  const $chartSilver = document.getElementById("chart-silver");
+  getElementChart($chartSilver, { ...json, symbol: "PEPPERSTONE:XAGUSD" });
+};
+
 const renderInfo = async (data, fromWSS) => {
   if (!data) return false;
 
@@ -401,24 +450,30 @@ const initTools = () => {
   const $theme = document.getElementById("theme");
 
   const setTheme = (value) => {
+    const $body = document.body;
     if (theme === "moon") {
       localStorage.setItem("theme", "moon");
       $theme.classList.remove("moon");
       $theme.classList.add("day");
+      $body.classList.remove("day");
+      $body.classList.add("moon");
     } else {
       localStorage.setItem("theme", "day");
       $theme.classList.remove("day");
       $theme.classList.add("moon");
+      $body.classList.remove("moon");
+      $body.classList.add("day");
     }
   };
   setTheme(theme);
+  renderChart(theme);
 
   $theme.addEventListener("click", (event) => {
     theme = localStorage.getItem("theme") || "day";
     theme = ["moon", "day"].includes(theme) ? theme : "day";
     theme = theme === "day" ? "moon" : "day";
     setTheme(theme);
-    location.reload();
+    renderChart(theme);
   });
 };
 
@@ -435,7 +490,7 @@ const initApp = async () => {
 
   if (can) {
     // Kết nối WebSocket để nhận cập nhật giá vàng theo thời gian thực
-    // connectWSS();
+    connectWSS();
   } else {
     getGiaVang_Server2();
     getGiaBac_Server2();
