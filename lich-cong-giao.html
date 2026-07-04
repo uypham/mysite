@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lịch Công Giáo | Uy Pham</title>
+    <meta
+      name="description"
+      content="Lịch Công giáo dạng mobile-first, có chế độ day/moon, hiển thị ngày lễ, màu áo lễ và bài đọc Tin Mừng trong tuần."
+    />
+    <meta name="robots" content="index" />
+    <meta name="theme-color" content="#f7f6f2" />
+    <link rel="canonical" href="https://uypham.com/lich-cong-giao.html" />
+
+    <meta property="og:url" content="https://uypham.com/lich-cong-giao.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Lịch Công Giáo • Uy Pham" />
+    <meta
+      property="og:description"
+      content="Trang lịch Công giáo giao diện gọn, dễ xem, có chế độ day/moon."
+    />
+    <meta property="og:image" content="https://uypham.com/images/feature.jpg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="uypham.com" />
+    <meta
+      property="twitter:url"
+      content="https://uypham.com/lich-cong-giao.html"
+    />
+    <meta name="twitter:title" content="Lịch Công Giáo • Uy Pham" />
+    <meta
+      name="twitter:description"
+      content="Lịch Công giáo với giao diện mobile-first và chuyển đổi day/moon."
+    />
+    <meta
+      name="twitter:image"
+      content="https://uypham.com/images/feature.jpg"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/images/gold-apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/images/favicon-16x16.png"
+    />
+
+    <style>
+      :root {
+        --base: #1f2227;
+        --muted: #858d97;
+        --bg: #f7f6f2;
+        --surface: #ffffff;
+        --line: #e6e2d8;
+        --accent: #1e4b80;
+        --accent-soft: #e4f1ff;
+
+        --rank-feast: #8a4a15;
+        --rank-feria: #5b6472;
+        --rank-memorial: #005b8b;
+        --rank-solemn-sunday: #9d0d17;
+        --today-border: #1e90ff;
+
+        --vestment-white: #fff4cf;
+        --vestment-green: #1a9f65;
+        --vestment-red: #d72638;
+        --vestment-purple: #673ab7;
+        --vestment-rose: #f06292;
+
+        --radius-lg: 24px;
+        --radius-md: 16px;
+        --radius-sm: 999px;
+        --shadow: 0 18px 40px rgba(28, 34, 46, 0.09);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Be Vietnam Pro", system-ui, sans-serif;
+        color: var(--base);
+        background:
+          radial-gradient(circle at 82% 2%, #fff5cf 0%, transparent 38%),
+          radial-gradient(circle at 4% 32%, #d7f8ff 0%, transparent 30%),
+          var(--bg);
+        min-height: 100vh;
+        line-height: 1.45;
+        transition:
+          background-color 0.35s,
+          color 0.35s;
+      }
+
+      body.moon {
+        --base: #e8edf6;
+        --muted: #7d8da8;
+        --bg: #0f141e;
+        --surface: #1a2232;
+        --line: #2e3c54;
+        --accent: #8cb8ff;
+        --accent-soft: #223654;
+        --rank-feast: #f6bb7b;
+        --rank-feria: #c5cfde;
+        --rank-memorial: #7bcdf8;
+        --rank-solemn-sunday: #ff8c94;
+        --today-border: #63b3ff;
+        --shadow: 0 14px 38px rgba(0, 0, 0, 0.35);
+      }
+
+      .page {
+        max-width: 840px;
+        margin: 0 auto;
+        padding: 18px 14px 40px;
+      }
+
+      .top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .title {
+        margin: 0;
+        font-family: "Fraunces", serif;
+        font-size: 1.7rem;
+        letter-spacing: 0.2px;
+      }
+
+      .tools {
+        position: sticky;
+        top: 12px;
+        align-self: flex-start;
+      }
+
+      .theme {
+        border: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: var(--surface);
+        box-shadow: var(--shadow);
+        background-position: center;
+        background-size: 20px;
+        background-repeat: no-repeat;
+        cursor: pointer;
+      }
+
+      .theme.day {
+        background-image: url("./images/day.png");
+      }
+
+      .theme.moon {
+        background-image: url("./images/moon.png");
+      }
+
+      .today-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow);
+        padding: 18px;
+        margin-bottom: 20px;
+      }
+
+      .today-card.weekend-sat {
+        background: color-mix(in oklab, #8a6a00 26%, var(--surface));
+      }
+
+      .today-card.weekend-sun,
+      .today-card.rank-solemn {
+        background: color-mix(in oklab, #7a0011 24%, var(--surface));
+      }
+
+      body.moon .today-card.weekend-sat {
+        background: color-mix(in oklab, #f3b414 22%, var(--surface));
+      }
+
+      body.moon .today-card.weekend-sun,
+      body.moon .today-card.rank-solemn {
+        background: color-mix(in oklab, #f43f5e 18%, var(--surface));
+      }
+
+      .today-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        font-size: 0.82rem;
+        letter-spacing: 0.04em;
+        color: var(--accent);
+        text-transform: uppercase;
+        background: var(--accent-soft);
+        padding: 6px 10px;
+        border-radius: var(--radius-sm);
+      }
+
+      .today-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .today-date-wrap {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .today-date {
+        margin: 0;
+        font-size: 1.06rem;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      .date-tile {
+        width: 56px;
+        min-width: 56px;
+        height: 56px;
+        border-radius: 12px;
+        border: 2px solid color-mix(in oklab, var(--base) 14%, var(--line));
+        border-bottom-width: 3px;
+        background: linear-gradient(
+          to bottom,
+          color-mix(in oklab, var(--surface) 86%, #fff8de) 0%,
+          color-mix(in oklab, var(--surface) 96%, #fff8de) 100%
+        );
+        box-shadow:
+          inset 0 -2px 0 rgba(0, 0, 0, 0.08),
+          0 4px 10px rgba(0, 0, 0, 0.08);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        padding: 2px 2px;
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+
+      .date-tile::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 19px;
+        background: linear-gradient(to right, #d94848, #b21f1f);
+      }
+
+      .date-tile.compact {
+        width: 52px;
+        min-width: 52px;
+        height: 52px;
+      }
+
+      .date-tile-month {
+        font-size: 0.5rem;
+        font-weight: 700;
+        color: #fff;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        z-index: 1;
+        letter-spacing: 0.02em;
+        line-height: 1;
+      }
+
+      .date-tile-day {
+        font-size: 1.38rem;
+        font-weight: 800;
+        color: var(--base);
+        margin-top: 4px;
+      }
+
+      body.moon .date-tile {
+        border-color: color-mix(in oklab, #9fb3d1 32%, var(--line));
+      }
+
+      body.moon .date-tile::before {
+        background: linear-gradient(to right, #ff7c7c, #e14949);
+      }
+
+      .today-celebration {
+        margin: 12px 0 0;
+        font-family: "Fraunces", serif;
+        font-weight: 700;
+        font-size: 1.4rem;
+      }
+
+      .meta-row {
+        margin-top: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .badge {
+        border-radius: var(--radius-sm);
+        padding: 6px 10px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        background: color-mix(in oklab, var(--muted) 14%, transparent);
+      }
+
+      .badge.feast {
+        color: var(--rank-feast);
+        background: color-mix(in oklab, var(--rank-feast) 15%, transparent);
+      }
+
+      .badge.feria {
+        color: var(--rank-feria);
+        background: color-mix(in oklab, var(--rank-feria) 18%, transparent);
+      }
+
+      .badge.memorial {
+        color: var(--rank-memorial);
+        background: color-mix(in oklab, var(--rank-memorial) 15%, transparent);
+      }
+
+      .badge.solemn {
+        color: var(--rank-solemn-sunday);
+        background: color-mix(
+          in oklab,
+          var(--rank-solemn-sunday) 17%,
+          transparent
+        );
+      }
+
+      .vestment {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 0.84rem;
+      }
+
+      .vestment-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid color-mix(in oklab, var(--base) 20%, transparent);
+      }
+
+      .vestment-dot.white {
+        background: var(--vestment-white);
+      }
+
+      .vestment-dot.green {
+        background: var(--vestment-green);
+      }
+
+      .vestment-dot.red {
+        background: var(--vestment-red);
+      }
+
+      .vestment-dot.purple {
+        background: var(--vestment-purple);
+      }
+
+      .vestment-dot.rose {
+        background: var(--vestment-rose);
+      }
+
+      .gospel-box {
+        margin-top: 16px;
+        border-top: 1px dashed var(--line);
+        padding-top: 14px;
+      }
+
+      .gospel-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .gospel-title {
+        margin: 0;
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 0.86rem;
+        white-space: nowrap;
+      }
+
+      .gospel-text {
+        margin: 0;
+        font-size: 1.02rem;
+        font-weight: 500;
+        text-align: left;
+      }
+
+      .section-head {
+        margin-top: 26px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .section-title {
+        margin: 0;
+        font-size: 1rem;
+        color: var(--muted);
+      }
+
+      .section-title.month-active {
+        color: var(--accent);
+        font-weight: 800;
+      }
+
+      .period-filter {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--surface);
+        color: var(--base);
+        font: inherit;
+        font-size: 0.86rem;
+        padding: 8px 10px;
+        min-width: 128px;
+      }
+
+      .upcoming-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .week-divider {
+        height: 1px;
+        background: color-mix(in oklab, var(--base) 20%, transparent);
+        margin: 8px 4px;
+        opacity: 0.45;
+        border-radius: 2px;
+        grid-column: 1 / -1;
+      }
+
+      .mini-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        padding: 12px;
+        display: grid;
+        gap: 5px;
+      }
+
+      .mini-card.is-today {
+        border-color: var(--today-border);
+        box-shadow: 0 0 0 2px color-mix(in oklab, var(--today-border) 42%, transparent);
+      }
+
+      .mini-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .mini-date-wrap {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .mini-date {
+        font-weight: 700;
+        font-size: 0.94rem;
+      }
+
+      .mini-title {
+        margin: 0;
+        font-size: 0.95rem;
+        font-weight: 700;
+      }
+
+      .mini-gospel {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .mini-meta {
+        margin-top: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .mini-meta-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .mini-meta-item.right {
+        margin-left: auto;
+      }
+
+      .mini-card.weekend-sat {
+        background: color-mix(in oklab, #8a6a00 26%, var(--surface));
+      }
+
+      .mini-card.weekend-sun,
+      .mini-card.rank-solemn {
+        background: color-mix(in oklab, #7a0011 24%, var(--surface));
+      }
+
+      body.moon .mini-card.weekend-sat {
+        background: color-mix(in oklab, #f3b414 22%, var(--surface));
+      }
+
+      body.moon .mini-card.weekend-sun,
+      body.moon .mini-card.rank-solemn {
+        background: color-mix(in oklab, #f43f5e 18%, var(--surface));
+      }
+
+      .legend {
+        margin-top: 16px;
+        padding: 12px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .legend-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .legend-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .footer {
+        margin-top: 20px;
+        color: var(--muted);
+        font-size: 0.8rem;
+        text-align: center;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+      }
+
+      @media (min-width: 760px) {
+        .page {
+          padding-top: 28px;
+        }
+
+        .title {
+          font-size: 2rem;
+        }
+
+        .today-card {
+          padding: 24px;
+        }
+
+        .today-date {
+          font-size: 1.1rem;
+        }
+
+        .date-tile {
+          width: 60px;
+          min-width: 60px;
+          height: 60px;
+        }
+
+        .date-tile.compact {
+          width: 56px;
+          min-width: 56px;
+          height: 56px;
+        }
+
+        .today-celebration {
+          font-size: 1.6rem;
+        }
+
+        .period-filter {
+          min-width: 180px;
+        }
+
+        .upcoming-list {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body class="day">
+    <div class="page">
+      <header class="top">
+        <div>
+          <h1 class="title">Lịch Công Giáo</h1>
+        </div>
+        <div class="tools">
+          <button
+            id="theme-switch"
+            class="theme moon"
+            aria-label="Chuyển sang chế độ tối"
+            title="Đổi giao diện day/moon"
+            type="button"
+          ></button>
+        </div>
+      </header>
+
+      <main>
+        <article id="today-card" class="today-card" aria-live="polite">
+          <div class="today-head">
+            <span class="today-label">Hôm nay</span>
+            <div class="today-date-wrap">
+              <div id="today-date-tile" class="date-tile compact">
+                <span class="date-tile-month">Tháng X</span>
+                <span class="date-tile-day">00</span>
+              </div>
+              <div class="today-date" id="today-date">Đang tải...</div>
+            </div>
+          </div>
+          <h2 class="today-celebration" id="today-celebration">Đang tải...</h2>
+          <div class="meta-row">
+            <span class="badge" id="today-rank">Đang tải...</span>
+            <span class="vestment"
+              ><span id="today-vestment-dot" class="vestment-dot white"></span
+              ><span id="today-vestment-text">Đang tải...</span></span
+            >
+          </div>
+          <div class="gospel-box">
+            <div class="gospel-row">
+              <p class="gospel-title">Bài đọc Tin Mừng</p>
+              <p class="gospel-text" id="today-gospel">Đang tải...</p>
+            </div>
+          </div>
+        </article>
+
+        <div class="section-head">
+          <h3 class="section-title">Các ngày tiếp theo trong tuần</h3>
+          <label for="period-filter" class="visually-hidden"
+            >Chọn khoảng thời gian</label
+          >
+          <select
+            id="period-filter"
+            class="period-filter"
+            aria-label="Lọc tuần hoặc tháng"
+          >
+            <option value="week">Tuần này</option>
+            <option value="month-1">Tháng 1</option>
+            <option value="month-2">Tháng 2</option>
+            <option value="month-3">Tháng 3</option>
+            <option value="month-4">Tháng 4</option>
+            <option value="month-5">Tháng 5</option>
+            <option value="month-6">Tháng 6</option>
+            <option value="month-7">Tháng 7</option>
+            <option value="month-8">Tháng 8</option>
+            <option value="month-9">Tháng 9</option>
+            <option value="month-10">Tháng 10</option>
+            <option value="month-11">Tháng 11</option>
+            <option value="month-12">Tháng 12</option>
+          </select>
+        </div>
+        <section id="upcoming-list" class="upcoming-list" aria-live="polite">
+          <div class="mini-card">Đang tải...</div>
+        </section>
+
+        <aside class="legend">
+          Màu mức độ phụng vụ:
+          <div class="legend-row">
+            <span class="legend-chip"
+              ><span class="badge feria">Ngày thường</span>
+            </span>
+            <span class="legend-chip"
+              ><span class="badge feast">Lễ kính</span>
+            </span>
+            <span class="legend-chip"
+              ><span class="badge memorial">Lễ nhớ</span>
+            </span>
+            <span class="legend-chip"
+              ><span class="badge solemn">Lễ trọng / Chúa nhật</span>
+            </span>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="footer">
+        Dữ liệu lịch hiển thị tham khảo để đọc nhanh hằng ngày •
+        <span id="year"></span>
+      </footer>
+    </div>
+
+    <script src="./lich-cong-giao.js"></script>
+  </body>
+</html>
