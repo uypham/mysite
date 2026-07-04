@@ -465,7 +465,7 @@ const buildMonthData = (year, month) => {
 
 const toOverrideMap = (json) => {
   const map = new Map();
-  const days = Array.isArray(json?.days) ? json.days : [];
+  const days = json && Array.isArray(json.days) ? json.days : [];
 
   days.forEach((item) => {
     if (!item || typeof item !== "object" || !item.date) {
@@ -498,7 +498,8 @@ const fetchMonthOverrides = async (year, month) => {
     }
 
     const data = await response.json();
-    const monthDays = data?.months?.[String(month)] || [];
+    const hasMonths = data && data.months;
+    const monthDays = hasMonths ? data.months[String(month)] || [] : [];
     const overrideMap = toOverrideMap({ days: monthDays });
     monthOverrideCache.set(cacheKey, overrideMap);
     return overrideMap;
