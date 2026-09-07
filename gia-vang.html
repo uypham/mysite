@@ -47,7 +47,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap"
       rel="stylesheet"
     />
 
@@ -207,12 +207,17 @@
         --gray: #71717a;
         --bg: #f8f7ff;
         --white: #ffffff;
-        --note: #fde68a;
-        --blue: #6366f1;
-        --red: #f43f5e;
-        --green: #10b981;
-        --yellow: #fbbf24;
-        --radius: 18px;
+        --note: rgb(250, 204, 51);
+        --blue: rgb(6, 24, 143);
+        --red: rgb(185, 28, 28);
+        --green: rgb(22, 163, 74);
+        --yellow: rgb(250, 204, 51);
+        --table-header: rgb(6, 24, 143);
+        --table-row: #ffffff;
+        --table-row-alt: rgb(243, 244, 246);
+        --table-row-hover: rgb(250, 204, 51);
+        --table-border: rgb(6, 24, 143);
+        --radius: 4px;
         --gap: 20px;
         --xs: 430px;
         --lg: 980px;
@@ -223,6 +228,7 @@
       body {
         color: var(--base);
         background-color: var(--bg);
+        font-family: "Montserrat", sans-serif;
         line-height: 1.5;
         transition:
           background-color 0.5s,
@@ -360,42 +366,43 @@
       }
       table {
         width: 100%;
-        border-collapse: collapse;
         border-radius: calc(var(--radius) * 0.5);
         overflow: hidden;
+        letter-spacing: -0.02rem;
+        border: 0.5px solid var(--table-border);
+        border-spacing: 0;
       }
       th,
       td {
         text-align: left;
         padding: calc(var(--gap) * 0.25) calc(var(--gap) * 0.5);
+        border: 0.5px solid var(--table-border);
       }
       th {
         color: var(--white);
-        background-color: var(--gray);
+        background-color: var(--table-header);
       }
-      tr:nth-child(even) {
-        background-color: var(--bg);
+      tbody tr:nth-child(odd) {
+        background-color: var(--table-row);
       }
-      tr.yellow th,
-      tr.yellow td {
-        background-color: var(--yellow);
-        color: var(--base);
+      tbody tr:nth-child(even) {
+        background-color: var(--table-row-alt);
       }
       th,
       td.bold {
-        font-weight: 600;
+        font-weight: 700;
       }
       th.right,
       td.right {
         text-align: right;
       }
       .num {
-        font-family: "Inter", sans-serif;
+        font-family: "Montserrat", sans-serif;
         font-optical-sizing: auto;
         font-variant-numeric: tabular-nums;
       }
-      tr:hover {
-        background-color: var(--note);
+      tbody tr:hover {
+        background-color: var(--table-row-hover);
       }
       .news-list details {
         color: var(--gray);
@@ -484,12 +491,17 @@
         --base: #e8e8e8;
         --gray: #8d8d96;
         --bg: #131722;
-        --white: #222;
-        --note: #685712;
-        --blue: #6366f1;
-        --red: #f43f5e;
-        --green: #10b981;
-        --yellow: #a07404;
+        --white: #0e0f0f;
+        --note: #2a240a;
+        --blue: rgb(173, 170, 170);
+        --red: #d14141;
+        --green: #37c169;
+        --yellow: #0e0b04;
+        --table-header: #1d4ed8;
+        --table-row: #171e29;
+        --table-row-alt: #111827;
+        --table-row-hover: #854d0e;
+        --table-border: #475569;
         --radius: 18px;
         --gap: 20px;
         --xs: 430px;
@@ -541,7 +553,8 @@
           width: 100%;
         }
         .vang-card {
-          padding: calc(var(--gap) * 0.5);
+          border-radius: 0;
+          padding: calc(var(--gap) * 0.25);
           font-size: 70%;
         }
         .vang-card.split-2 {
