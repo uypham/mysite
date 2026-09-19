@@ -759,7 +759,7 @@
         font:
           500 10px "DM Mono",
           monospace;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
       }
       td.num {
@@ -964,8 +964,9 @@
         font:
           500 10px/1 "DM Mono",
           monospace;
-        gap: 7px;
-        letter-spacing: 0.08em;
+        gap: 10px;
+        letter-spacing: 0.12em;
+        margin-left: 16px;
         text-transform: uppercase;
       }
       .topbar-status::before {
@@ -1093,12 +1094,15 @@
         }
         .topbar-status {
           margin-left: auto;
+          padding-left: 12px;
         }
         .section:first-child {
           padding-top: 26px;
         }
         .section:first-child > .container > .title:first-of-type {
           font-size: 2.35rem;
+          column-gap: 12px;
+          row-gap: 5px;
           margin-bottom: 22px;
         }
         #ngay {
@@ -1117,8 +1121,13 @@
         }
         .summary-card .quote span {
           font-size: 1.3rem;
+          letter-spacing: -0.02em;
+        }
+        .summary-card .quote {
+          column-gap: 16px;
         }
         .title.mb {
+          letter-spacing: 0.08em;
           margin-top: 22px;
         }
         #bien-dong,
@@ -1133,8 +1142,8 @@
           padding-bottom: 18px;
         }
         .section.white.gap .container {
-          padding-left: 8px;
-          padding-right: 8px;
+          padding-left: 2px;
+          padding-right: 2px;
         }
         .section.white.gap .title.mb:first-of-type {
           margin-top: 16px;
@@ -1143,10 +1152,15 @@
           padding: 7px 0;
         }
         .news-list details summary {
+          padding: 2px 0;
           line-height: 1.25;
         }
         .news-list .news-content {
           margin-top: 5px;
+        }
+        .section.my-work th,
+        .section.my-work td {
+          line-height: 1.4;
         }
       }
     </style>
@@ -1154,7 +1168,7 @@
   <body>
     <div id="page">
       <header class="topbar">
-        <a class="topbar-brand" href="./gia-vang.html">UY / MARKETS</a>
+        <a class="topbar-brand" href="./gia-vang.html">MARKET</a>
         <nav class="topbar-nav" aria-label="Điều hướng thị trường">
           <a href="#gia-vang">Vàng</a>
           <a href="#gia-bac">Bạc</a>
