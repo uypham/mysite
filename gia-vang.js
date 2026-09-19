@@ -23,6 +23,14 @@ const formatNumber = (num) => {
   //   : intWithSep;
 };
 
+const renderQuote = (label, buy, sell) => `
+  <h2>${label}</h2>
+  <div class="quote">
+    <span><small>Mua</small>${buy}</span>
+    <span><small>Bán</small>${sell}</span>
+  </div>
+`;
+
 const getNgay = () => {
   const $dateEle = document.getElementById("ngay");
   const today = new Date();
@@ -39,7 +47,11 @@ const getGiaVang = () => {
       const goldTableData = data.data;
       const banVangSjc = goldTableData.find((item) => item.masp === "RAW_9999");
       const muaVangSjc = goldTableData.find((item) => item.masp === "RAW_9900");
-      $goldAnalytic.innerHTML = `<h2>Vàng</h2><div><span>${formatNumber(muaVangSjc.giamua)}</span> / <span>${formatNumber(banVangSjc.giamua)}</span></div>`;
+      $goldAnalytic.innerHTML = renderQuote(
+        "Vàng",
+        formatNumber(muaVangSjc.giamua),
+        formatNumber(banVangSjc.giamua),
+      );
 
       // Bảng giá vàng
       const $goldTable = document.createElement("table");
@@ -85,7 +97,11 @@ const getGiaBac = () => {
       const bacSjc = silverTableData.find(
         (item) => item.name === "Bạc thỏi Phú Quý 999 1Kilo",
       );
-      $silverAnalytic.innerHTML = `<h2>Bạc</h2><div><span>${formatNumber(bacSjc.buyPrice / 1000)}</span> / <span>${formatNumber(bacSjc.sellPrice / 1000)}</span></div>`;
+      $silverAnalytic.innerHTML = renderQuote(
+        "Bạc",
+        formatNumber(bacSjc.buyPrice / 1000),
+        formatNumber(bacSjc.sellPrice / 1000),
+      );
 
       // Bảng giá bạc
       const $silverTable = document.createElement("table");
@@ -202,18 +218,21 @@ const getTinTuc = () => {
       };
 
       const newsData = data.Data;
-      const $newsList = document.createElement("div");
-      newsData.forEach((item) => {
-        const $html = `<details>
-        <summary>${item.Title}</summary>
-        ${item.SubContent}
-      </details>`;
-        const $row = document.createElement("div");
-        $row.innerHTML = $html;
-        $newsList.append($row);
-      });
-      $newsMain.innerHTML = "";
-      $newsMain.append($newsList);
+      if (!$newsMain.dataset.loaded && newsData.length) {
+        const $newsList = document.createElement("div");
+        newsData.forEach((item) => {
+          const $html = `<details>
+          <summary>${item.Title}</summary>
+          <div class="news-content">${item.SubContent}</div>
+        </details>`;
+          const $row = document.createElement("div");
+          $row.innerHTML = $html;
+          $newsList.append($row);
+        });
+        $newsMain.innerHTML = "";
+        $newsMain.append($newsList);
+        $newsMain.dataset.loaded = "true";
+      }
     })
     .catch((err) => {
       console.error("Lỗi khi lấy tin tức:", err);
@@ -317,12 +336,11 @@ const renderInfo = async (data, fromWSS) => {
     $goldMain.innerHTML = "";
     $goldMain.append($goldTable);
     const vangSjc = goldTableData.find((item) => item.name === "Vàng 999.9");
-    $goldAnalytic.innerHTML = `
-      <h2>Vàng</h2>
-      <div>
-        <span>${formatNumber(vangSjc.saigon.buy)}</span> / <span>${formatNumber(vangSjc.saigon.sell)}</span>
-      </div>
-    `;
+    $goldAnalytic.innerHTML = renderQuote(
+      "Vàng",
+      formatNumber(vangSjc.saigon.buy),
+      formatNumber(vangSjc.saigon.sell),
+    );
 
     // Bảng ngoại tệ
     const $forexMain = document.getElementById("gia-ngoai-te");
@@ -353,8 +371,11 @@ const renderInfo = async (data, fromWSS) => {
     $forexMain.innerHTML = "";
     $forexMain.append($forexTable);
     const usd = forexTableData.find((item) => item.name === "USD");
-    $currencyAnalytic.innerHTML = `<h2>USD</h2><div><span>${formatNumber(usd.saigon.buy)}</span> / 
-        <span>${formatNumber(usd.saigon.sell)}</span></div>`;
+    $currencyAnalytic.innerHTML = renderQuote(
+      "USD",
+      formatNumber(usd.saigon.buy),
+      formatNumber(usd.saigon.sell),
+    );
 
     // Bảng bạc
     const $silverMain = document.getElementById("gia-bac");
@@ -385,24 +406,30 @@ const renderInfo = async (data, fromWSS) => {
     $silverMain.innerHTML = "";
     $silverMain.append($silverTable);
     const bacSjc = silverTableData.find((i) => i.name === "PHUQUY_1KG");
-    $silverAnalytic.innerHTML = `<h2>Bạc</h2><div><span>${formatNumber(bacSjc.saigon.buy)}</span>
-        / <span>${formatNumber(bacSjc.saigon.sell)}</span></div>`;
+    $silverAnalytic.innerHTML = renderQuote(
+      "Bạc",
+      formatNumber(bacSjc.saigon.buy),
+      formatNumber(bacSjc.saigon.sell),
+    );
 
     // Tin tức
     const $newsMain = document.getElementById("tin-tuc");
     const newsData = data.ContentNew;
-    const $newsList = document.createElement("div");
-    newsData.forEach((item) => {
-      const $html = `<details>
-        <summary>${item.title}</summary>
-        ${item.content}
-      </details>`;
-      const $row = document.createElement("div");
-      $row.innerHTML = $html;
-      $newsList.append($row);
-    });
-    $newsMain.innerHTML = "";
-    $newsMain.append($newsList);
+    if (!$newsMain.dataset.loaded && newsData?.length) {
+      const $newsList = document.createElement("div");
+      newsData.forEach((item) => {
+        const $html = `<details>
+          <summary>${item.title}</summary>
+          <div class="news-content">${item.content}</div>
+        </details>`;
+        const $row = document.createElement("div");
+        $row.innerHTML = $html;
+        $newsList.append($row);
+      });
+      $newsMain.innerHTML = "";
+      $newsMain.append($newsList);
+      $newsMain.dataset.loaded = "true";
+    }
     return true;
   } catch (error) {
     const $goldMain = document.getElementById("gia-vang");
@@ -495,12 +522,11 @@ const initApp = async () => {
     getGiaVang_Server2();
     getGiaBac_Server2();
     getGiaNgoaiTe_Server2();
-    getTinTuc_Server2();
+    getTinTuc();
     setInterval(() => {
       getGiaVang_Server2();
       getGiaBac_Server2();
       getGiaNgoaiTe_Server2();
-      getTinTuc_Server2();
     }, 30000);
   }
 };

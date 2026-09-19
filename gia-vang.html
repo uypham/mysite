@@ -50,6 +50,10 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- ICONS -->
     <link
@@ -574,13 +578,594 @@
         }
       }
     </style>
+    <style>
+      :root {
+        --base: #171717;
+        --gray: #737373;
+        --bg: #f4f3ef;
+        --white: #fffefa;
+        --note: #e9e1ca;
+        --blue: #525252;
+        --red: #b42318;
+        --green: #16794b;
+        --yellow: #d6a93a;
+        --table-header: #171717;
+        --table-row: #fffefa;
+        --table-row-alt: #f7f6f1;
+        --table-row-hover: #eee8d8;
+        --table-border: #e4e1d9;
+        --radius: 2px;
+        --gap: 24px;
+        --lg: 1180px;
+        --shadow: 0 12px 30px rgba(25, 25, 20, 0.06);
+        --section-gap: 58px;
+      }
+      body {
+        background: var(--bg);
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: 0;
+      }
+      #page {
+        background: radial-gradient(
+          circle at 88% 0,
+          #ebe4d1 0,
+          transparent 32rem
+        );
+      }
+      .container {
+        max-width: var(--lg);
+      }
+      .section {
+        margin-top: 0;
+      }
+      .section:first-child {
+        padding-top: 18px;
+      }
+      .section:first-child .container::before {
+        content: "METAL / DAILY";
+        display: block;
+        color: var(--gray);
+        font:
+          500 11px/1 "DM Mono",
+          monospace;
+        letter-spacing: 0.16em;
+        margin-bottom: 28px;
+      }
+      .title {
+        color: var(--gray);
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+      }
+      .title span {
+        color: var(--base);
+      }
+      .section:first-child > .container > .title:first-of-type {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 14px;
+        max-width: 900px;
+        color: var(--gray);
+        font-size: clamp(2rem, 3.2vw, 3.2rem);
+        font-weight: 600;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        margin: 0 0 22px;
+        text-transform: none;
+      }
+      .section:first-child > .container > .title:first-of-type span {
+        color: var(--base);
+      }
+      #ngay {
+        display: inline;
+        color: var(--gray);
+        font:
+          500 0.42em/1 "DM Mono",
+          monospace;
+        letter-spacing: 0;
+        margin-top: 0;
+        text-transform: uppercase;
+      }
+      #quick-summary {
+        gap: 1px;
+        background: var(--base);
+        border: 1px solid var(--base);
+        margin-bottom: 24px;
+      }
+      .summary-card {
+        min-height: 120px;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 16px 18px;
+        background: var(--white);
+        font-size: 18px;
+      }
+      .summary-card:first-child {
+        background: var(--base);
+        color: var(--white);
+      }
+      .summary-card h2 {
+        color: var(--gray);
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        margin: 0 0 16px;
+        text-transform: uppercase;
+      }
+      .summary-card:first-child h2 {
+        color: var(--yellow);
+      }
+      .summary-card .quote {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .summary-card .quote span {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        color: inherit !important;
+        font:
+          500 clamp(1.75rem, 2.8vw, 2.5rem) / 1 "DM Mono",
+          monospace;
+        letter-spacing: -0.05em;
+        white-space: nowrap;
+      }
+      .summary-card .quote small {
+        color: var(--gray);
+        font:
+          500 10px/1 "Space Grotesk",
+          sans-serif;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .summary-card:first-child .quote small {
+        color: #a3a3a3;
+      }
+      .title.mb {
+        border-top: 1px solid var(--table-border);
+        padding-top: 12px;
+        margin: 24px 0 12px;
+      }
+      #bien-dong,
+      #bien-dong-bac {
+        height: 320px !important;
+        background: var(--white);
+        border: 1px solid var(--table-border);
+      }
+      .vang-card {
+        background: var(--white);
+        border: 1px solid var(--table-border);
+        border-radius: 0;
+        box-shadow: var(--shadow);
+        padding: 0;
+      }
+      table {
+        border: 0;
+        border-radius: 0;
+        font-size: 14px;
+      }
+      th,
+      td {
+        border: 0;
+        border-bottom: 1px solid var(--table-border);
+        padding: 11px 16px;
+      }
+      th {
+        color: #a3a3a3;
+        background: var(--base);
+        font:
+          500 10px "DM Mono",
+          monospace;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      td.num {
+        font-family: "DM Mono", monospace;
+        font-weight: 500;
+      }
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+      .blue {
+        color: var(--base);
+      }
+      tbody tr:hover {
+        background: var(--table-row-hover);
+      }
+      .section.my-work {
+        background: #ebe9e2;
+        padding: 1px 0 24px;
+      }
+      .section.white {
+        background: var(--white);
+      }
+      .section.gap {
+        padding-top: 1px;
+      }
+      .news-list details {
+        border-bottom: 1px solid var(--table-border);
+        padding: 12px 0;
+      }
+      .news-list details summary {
+        color: var(--base);
+        font-size: 14px;
+        line-height: 1.35;
+      }
+      .news-list .news-content {
+        color: var(--gray);
+        font-size: 13px;
+        line-height: 1.5;
+        margin-top: 8px;
+      }
+      .note {
+        background: var(--note);
+        border-radius: 0;
+        color: #5c513a;
+      }
+      .tools {
+        position: fixed;
+        top: 18px;
+        right: 24px;
+        z-index: 10;
+      }
+      .theme {
+        width: 30px;
+        height: 30px;
+        filter: grayscale(1);
+        opacity: 0.7;
+      }
+      body.moon {
+        --base: #f1efe8;
+        --gray: #9a9a94;
+        --bg: #171716;
+        --white: #20201e;
+        --note: #3e3725;
+        --blue: #c8c5b9;
+        --red: #f07e70;
+        --green: #73c99a;
+        --yellow: #d6a93a;
+        --table-header: #0e0e0d;
+        --table-row: #20201e;
+        --table-row-alt: #242421;
+        --table-row-hover: #39372f;
+        --table-border: #393936;
+        --shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      }
+      body.moon #page {
+        background: radial-gradient(
+          circle at 88% 0,
+          #343020 0,
+          transparent 32rem
+        );
+      }
+      @media screen and (max-width: 600px) {
+        .section:first-child {
+          padding-top: 14px;
+        }
+        .section:first-child .container::before {
+          margin-bottom: 22px;
+        }
+        .section:first-child > .container > .title:first-of-type {
+          font-size: 2rem;
+          gap: 8px;
+          margin-bottom: 18px;
+        }
+        #quick-summary {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          margin-bottom: 20px;
+        }
+        .summary-card {
+          min-width: 0;
+          min-height: 118px;
+          padding: 13px 14px;
+          font-size: 14px;
+        }
+        .summary-card:first-child {
+          grid-column: span 2;
+        }
+        .summary-card h2 {
+          margin-bottom: 15px;
+        }
+        .summary-card .quote {
+          gap: 10px;
+        }
+        .summary-card .quote span {
+          font-size: 1.35rem;
+        }
+        .summary-card .quote small {
+          font-size: 9px;
+        }
+        .title.mb {
+          padding-top: 10px;
+          margin-top: 22px;
+        }
+        #bien-dong,
+        #bien-dong-bac {
+          height: 240px !important;
+        }
+        .vang-card {
+          font-size: 12px;
+        }
+        th,
+        td {
+          padding: 10px 9px;
+        }
+        .tools {
+          right: 14px;
+        }
+      }
+    </style>
+    <style>
+      :root {
+        --base: #102a43;
+        --gray: #627d98;
+        --bg: #f6f4ef;
+        --white: #fffdf8;
+        --note: #f2e6c8;
+        --blue: #145da0;
+        --red: #b9382f;
+        --green: #167a5b;
+        --yellow: #e0a92f;
+        --table-header: #102a43;
+        --table-row: #fffdf8;
+        --table-row-alt: #f1f5f8;
+        --table-row-hover: #e8f0f5;
+        --table-border: #d7e0e8;
+        --shadow: 0 16px 40px rgba(16, 42, 67, 0.09);
+      }
+      body {
+        background: var(--bg);
+        color: var(--base);
+      }
+      #page {
+        background:
+          linear-gradient(180deg, #eaf1f5 0 34rem, transparent 34rem), var(--bg);
+      }
+      .topbar {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        max-width: var(--lg);
+        margin: 0 auto;
+        padding: 22px var(--gap) 0;
+      }
+      .topbar-brand {
+        color: var(--base);
+        font:
+          700 14px/1 "Space Grotesk",
+          sans-serif;
+        letter-spacing: 0.08em;
+        text-decoration: none;
+      }
+      .topbar-nav {
+        display: flex;
+        gap: 24px;
+        margin-left: auto;
+        margin-right: 28px;
+      }
+      .topbar-nav a {
+        color: var(--gray);
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .topbar-nav a:first-child,
+      .topbar-nav a:hover {
+        color: var(--base);
+      }
+      .topbar-status {
+        align-items: center;
+        color: var(--green);
+        display: flex;
+        font:
+          500 10px/1 "DM Mono",
+          monospace;
+        gap: 7px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .topbar-status::before {
+        background: var(--green);
+        border-radius: 50%;
+        content: "";
+        height: 7px;
+        width: 7px;
+      }
+      .section:first-child {
+        padding-top: 58px;
+      }
+      .section:first-child .container::before {
+        content: "MARKET WATCH / 01";
+        color: var(--blue);
+        margin-bottom: 18px;
+      }
+      .section:first-child > .container > .title:first-of-type {
+        color: var(--gray);
+        font-size: clamp(2.25rem, 4vw, 4rem);
+        letter-spacing: -0.055em;
+        margin-bottom: 28px;
+      }
+      .section:first-child
+        > .container
+        > .title:first-of-type
+        span:first-child {
+        color: var(--base);
+      }
+      #ngay {
+        color: var(--blue);
+        font:
+          600 clamp(1rem, 1.8vw, 1.35rem) / 1 "Space Grotesk",
+          sans-serif;
+        letter-spacing: -0.02em;
+      }
+      #quick-summary {
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+      .summary-card {
+        background: var(--white);
+        border: 1px solid var(--table-border);
+        box-shadow: 0 4px 0 rgba(16, 42, 67, 0.04);
+        min-height: 100px;
+        padding: 16px 20px 5px;
+      }
+      .summary-card:first-child {
+        background: var(--base);
+        border-color: var(--base);
+        box-shadow: 0 8px 0 var(--yellow);
+        color: var(--white);
+      }
+      .summary-card h2 {
+        color: var(--gray);
+        font-size: 11px;
+        margin-bottom: 20px;
+      }
+      .summary-card:first-child h2 {
+        color: var(--yellow);
+      }
+      .summary-card .quote {
+        gap: 12px;
+      }
+      .summary-card .quote span {
+        font-size: clamp(1.65rem, 2.2vw, 2.25rem);
+      }
+      .summary-card .quote small {
+        color: var(--gray);
+      }
+      .summary-card:first-child .quote small {
+        color: #9fb3c8;
+      }
+      .title.mb {
+        border-top: 0;
+        color: var(--gray);
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        margin: 38px 0 12px;
+        padding: 0;
+      }
+      .title.mb span {
+        color: var(--base);
+      }
+      #bien-dong,
+      #bien-dong-bac {
+        background: var(--white);
+        border: 1px solid var(--table-border);
+        box-shadow: var(--shadow);
+        height: 320px !important;
+      }
+      .vang-card {
+        border: 1px solid var(--table-border);
+        box-shadow: var(--shadow);
+      }
+      .section.my-work {
+        background: #eaf1f5;
+        padding: 24px 0 24px;
+      }
+      .section.my-work .title {
+        margin-top: 0;
+      }
+      .section.white {
+        background: var(--white);
+      }
+      .news-list details {
+        padding: 12px 0;
+      }
+      .news-list details summary {
+        color: var(--base);
+        font-weight: 600;
+      }
+      .note {
+        border-left: 4px solid var(--yellow);
+      }
+      @media screen and (max-width: 600px) {
+        .topbar {
+          padding: 18px 12px 0;
+        }
+        .topbar-nav {
+          display: none;
+        }
+        .topbar-status {
+          margin-left: auto;
+        }
+        .section:first-child {
+          padding-top: 26px;
+        }
+        .section:first-child > .container > .title:first-of-type {
+          font-size: 2.35rem;
+          margin-bottom: 22px;
+        }
+        #ngay {
+          font-size: 0.95rem;
+        }
+        #quick-summary {
+          gap: 8px;
+          margin-bottom: 20px;
+        }
+        .summary-card {
+          min-height: 0;
+          padding: 12px 15px 8px;
+        }
+        .summary-card h2 {
+          margin-bottom: 16px;
+        }
+        .summary-card .quote span {
+          font-size: 1.3rem;
+        }
+        .title.mb {
+          margin-top: 22px;
+        }
+        #bien-dong,
+        #bien-dong-bac {
+          height: 240px !important;
+        }
+        .section.my-work {
+          padding: 18px 0 18px;
+        }
+        .section.white.gap {
+          padding-top: 0;
+          padding-bottom: 18px;
+        }
+        .section.white.gap .container {
+          padding-left: 8px;
+          padding-right: 8px;
+        }
+        .section.white.gap .title.mb:first-of-type {
+          margin-top: 16px;
+        }
+        .news-list details {
+          padding: 7px 0;
+        }
+        .news-list details summary {
+          line-height: 1.25;
+        }
+        .news-list .news-content {
+          margin-top: 5px;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="page">
+      <header class="topbar">
+        <a class="topbar-brand" href="./gia-vang.html">UY / MARKETS</a>
+        <nav class="topbar-nav" aria-label="Điều hướng thị trường">
+          <a href="#gia-vang">Vàng</a>
+          <a href="#gia-bac">Bạc</a>
+          <a href="#tin-tuc">Tin tức</a>
+        </nav>
+        <span class="topbar-status">Live data</span>
+      </header>
       <section class="section">
         <div class="container">
           <h2 class="title">
-            <span>Giá vàng 👑</span> hôm nay (<span id="ngay"></span>)
+            <span>Giá vàng 👑</span> <span id="ngay"></span>
           </h2>
           <div id="quick-summary">
             <div class="summary-card" id="gia-vang-analytic">
@@ -615,7 +1200,7 @@
           </div>
 
           <h2 class="title mb"><span>Biểu đồ</span> giá bạc</h2>
-          <div id="bien-dong" style="height: 400px">
+          <div id="bien-dong-bac" style="height: 400px">
             <!-- TradingView Widget BEGIN -->
             <div
               class="tradingview-widget-container"
@@ -670,7 +1255,7 @@
       </div>
     </div>
     <!-- Delete when release -->
-    <script src="./gia-vang.js"></script>
+    <script src="./gia-vang.js?v=20260919"></script>
     <!-- Google tag (gtag.js) -->
     <script
       async
