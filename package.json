@@ -1,19 +1,28 @@
 {
   "name": "mysite",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
   "repository": "https://github.com/uypham/mysite.git",
   "author": "Uy <uyphamvuong@gmail.com>",
   "license": "MIT",
-  "private": false,
   "scripts": {
-    "start": "webpack serve",
-    "build": "echo 'nothing :)'",
-    "clean": "rm -rf node_modules package-lock.json"
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build && node scripts/check-legacy-syntax.js",
+    "preview": "vite preview",
+    "clean": "rm -rf node_modules dist"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "webpack": "^5.76.2",
-    "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.12.0"
+    "@vitejs/plugin-legacy": "^8.2.3",
+    "@vitejs/plugin-react": "^6.1.2",
+    "acorn": "^8.19.0",
+    "acorn-walk": "^8.3.5",
+    "terser": "^5.51.2",
+    "vite": "^8.3.5"
   }
 }

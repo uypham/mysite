@@ -8,7 +8,7 @@ const WEEKDAY_LABELS = [
   "Thứ Bảy",
 ];
 
-const RANK_META = {
+export const RANK_META = {
   feria: {
     label: "Ngày thường",
     badgeClass: "feria",
@@ -27,7 +27,7 @@ const RANK_META = {
   },
 };
 
-const VESTMENT_META = {
+export const VESTMENT_META = {
   white: {
     label: "Áo lễ: Trắng",
     dotClass: "white",
@@ -360,7 +360,7 @@ const parseVietnameseWeekOrdinal = (rawText) => {
   return null;
 };
 
-const convertWeekOrdinalToRoman = (title) => {
+export const convertWeekOrdinalToRoman = (title) => {
   if (!title) return title;
 
   return title.replace(
@@ -434,7 +434,7 @@ const sanitizeDayInfo = (dayInfo) => {
   };
 };
 
-const buildDayData = (date) => {
+export const buildDayData = (date) => {
   const info = sanitizeDayInfo(getLiturgicalDayInfo(date));
   return {
     isoDate: toIsoDate(date),
@@ -483,13 +483,13 @@ const toOverrideMap = (json) => {
   return map;
 };
 
-const fetchMonthOverrides = async (year, month) => {
+export const fetchMonthOverrides = async (year, month) => {
   const cacheKey = `${year}-${month}`;
   if (monthOverrideCache.has(cacheKey)) {
     return monthOverrideCache.get(cacheKey);
   }
 
-  const filePath = `./lich-cong-giao-${year}.json`;
+  const filePath = `/lich-cong-giao-${year}.json`;
 
   try {
     const response = await fetch(filePath, { cache: "no-store" });
@@ -517,7 +517,7 @@ const mergeDaysWithOverrides = (days, overrideMap) => {
   });
 };
 
-const getWeekData = async (today) => {
+export const getWeekData = async (today) => {
   const weekDays = buildWeekData(today);
   const monthKeys = [
     ...new Set(
@@ -547,216 +547,9 @@ const getWeekData = async (today) => {
   return merged;
 };
 
-const getMonthData = async (year, month) => {
+export const getMonthData = async (year, month) => {
   const autoDays = buildMonthData(year, month);
   const overrideMap = await fetchMonthOverrides(year, month);
   return mergeDaysWithOverrides(autoDays, overrideMap);
 };
 
-const createBadgeClass = (rank) => {
-  const meta = RANK_META[rank] || RANK_META.feria;
-  return meta.badgeClass;
-};
-
-const getDateTileParts = (date) => {
-  return {
-    month: date.getMonth() + 1,
-    day: date.getDate(),
-  };
-};
-
-const renderTodayCard = (day) => {
-  const todayCard = document.getElementById("today-card");
-  const todayDate = document.getElementById("today-date");
-  const todayDateTile = document.getElementById("today-date-tile");
-  const todayCelebration = document.getElementById("today-celebration");
-  const todayRank = document.getElementById("today-rank");
-  const todayVestmentDot = document.getElementById("today-vestment-dot");
-  const todayVestmentText = document.getElementById("today-vestment-text");
-  const todayGospel = document.getElementById("today-gospel");
-
-  const rankMeta = RANK_META[day.rank] || RANK_META.feria;
-  const vestmentMeta = VESTMENT_META[day.vestment] || VESTMENT_META.green;
-  const dateTileParts = getDateTileParts(day.date);
-
-  todayDate.textContent = `${day.weekday}, ${day.dateText}`;
-  if (todayDateTile) {
-    todayDateTile.innerHTML = `<span class="date-tile-month">Tháng ${dateTileParts.month}</span><span class="date-tile-day">${dateTileParts.day}</span>`;
-  }
-  todayCelebration.textContent = convertWeekOrdinalToRoman(day.title);
-  if (day.rank === "feria") {
-    todayRank.textContent = "";
-    todayRank.className = "badge";
-    todayRank.style.display = "none";
-  } else {
-    todayRank.textContent = rankMeta.label;
-    todayRank.className = `badge ${rankMeta.badgeClass}`;
-    todayRank.style.display = "";
-  }
-
-  todayVestmentDot.className = `vestment-dot ${vestmentMeta.dotClass}`;
-  todayVestmentText.textContent = vestmentMeta.label;
-
-  todayGospel.textContent = day.gospel;
-
-  if (todayCard) {
-    const weekendClass =
-      day.date.getDay() === 6
-        ? "weekend-sat"
-        : day.date.getDay() === 0
-          ? "weekend-sun"
-          : "";
-    const rankClass = day.rank === "solemn" ? "rank-solemn" : "";
-    todayCard.className = `today-card ${weekendClass} ${rankClass}`.trim();
-  }
-};
-
-const renderUpcomingList = (days, options = {}) => {
-  const { showWeekDividers = false, highlightIsoDate = "" } = options;
-  const upcomingList = document.getElementById("upcoming-list");
-  const html = days
-    .map((day, index) => {
-      const rankMeta = RANK_META[day.rank] || RANK_META.feria;
-      const vestmentMeta = VESTMENT_META[day.vestment] || VESTMENT_META.green;
-      const dateTileParts = getDateTileParts(day.date);
-      const weekendClass =
-        day.date.getDay() === 6
-          ? "weekend-sat"
-          : day.date.getDay() === 0
-            ? "weekend-sun"
-            : "";
-      const rankClass = day.rank === "solemn" ? "rank-solemn" : "";
-      const weekDivider =
-        showWeekDividers && index > 0 && day.date.getDay() === 1
-          ? '<div class="week-divider" aria-hidden="true"></div>'
-          : "";
-      const todayClass = day.isoDate === highlightIsoDate ? "is-today" : "";
-      const badgeHtml =
-        day.rank === "feria"
-          ? ""
-          : `<span class="badge ${createBadgeClass(day.rank)}">${rankMeta.label}</span>`;
-      const displayTitle = convertWeekOrdinalToRoman(day.title);
-
-      return `
-        ${weekDivider}
-        <article class="mini-card ${weekendClass} ${rankClass} ${todayClass}">
-          <div class="mini-top">
-            <div class="mini-date-wrap">
-              <div class="date-tile">
-                <span class="date-tile-month">Tháng ${dateTileParts.month}</span>
-                <span class="date-tile-day">${dateTileParts.day}</span>
-              </div>
-              <div class="mini-date">${day.weekday}</div>
-            </div>
-            ${badgeHtml}
-          </div>
-          <p class="mini-title">${displayTitle}</p>
-          <div class="mini-meta">
-            <span class="mini-meta-item"><span aria-hidden="true">👕</span><span class="vestment-dot ${vestmentMeta.dotClass}"></span>${vestmentMeta.label.replace("Áo lễ: ", "")}</span>
-            <span class="mini-meta-item right"><span aria-hidden="true">📖</span>${day.gospel}</span>
-          </div>
-        </article>
-      `;
-    })
-    .join("");
-
-  upcomingList.innerHTML = html;
-};
-
-const renderPeriodTitle = (filterValue) => {
-  const titleNode = document.querySelector(".section-title");
-  if (!titleNode) return;
-
-  if (filterValue === "week") {
-    titleNode.textContent = "Các ngày tiếp theo trong tuần";
-    titleNode.classList.remove("month-active");
-    return;
-  }
-
-  const selectedMonth = Number(filterValue.replace("month-", ""));
-  titleNode.textContent = `Các ngày trong tháng ${selectedMonth}`;
-  titleNode.classList.add("month-active");
-};
-
-const initThemeSwitch = () => {
-  const themeSwitch = document.getElementById("theme-switch");
-  let theme = localStorage.getItem("theme") || "day";
-  theme = ["day", "moon"].includes(theme) ? theme : "day";
-
-  const applyTheme = (value) => {
-    document.body.classList.remove("day", "moon");
-    document.body.classList.add(value);
-    localStorage.setItem("theme", value);
-
-    if (value === "moon") {
-      themeSwitch.classList.remove("moon");
-      themeSwitch.classList.add("day");
-      themeSwitch.setAttribute("aria-label", "Chuyển sang chế độ sáng");
-    } else {
-      themeSwitch.classList.remove("day");
-      themeSwitch.classList.add("moon");
-      themeSwitch.setAttribute("aria-label", "Chuyển sang chế độ tối");
-    }
-  };
-
-  applyTheme(theme);
-
-  themeSwitch.addEventListener("click", () => {
-    const currentTheme = localStorage.getItem("theme") || "day";
-    const nextTheme = currentTheme === "day" ? "moon" : "day";
-    applyTheme(nextTheme);
-  });
-};
-
-const initCalendarPage = async () => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const renderByFilter = async (filterValue) => {
-    renderPeriodTitle(filterValue);
-
-    if (filterValue === "week") {
-      const weekData = await getWeekData(today);
-      const [todayDay, ...upcoming] = weekData;
-      renderTodayCard(todayDay);
-      renderUpcomingList(upcoming, { showWeekDividers: false });
-      return;
-    }
-
-    const selectedMonth = Number(filterValue.replace("month-", ""));
-    const todayMonthOverrides = await fetchMonthOverrides(
-      today.getFullYear(),
-      today.getMonth() + 1,
-    );
-    const todayAutoData = buildDayData(today);
-    const todayOverride = todayMonthOverrides.get(todayAutoData.isoDate);
-    renderTodayCard(
-      todayOverride ? { ...todayAutoData, ...todayOverride } : todayAutoData,
-    );
-
-    const monthData = await getMonthData(today.getFullYear(), selectedMonth);
-    renderUpcomingList(monthData, {
-      showWeekDividers: true,
-      highlightIsoDate: todayAutoData.isoDate,
-    });
-  };
-
-  const periodFilter = document.getElementById("period-filter");
-  await renderByFilter(periodFilter ? periodFilter.value : "week");
-
-  if (periodFilter) {
-    periodFilter.addEventListener("change", async (event) => {
-      const nextValue = event.target.value;
-      await renderByFilter(nextValue);
-    });
-  }
-
-  const yearNode = document.getElementById("year");
-  if (yearNode) {
-    yearNode.textContent = String(new Date().getFullYear());
-  }
-
-  initThemeSwitch();
-};
-
-document.addEventListener("DOMContentLoaded", initCalendarPage);

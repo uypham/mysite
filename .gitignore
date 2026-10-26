@@ -28,3 +28,5 @@ Temporary Items
 node_modules
 *.log
 .astro
+# Build
+dist
