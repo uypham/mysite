@@ -17,19 +17,18 @@ const findBy = (items, field, value) => {
   return found;
 };
 
-const text = (value, className = "bold") => ({ value, className });
+const text = (value, className = "") => ({ value, className });
 const price = (value, color = "") => ({
   value: formatNumber(value),
-  className: `right num bold ${color}`.trim(),
+  className: `right num ${color}`.trim(),
 });
 
 // vang247 tables share the { name, saigon: { buy, sell, buy_change } } shape.
 const toSaigonTable = (items, columns, withGap = false) => ({
   columns,
   rows: items.map((item) => ({
-    className: item.saigon.buy_change < 0 ? "bg-red" : "bg-green",
     cells: [
-      text(item.name, "bold blue"),
+      text(item.name, "name"),
       price(item.saigon.buy),
       price(item.saigon.sell),
       price(item.saigon.buy_change, changeClass(item.saigon.buy_change)),
@@ -92,7 +91,7 @@ export const buildPnjGold = (items) => ({
     ],
     rows: items.map((item) => ({
       cells: [
-        text(item.masp, "bold blue"),
+        text(item.masp, "name"),
         text(item.tensp),
         price(item.giamua, "red"),
         price(item.giaban, "green"),
@@ -116,7 +115,7 @@ export const buildCafefSilver = (items) => {
       ],
       rows: items.map((item) => ({
         cells: [
-          text(item.name, "bold blue"),
+          text(item.name, "name"),
           price(item.buyPrice / 1000, "red"),
           price(item.sellPrice / 1000, "green"),
         ],
@@ -139,7 +138,7 @@ export const buildBidvCurrency = (items) => {
       ],
       rows: items.map((item) => ({
         cells: [
-          text(item.currency, "bold blue"),
+          text(item.currency, "name"),
           text(item.nameVI),
           price(item.muaTm, "red"),
           price(item.ban, "green"),

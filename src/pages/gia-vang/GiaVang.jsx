@@ -31,6 +31,18 @@ const POLL_INTERVAL_MS = 30000;
 const WSS_RECONNECT_MS = 5000;
 const TONG_HOP_ERROR = "Không thể lấy giá vàng, thử lại sau nhé!";
 
+const CHARTS = [
+  { id: "gold", label: "Vàng", symbol: "PEPPERSTONE:XAUUSD", caption: "XAU/USD" },
+  { id: "silver", label: "Bạc", symbol: "PEPPERSTONE:XAGUSD", caption: "XAG/USD" },
+];
+
+const NAV_LINKS = [
+  { href: "#gia-vang", label: "Vàng" },
+  { href: "#gia-bac", label: "Bạc" },
+  { href: "#gia-ngoai-te", label: "Ngoại tệ" },
+  { href: "#tin-tuc", label: "Tin tức" },
+];
+
 const buildChartConfig = (symbol, theme) => ({
   allow_symbol_change: true,
   calendar: false,
@@ -47,7 +59,7 @@ const buildChartConfig = (symbol, theme) => ({
   symbol,
   theme: theme === "moon" ? "dark" : "light",
   timezone: "Asia/Ho_Chi_Minh",
-  backgroundColor: theme === "moon" ? "#131722" : "#ffffff",
+  backgroundColor: theme === "moon" ? "#1c1c1e" : "#ffffff",
   gridColor: "rgba(46, 46, 46, 0.06)",
   watchlist: [],
   withdateranges: false,
@@ -98,7 +110,7 @@ const TradingViewChart = ({ id, symbol, theme }) => {
 };
 
 const PriceTable = ({ table }) => (
-  <table>
+  <table className="price-table">
     <thead>
       <tr>
         {table.columns.map((column) => (
@@ -110,7 +122,7 @@ const PriceTable = ({ table }) => (
     </thead>
     <tbody>
       {table.rows.map((row, rowIndex) => (
-        <tr key={rowIndex} className={row.className}>
+        <tr key={rowIndex}>
           {row.cells.map((cell, cellIndex) => (
             <td key={cellIndex} className={cell.className}>
               {cell.value}
@@ -122,63 +134,59 @@ const PriceTable = ({ table }) => (
   </table>
 );
 
-const TableCard = ({ id, className, section }) => {
-  let content = <span>Đang tải, đợi tí...</span>;
+const TableCard = ({ section }) => {
+  let content = <p className="card-state">Đang tải, đợi tí...</p>;
   if (section.tableError) {
-    content = <span className="red">{section.tableError}</span>;
+    content = <p className="card-state red">{section.tableError}</p>;
   } else if (section.table) {
     content = <PriceTable table={section.table} />;
   }
-  return (
-    <div id={id} className={className}>
-      {content}
-    </div>
-  );
+  return <div className="table-card">{content}</div>;
 };
 
-const SummaryCard = ({ id, label, section }) => {
-  let content = <div>Đang tải...</div>;
+const SummaryCard = ({ anchor, eyebrow, label, tone, section }) => {
+  let content = <p className="card-state">Đang tải...</p>;
   if (section.quoteError) {
-    content = <div className="red">{section.quoteError}</div>;
+    content = <p className="card-state red">{section.quoteError}</p>;
   } else if (section.quote) {
     content = (
       <div className="quote">
-        <span>
-          <small>Mua</small>
-          {section.quote.buy}
-        </span>
-        <span>
-          <small>Bán</small>
-          {section.quote.sell}
-        </span>
+        <div>
+          <small>Mua vào</small>
+          <strong>{section.quote.buy}</strong>
+        </div>
+        <div>
+          <small>Bán ra</small>
+          <strong>{section.quote.sell}</strong>
+        </div>
       </div>
     );
   }
   return (
-    <div className="summary-card" id={id}>
-      <h2>{label}</h2>
+    <a className={`summary-card ${tone || ""}`} href={`#${anchor}`}>
+      <p className="eyebrow">{eyebrow}</p>
+      <h3>{label}</h3>
       {content}
-    </div>
+    </a>
   );
 };
 
 const NewsList = ({ news }) => {
-  if (news.error) return <span className="red">{news.error}</span>;
-  if (!news.items) return <span>Đang tải, đợi tí...</span>;
-  return (
-    <div>
-      {news.items.map((item, index) => (
-        <details key={index}>
-          <summary>{item.title}</summary>
-          <div
-            className="news-content"
-            dangerouslySetInnerHTML={{ __html: item.content }}
-          />
-        </details>
-      ))}
-    </div>
-  );
+  if (news.error) return <p className="card-state red">{news.error}</p>;
+  if (!news.items) return <p className="card-state">Đang tải, đợi tí...</p>;
+  return news.items.map((item, index) => (
+    <details key={index}>
+      <summary>{item.title}</summary>
+      <div className="news-content" dangerouslySetInnerHTML={{ __html: item.content }} />
+    </details>
+  ));
 };
+
+const ShelfHeading = ({ title, subtitle }) => (
+  <h2 className="shelf-heading">
+    {title} <span>{subtitle}</span>
+  </h2>
+);
 
 const useMarketData = () => {
   const [market, setMarket] = useState({ gold: {}, silver: {}, currency: {} });
@@ -302,85 +310,138 @@ export const GiaVang = () => {
   const { theme, toggleTheme } = useTheme();
   const now = useNow();
   const { market, news } = useMarketData();
+  const [chartId, setChartId] = useState(CHARTS[0].id);
+  const activeChart = CHARTS.find((chart) => chart.id === chartId);
 
   return (
-    <div id="page">
-      <header className="topbar">
-        <a className="topbar-brand" href="./gia-vang.html">
-          MARKET
-        </a>
-        <nav className="topbar-nav" aria-label="Điều hướng thị trường">
-          <a href="#gia-vang">Vàng</a>
-          <a href="#gia-bac">Bạc</a>
-          <a href="#tin-tuc">Tin tức</a>
-        </nav>
-        <span className="topbar-status">Live data</span>
+    <div id="page" className="market">
+      <header className="market-nav">
+        <div className="container market-nav-inner">
+          <a className="market-brand" href="./gia-vang.html">
+            Thị trường
+          </a>
+          <nav className="market-links" aria-label="Điều hướng thị trường">
+            {NAV_LINKS.map((link) => (
+              <a key={link.href} href={link.href}>
+                {link.label}
+              </a>
+            ))}
+          </nav>
+          <button
+            type="button"
+            className={`theme-toggle ${theme === "moon" ? "day" : "moon"}`}
+            onClick={toggleTheme}
+            aria-label="Đổi giao diện sáng tối"
+          />
+        </div>
       </header>
-      <section className="section">
-        <div className="container">
-          <h2 className="title">
-            <span>Giá vàng 👑</span>{" "}
-            <span id="ngay">{now.toLocaleDateString("vi-VN", FORMAT_DATE_OPTIONS)}</span>
-          </h2>
-          <div id="quick-summary">
-            <SummaryCard id="gia-vang-analytic" label="Vàng" section={market.gold} />
-            <SummaryCard id="gia-bac-analytic" label="Bạc" section={market.silver} />
-            <SummaryCard id="gia-usd-analytic" label="USD" section={market.currency} />
-          </div>
 
-          <h2 className="title mb">
-            <span>Biểu đồ</span> giá vàng
-          </h2>
-          <div id="bien-dong" style={{ height: 400 }}>
-            <TradingViewChart id="chart-gold" symbol="PEPPERSTONE:XAUUSD" theme={theme} />
-          </div>
-
-          <h2 className="title mb">
-            <span>Biểu đồ</span> giá bạc
-          </h2>
-          <div id="bien-dong-bac" style={{ height: 400 }}>
-            <TradingViewChart id="chart-silver" symbol="PEPPERSTONE:XAGUSD" theme={theme} />
-          </div>
-
-          <TableCard id="gia-vang" className="vang-card mt-4" section={market.gold} />
-        </div>
-      </section>
-      <section className="section my-work">
-        <div className="container">
-          <h2 className="title">
-            <span>Giá</span> bạc
-          </h2>
-          <TableCard id="gia-bac" className="vang-card" section={market.silver} />
-
-          <h2 className="title">
-            <span>Ngoại tệ</span>
-          </h2>
-          <TableCard id="gia-ngoai-te" className="vang-card" section={market.currency} />
-        </div>
-      </section>
-      <section className="section white gap bottom">
-        <div className="container">
-          <h2 className="title mb">
-            <span>Tin tức</span> thị trường
-          </h2>
-          <div id="tin-tuc" className="news-list">
-            <NewsList news={news} />
-          </div>
-
-          <h2 className="title mb">
-            <span>#fromUy</span>withlove♥️
-          </h2>
-          <p className="note">
-            Tại điện thoại của mình quá cũ không mở được trang web của vàng 247
-            nên mình sẽ lấy dữ liệu giá vàng từ API của họ để đọc giá vàng cho
-            dễ thôi, chứ mình cũng không có ý định làm một trang web về giá vàng
-            đâu :D
+      <section className="hero container">
+        <div className="hero-text">
+          <h1 className="hero-title">
+            Giá vàng. <span>Cập nhật trực tiếp.</span>
+          </h1>
+          <p className="hero-meta">
+            <span className="live-dot" aria-hidden="true" />
+            Trực tiếp ·{" "}
+            <span className="nowrap">{now.toLocaleDateString("vi-VN", FORMAT_DATE_OPTIONS)}</span>
           </p>
         </div>
       </section>
-      <div className="tools">
-        <div className={`theme ${theme === "moon" ? "day" : "moon"}`} onClick={toggleTheme} />
-      </div>
+
+      <section className="container">
+        <div className="summary-grid">
+          <SummaryCard
+            anchor="gia-vang"
+            eyebrow="Vàng"
+            label="Vàng 999.9"
+            tone="gradient"
+            section={market.gold}
+          />
+          <SummaryCard
+            anchor="gia-bac"
+            eyebrow="Bạc"
+            label="Bạc Phú Quý 1kg"
+            section={market.silver}
+          />
+          <SummaryCard
+            anchor="gia-ngoai-te"
+            eyebrow="Ngoại tệ"
+            label="USD"
+            tone="dark"
+            section={market.currency}
+          />
+        </div>
+      </section>
+
+      <section className="shelf">
+        <div className="container">
+          <div className="shelf-head">
+            <ShelfHeading title="Biểu đồ." subtitle={`Thế giới ${activeChart.caption}.`} />
+            <div className="segmented" role="tablist" aria-label="Chọn biểu đồ">
+              {CHARTS.map((chart) => (
+                <button
+                  key={chart.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={chart.id === chartId}
+                  className={chart.id === chartId ? "active" : undefined}
+                  onClick={() => setChartId(chart.id)}
+                >
+                  {chart.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="chart-card">
+            <TradingViewChart id="chart" symbol={activeChart.symbol} theme={theme} />
+          </div>
+        </div>
+      </section>
+
+      <section className="shelf" id="gia-vang">
+        <div className="container">
+          <ShelfHeading title="Vàng." subtitle="Giá mua bán tại các tiệm lớn." />
+          <TableCard section={market.gold} />
+        </div>
+      </section>
+
+      <section className="shelf" id="gia-bac">
+        <div className="container">
+          <ShelfHeading title="Bạc." subtitle="Thỏi, miếng và trang sức." />
+          <TableCard section={market.silver} />
+        </div>
+      </section>
+
+      <section className="shelf" id="gia-ngoai-te">
+        <div className="container">
+          <ShelfHeading title="Ngoại tệ." subtitle="Tỷ giá mua bán hôm nay." />
+          <TableCard section={market.currency} />
+        </div>
+      </section>
+
+      <section className="shelf" id="tin-tuc">
+        <div className="container">
+          <ShelfHeading title="Tin tức." subtitle="Vàng và kim loại quý." />
+          <div className="news-card">
+            <NewsList news={news} />
+          </div>
+        </div>
+      </section>
+
+      <section className="shelf">
+        <div className="container">
+          <p className="note-card">
+            <span className="vcard">#fromUy with love ♥️</span> Điện thoại của mình quá cũ
+            không mở được trang vàng 247, nên mình lấy dữ liệu từ API của họ để xem giá cho
+            dễ thôi, chứ cũng không có ý định làm trang web về giá vàng đâu :D
+          </p>
+        </div>
+      </section>
+
+      <footer className="footer container">
+        © {now.getFullYear()} Uy Pham. Dữ liệu từ vang247, PNJ, CafeF, BIDV và Vietstock.
+      </footer>
     </div>
   );
 };
