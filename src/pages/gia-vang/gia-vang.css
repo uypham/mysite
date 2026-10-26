@@ -83,6 +83,9 @@ body {
 .market .hero {
   padding-top: 48px;
 }
+.market .hero-title {
+  white-space: nowrap;
+}
 /* Keep section titles clear of the sticky nav; scroll-snap-margin-top is the Safari 11-14.4 name. */
 .market .shelf {
   scroll-snap-margin-top: var(--anchor-offset);
@@ -380,6 +383,12 @@ body.moon .market .footer {
   border-top-color: var(--hairline);
 }
 
+/* Scale with the viewport so the hero title stays on one line. */
+@media screen and (max-width: 875px) {
+  .market .hero-title {
+    font-size: 6.4vw;
+  }
+}
 @media screen and (max-width: 834px) {
   .summary-card {
     width: calc(50% - var(--gap));
