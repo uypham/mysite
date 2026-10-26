@@ -1,17 +1,4 @@
 /* Gold price page: builds on the shared Apple Store tokens in home.css. */
-:root {
-  --red: #e30000;
-  --green: #1d8a2e;
-  --hairline: #d2d2d7;
-  --row-hover: #f5f5f7;
-  --nav-bg: rgba(245, 245, 247, 0.8);
-  --nav-height: 52px;
-  --anchor-offset: calc(var(--nav-height) + 20px);
-}
-body {
-  -webkit-transition: background-color 0.3s, color 0.3s;
-  transition: background-color 0.3s, color 0.3s;
-}
 .red {
   color: var(--red);
 }
@@ -25,71 +12,11 @@ body {
   white-space: nowrap;
 }
 
-.market-nav {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background-color: var(--nav-bg);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid var(--hairline);
-}
-.market-nav-inner {
-  display: flex;
-  align-items: center;
-  height: var(--nav-height);
-}
-.market-brand {
-  margin-right: auto;
-  color: var(--base);
-  font-size: 19px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-.market-brand:hover,
-.market-links a:hover {
-  text-decoration: none;
-  color: var(--accent);
-}
-.market-links {
-  display: flex;
-}
-.market-links a {
-  margin-left: 24px;
-  color: var(--base);
-  font-size: 13px;
-}
-.theme-toggle {
-  width: 28px;
-  height: 28px;
-  margin-left: 24px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background-color: transparent;
-  background-position: center;
-  background-size: 22px;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-.theme-toggle.day {
-  background-image: url("/images/day.png");
-}
-.theme-toggle.moon {
-  background-image: url("/images/moon.png");
-}
-
 .market .hero {
   padding-top: 48px;
 }
 .market .hero-title {
   white-space: nowrap;
-}
-/* Keep section titles clear of the sticky nav; scroll-snap-margin-top is the Safari 11-14.4 name. */
-.market .shelf {
-  scroll-snap-margin-top: var(--anchor-offset);
-  scroll-margin-top: var(--anchor-offset);
 }
 .live-dot {
   display: inline-block;
@@ -139,14 +66,6 @@ body {
   -webkit-transform: scale(1.01);
   transform: scale(1.01);
 }
-.summary-card .eyebrow {
-  margin: 0 0 8px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
 .summary-card h3 {
   margin: 0;
   text-wrap: balance;
@@ -194,42 +113,10 @@ body {
   color: #a1a1a6;
 }
 
-.shelf-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-.segmented {
-  display: inline-flex;
-  padding: 2px;
-  border-radius: 9px;
-  background-color: rgba(118, 118, 128, 0.12);
-}
-.segmented button {
-  min-width: 72px;
-  padding: 6px 14px;
-  border: 0;
-  border-radius: 7px;
-  background: transparent;
-  color: var(--base);
-  font: inherit;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-}
-.segmented button.active {
-  background-color: var(--white);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
-}
 .chart-card,
 .table-card,
-.news-card,
-.note-card {
+.news-card {
   margin-top: 20px;
-  border-radius: var(--radius);
-  background-color: var(--white);
-  box-shadow: var(--shadow);
 }
 .chart-card {
   height: 440px;
@@ -294,37 +181,6 @@ body {
 .news-card {
   padding: 8px 30px;
 }
-.news-card details {
-  border-bottom: 1px solid var(--hairline);
-}
-.news-card details:last-child {
-  border-bottom: 0;
-}
-.news-card summary {
-  position: relative;
-  padding: 16px 28px 16px 0;
-  list-style: none;
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.35;
-  letter-spacing: -0.015em;
-  cursor: pointer;
-}
-.news-card summary::-webkit-details-marker {
-  display: none;
-}
-.news-card summary::after {
-  content: "+";
-  position: absolute;
-  top: 12px;
-  right: 0;
-  color: var(--accent);
-  font-size: 24px;
-  font-weight: 400;
-}
-.news-card details[open] summary::after {
-  content: "−";
-}
 .news-content {
   overflow: hidden;
   padding-bottom: 18px;
@@ -356,31 +212,8 @@ body {
   margin-top: var(--section-gap);
 }
 
-/* THEME */
-body.moon {
-  --base: #f5f5f7;
-  --gray: #a1a1a6;
-  --muted: #86868b;
-  --bg: #000;
-  --white: #1c1c1e;
-  --night: #2c2c2e;
-  --red: #ff453a;
-  --green: #30d158;
-  --accent: #2997ff;
-  --hairline: #38383a;
-  --row-hover: #2c2c2e;
-  --nav-bg: rgba(22, 22, 23, 0.8);
-  --shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-hover: 2px 4px 16px rgba(0, 0, 0, 0.6);
-}
 body.moon .summary-card.gradient {
   color: #fff;
-}
-body.moon .segmented button.active {
-  background-color: #636366;
-}
-body.moon .market .footer {
-  border-top-color: var(--hairline);
 }
 
 /* Scale with the viewport so the hero title stays on one line. */
@@ -448,9 +281,6 @@ body.moon .market .footer {
   }
 }
 @media screen and (max-width: 600px) {
-  .market-links a {
-    margin-left: 14px;
-  }
   .market .hero {
     padding-top: 20px;
     padding-bottom: 12px;
@@ -470,9 +300,6 @@ body.moon .market .footer {
   .market .shelf-heading {
     font-size: 21px;
   }
-  .shelf-head .segmented {
-    margin-top: 12px;
-  }
   .chart-card {
     height: 340px;
   }
@@ -491,16 +318,5 @@ body.moon .market .footer {
     padding-top: 12px;
     padding-bottom: 12px;
     font-size: 16px;
-  }
-}
-@media screen and (max-width: 380px) {
-  .market-brand {
-    font-size: 17px;
-  }
-  .market-links a {
-    margin-left: 10px;
-  }
-  .theme-toggle {
-    margin-left: 12px;
   }
 }

@@ -18,6 +18,29 @@
   --shadow: 2px 4px 12px rgba(0, 0, 0, 0.05);
   --shadow-hover: 2px 4px 16px rgba(0, 0, 0, 0.1);
   --section-gap: 70px;
+  --red: #e30000;
+  --green: #1d8a2e;
+  --hairline: #d2d2d7;
+  --row-hover: #f5f5f7;
+  --nav-bg: rgba(245, 245, 247, 0.8);
+  --nav-height: 52px;
+  --anchor-offset: calc(var(--nav-height) + 20px);
+}
+body.moon {
+  --base: #f5f5f7;
+  --gray: #a1a1a6;
+  --muted: #86868b;
+  --bg: #000;
+  --white: #1c1c1e;
+  --night: #2c2c2e;
+  --red: #ff453a;
+  --green: #30d158;
+  --accent: #2997ff;
+  --hairline: #38383a;
+  --row-hover: #2c2c2e;
+  --nav-bg: rgba(22, 22, 23, 0.8);
+  --shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 2px 4px 16px rgba(0, 0, 0, 0.6);
 }
 body {
   color: var(--base);
@@ -25,6 +48,8 @@ body {
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   letter-spacing: -0.01em;
+  -webkit-transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
 }
 #page {
   display: flex;
@@ -229,13 +254,13 @@ a:hover {
   font-weight: 600;
   letter-spacing: -0.025em;
 }
-.tile p {
+.tile p:not(.eyebrow) {
   margin: 12px 0 0;
   font-size: 16px;
   line-height: 1.45;
   color: var(--gray);
 }
-.tile .eyebrow {
+.eyebrow {
   margin: 0 0 8px;
   font-size: 12px;
   font-weight: 600;
@@ -314,9 +339,143 @@ a:hover {
   margin-top: auto;
   padding-top: 24px;
   padding-bottom: 32px;
-  border-top: 1px solid #d2d2d7;
+  border-top: 1px solid var(--hairline);
   font-size: 12px;
   color: var(--muted);
+}
+
+.card {
+  border-radius: var(--radius);
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+}
+.shelf-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.accordion details {
+  border-bottom: 1px solid var(--hairline);
+}
+.accordion details:last-child {
+  border-bottom: 0;
+}
+.accordion summary {
+  position: relative;
+  padding: 16px 28px 16px 0;
+  list-style: none;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  cursor: pointer;
+}
+.accordion summary::-webkit-details-marker {
+  display: none;
+}
+.accordion summary::after {
+  content: "+";
+  position: absolute;
+  top: 12px;
+  right: 0;
+  color: var(--accent);
+  font-size: 24px;
+  font-weight: 400;
+}
+.accordion details[open] summary::after {
+  content: "−";
+}
+
+/* Sticky sub-site nav (gold, calendar). */
+.local-nav {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--nav-bg);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--hairline);
+}
+.local-nav-inner {
+  display: flex;
+  align-items: center;
+  height: var(--nav-height);
+}
+.local-brand {
+  margin-right: auto;
+  color: var(--base);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.local-brand:hover,
+.local-links a:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+.local-links {
+  display: flex;
+}
+.local-links a {
+  margin-left: 24px;
+  color: var(--base);
+  font-size: 13px;
+  white-space: nowrap;
+}
+/* Keep anchored sections clear of the sticky nav; scroll-snap-margin-top is the Safari 11-14.4 name. */
+.local-nav ~ main [id] {
+  scroll-snap-margin-top: var(--anchor-offset);
+  scroll-margin-top: var(--anchor-offset);
+}
+.theme-toggle {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  margin-left: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: transparent;
+  background-position: center;
+  background-size: 22px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.theme-toggle.day {
+  background-image: url("/images/day.png");
+}
+.theme-toggle.moon {
+  background-image: url("/images/moon.png");
+}
+
+.segmented {
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 9px;
+  background-color: rgba(118, 118, 128, 0.12);
+}
+.segmented button {
+  min-width: 72px;
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--base);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.segmented button.active {
+  background-color: var(--white);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+body.moon .segmented button.active {
+  background-color: #636366;
 }
 
 @media screen and (max-width: 1120px) {
@@ -346,6 +505,12 @@ a:hover {
   :root {
     --section-gap: 50px;
   }
+  .local-links a {
+    margin-left: 14px;
+  }
+  .shelf-head .segmented {
+    margin-top: 12px;
+  }
   .title.lg {
     font-size: 160%;
   }
@@ -369,5 +534,16 @@ a:hover {
   .perk {
     width: calc(100% - var(--gap));
     min-height: 0;
+  }
+}
+@media screen and (max-width: 380px) {
+  .local-brand {
+    font-size: 17px;
+  }
+  .local-links a {
+    margin-left: 10px;
+  }
+  .theme-toggle {
+    margin-left: 12px;
   }
 }

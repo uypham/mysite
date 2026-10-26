@@ -1,4 +1,5 @@
 import { CURRENT_YEAR } from "../../shared/constants.js";
+import { ShelfHeading } from "../../shared/ShelfHeading.jsx";
 
 const CAREER_START_YEAR = 2011;
 const YEARS_OF_EXPERIENCE = CURRENT_YEAR - CAREER_START_YEAR;
@@ -105,12 +106,6 @@ const PERKS = [
   { tone: "purple", highlight: "Clean, documented code", rest: " any team can pick up." },
   { tone: "green", highlight: "Works on old phones too,", rest: " not just the latest ones." },
 ];
-
-const ShelfHeading = ({ title, subtitle }) => (
-  <h2 className="shelf-heading">
-    {title} <span>{subtitle}</span>
-  </h2>
-);
 
 export const Home = () => (
   <div id="page" className="store">

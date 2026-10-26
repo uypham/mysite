@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { CURRENT_YEAR } from "../../shared/constants.js";
+import { LocalNav } from "../../shared/LocalNav.jsx";
+import { ShelfHeading } from "../../shared/ShelfHeading.jsx";
 import { useTheme } from "../../shared/useTheme.js";
 import {
   TONG_HOP_WSS_URL,
@@ -144,7 +146,7 @@ const TableCard = ({ section }) => {
   } else if (section.table) {
     content = <PriceTable table={section.table} />;
   }
-  return <div className="table-card">{content}</div>;
+  return <div className="card table-card">{content}</div>;
 };
 
 const SummaryCard = ({ anchor, eyebrow, label, tone, section }) => {
@@ -184,12 +186,6 @@ const NewsList = ({ news }) => {
     </details>
   ));
 };
-
-const ShelfHeading = ({ title, subtitle }) => (
-  <h2 className="shelf-heading">
-    {title} <span>{subtitle}</span>
-  </h2>
-);
 
 const useMarketData = () => {
   const [market, setMarket] = useState({ gold: {}, silver: {}, currency: {} });
@@ -318,26 +314,14 @@ export const GiaVang = () => {
 
   return (
     <div id="page" className="market">
-      <header className="market-nav">
-        <div className="container market-nav-inner">
-          <a className="market-brand" href="./gia-vang.html">
-            Thị trường
-          </a>
-          <nav className="market-links" aria-label="Điều hướng thị trường">
-            {NAV_LINKS.map((link) => (
-              <a key={link.href} href={link.href}>
-                {link.label}
-              </a>
-            ))}
-          </nav>
-          <button
-            type="button"
-            className={`theme-toggle ${theme === "moon" ? "day" : "moon"}`}
-            onClick={toggleTheme}
-            aria-label="Đổi giao diện sáng tối"
-          />
-        </div>
-      </header>
+      <LocalNav
+        brand="Thị trường"
+        brandHref="./gia-vang.html"
+        label="Điều hướng thị trường"
+        links={NAV_LINKS}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
 
       <main>
         <section className="hero container">
@@ -399,7 +383,7 @@ export const GiaVang = () => {
                 ))}
               </div>
             </div>
-            <div className="chart-card">
+            <div className="card chart-card">
               <TradingViewChart id="chart" symbol={activeChart.symbol} theme={theme} />
             </div>
           </div>
@@ -429,7 +413,7 @@ export const GiaVang = () => {
         <section className="shelf" id="tin-tuc">
           <div className="container">
             <ShelfHeading title="Tin tức." subtitle="Vàng và kim loại quý." />
-            <div className="news-card">
+            <div className="card news-card accordion">
               <NewsList news={news} />
             </div>
           </div>
@@ -437,7 +421,7 @@ export const GiaVang = () => {
 
         <section className="shelf">
           <div className="container">
-            <p className="note-card">
+            <p className="card note-card">
               <span className="vcard">#fromUy with love ♥️</span> Điện thoại của mình quá cũ
               không mở được trang vàng 247, nên mình lấy dữ liệu từ API của họ để xem giá cho
               dễ thôi, chứ cũng không có ý định làm trang web về giá vàng đâu :D
