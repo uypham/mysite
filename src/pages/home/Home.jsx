@@ -92,6 +92,13 @@ const CONTACTS = [
   { label: "Contact card", value: "Add to contacts", href: "/uy-vcard.vcf", download: true },
 ];
 
+const PERKS = [
+  { tone: "blue", highlight: "Fast replies,", rest: " usually within the same day." },
+  { tone: "red", lead: "Pay per project, or ", highlight: "hire me monthly for ongoing work." },
+  { tone: "purple", highlight: "Clean, documented code", rest: " any team can pick up." },
+  { tone: "green", highlight: "Works on old phones too,", rest: " not just the latest ones." },
+];
+
 const ShelfHeading = ({ title, subtitle }) => (
   <h2 className="shelf-heading">
     {title} <span>{subtitle}</span>
@@ -171,6 +178,21 @@ export const Home = () => (
             <img width="64" height="64" alt={service.title} src={service.icon} />
           </article>
         ))}
+      </div>
+    </section>
+
+    <section className="shelf">
+      <div className="container">
+        <ShelfHeading title="The Uy difference." subtitle="Even more reasons to work with me." />
+        <div className="perks">
+          {PERKS.map((perk) => (
+            <p key={perk.highlight} className="perk">
+              {perk.lead}
+              <span className={perk.tone}>{perk.highlight}</span>
+              {perk.rest}
+            </p>
+          ))}
+        </div>
       </div>
     </section>
 

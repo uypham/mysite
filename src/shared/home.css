@@ -165,7 +165,7 @@ a:hover {
   margin: 0 0 4px;
   font-size: 28px;
   line-height: 1.15;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.025em;
 }
 .shelf-heading span {
@@ -220,7 +220,7 @@ a:hover {
   margin: 0;
   font-size: 26px;
   line-height: 1.15;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.025em;
 }
 .tile p {
@@ -273,6 +273,38 @@ a:hover {
   font-size: 15px;
 }
 
+.perks {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  margin-right: calc(var(--gap) * -1);
+}
+.perk {
+  width: calc(25% - var(--gap));
+  min-height: 180px;
+  margin: 0 var(--gap) var(--gap) 0;
+  padding: 30px;
+  border-radius: var(--radius-lg);
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+  font-size: 21px;
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.perk .blue {
+  color: var(--accent);
+}
+.perk .red {
+  color: #e30000;
+}
+.perk .purple {
+  color: #8e44ec;
+}
+.perk .green {
+  color: #1d8a2e;
+}
+
 .footer {
   margin-top: auto;
   padding-top: 24px;
@@ -301,6 +333,9 @@ a:hover {
   .hero-title {
     font-size: 40px;
   }
+  .perk {
+    width: calc(50% - var(--gap));
+  }
 }
 @media screen and (max-width: 600px) {
   :root {
@@ -325,5 +360,9 @@ a:hover {
   }
   .tile h3 {
     font-size: 23px;
+  }
+  .perk {
+    width: calc(100% - var(--gap));
+    min-height: 0;
   }
 }
