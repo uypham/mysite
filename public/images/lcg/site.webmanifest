@@ -3,19 +3,20 @@
   "short_name": "Lịch Công Giáo",
   "icons": [
     {
-      "src": "/web-app-manifest-192x192.png",
+      "src": "/images/lcg/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/web-app-manifest-512x512.png",
+      "src": "/images/lcg/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#000000",
-  "display": "standalone"
+  "theme_color": "#f5f5f7",
+  "background_color": "#f5f5f7",
+  "display": "standalone",
+  "start_url": "/lich-cong-giao.html"
 }

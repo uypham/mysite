@@ -434,7 +434,7 @@ const sanitizeDayInfo = (dayInfo) => {
   };
 };
 
-export const buildDayData = (date) => {
+const buildDayData = (date) => {
   const info = sanitizeDayInfo(getLiturgicalDayInfo(date));
   return {
     isoDate: toIsoDate(date),
@@ -483,7 +483,7 @@ const toOverrideMap = (json) => {
   return map;
 };
 
-export const fetchMonthOverrides = async (year, month) => {
+const fetchMonthOverrides = async (year, month) => {
   const cacheKey = `${year}-${month}`;
   if (monthOverrideCache.has(cacheKey)) {
     return monthOverrideCache.get(cacheKey);

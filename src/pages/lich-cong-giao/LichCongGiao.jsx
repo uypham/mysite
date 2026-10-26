@@ -1,37 +1,45 @@
 import { useEffect, useState } from "react";
-import { CURRENT_YEAR } from "../../shared/constants.js";
-import { useTheme } from "../../shared/useTheme.js";
+import { ShelfHeading } from "../../shared/ShelfHeading.jsx";
+import { LcgFooter, LcgNav, PRIVACY_PATH, SUPPORT_PATH } from "./LcgChrome.jsx";
 import {
   RANK_META,
   VESTMENT_META,
-  buildDayData,
   convertWeekOrdinalToRoman,
-  fetchMonthOverrides,
   getMonthData,
   getWeekData,
 } from "./liturgy.js";
 
-const MONTHS = Array.from({ length: 12 }, (_, index) => index + 1);
+const NAV_LINKS = [
+  { href: "#hom-nay", label: "Hôm nay" },
+  { href: "#lich", label: "Lịch" },
+  { href: "#ung-dung", label: "Ứng dụng" },
+];
 
-const getWeekendClass = (date) => {
-  if (date.getDay() === 6) return "weekend-sat";
-  if (date.getDay() === 0) return "weekend-sun";
-  return "";
+const MODES = [
+  { id: "week", label: "Tuần này" },
+  { id: "month", label: "Theo tháng" },
+];
+
+const RANK_ORDER = ["solemn", "feast", "memorial", "feria"];
+const VESTMENT_ORDER = ["white", "red", "green", "purple", "rose"];
+
+const VESTMENT_USES = {
+  white: "Lễ Chúa, Đức Mẹ, các thánh không tử đạo, Mùa Giáng Sinh và Phục Sinh.",
+  red: "Lễ Chúa Thánh Thần, cuộc Thương Khó, các thánh Tông đồ và tử đạo.",
+  green: "Mùa Thường Niên.",
+  purple: "Mùa Vọng, Mùa Chay và lễ cầu cho các linh hồn.",
+  rose: "Chúa nhật III Mùa Vọng và Chúa nhật IV Mùa Chay.",
 };
 
-const getCardClass = (baseClass, day, extraClass = "") =>
-  [
-    baseClass,
-    getWeekendClass(day.date),
-    day.rank === "solemn" ? "rank-solemn" : "",
-    extraClass,
-  ]
-    .filter(Boolean)
-    .join(" ");
+const APP_FEATURES = [
+  "Tên lễ, bậc lễ, màu áo lễ và Tin Mừng mỗi ngày.",
+  "Lịch tuần, lưới tháng và đếm ngược tới Lễ trọng kế tiếp.",
+  "Nhắc Lễ trọng trước 1–7 ngày, widget màn hình chính và khoá.",
+  "Chữ lớn, dễ đọc cho ông bà, cha mẹ. Chạy hoàn toàn offline.",
+];
 
-const getRankMeta = (rank) => RANK_META[rank] || RANK_META.feria;
-const getVestmentMeta = (vestment) =>
-  VESTMENT_META[vestment] || VESTMENT_META.green;
+const FIRST_MONTH = 1;
+const LAST_MONTH = 12;
 
 const getToday = () => {
   const today = new Date();
@@ -39,12 +47,9 @@ const getToday = () => {
   return today;
 };
 
-const DateTile = ({ date, compact = false }) => (
-  <div className={compact ? "date-tile compact" : "date-tile"}>
-    <span className="date-tile-month">Tháng {date.getMonth() + 1}</span>
-    <span className="date-tile-day">{date.getDate()}</span>
-  </div>
-);
+const getRankMeta = (rank) => RANK_META[rank] || RANK_META.feria;
+const getVestmentMeta = (vestment) => VESTMENT_META[vestment] || VESTMENT_META.green;
+const getVestmentName = (vestment) => getVestmentMeta(vestment).label.replace("Áo lễ: ", "");
 
 const RankBadge = ({ rank }) => {
   if (rank === "feria") return null;
@@ -52,213 +57,281 @@ const RankBadge = ({ rank }) => {
   return <span className={`badge ${rankMeta.badgeClass}`}>{rankMeta.label}</span>;
 };
 
+const Vestment = ({ vestment }) => (
+  <span className="vestment">
+    <span className={`vestment-dot ${getVestmentMeta(vestment).dotClass}`} aria-hidden="true" />
+    Áo {getVestmentName(vestment).toLowerCase()}
+  </span>
+);
+
 const TodayCard = ({ day }) => {
   if (!day) {
     return (
-      <article className="today-card" aria-live="polite">
-        <div className="today-head">
-          <span className="today-label">Hôm nay</span>
-          <div className="today-date">Đang tải...</div>
-        </div>
+      <article className="card today-card" aria-busy="true">
+        <p className="eyebrow">Hôm nay</p>
+        <p className="today-title is-loading">Đang tải lịch...</p>
       </article>
     );
   }
 
-  const vestmentMeta = getVestmentMeta(day.vestment);
-
   return (
-    <article className={getCardClass("today-card", day)} aria-live="polite">
-      <div className="today-head">
-        <span className="today-label">Hôm nay</span>
-        <div className="today-date-wrap">
-          <DateTile date={day.date} compact />
-          <div className="today-date">
-            {day.weekday}, {day.dateText}
-          </div>
-        </div>
-      </div>
-      <h2 className="today-celebration">
-        {convertWeekOrdinalToRoman(day.title)}
-      </h2>
-      <div className="meta-row">
-        <RankBadge rank={day.rank} />
-        <span className="vestment">
-          <span className={`vestment-dot ${vestmentMeta.dotClass}`}></span>
-          <span>{vestmentMeta.label}</span>
+    <article className={`card today-card vest-${getVestmentMeta(day.vestment).dotClass}`}>
+      <div className="today-date">
+        <span className="today-day">{day.date.getDate()}</span>
+        <span className="today-month">
+          <strong>{day.weekday}</strong>
+          Tháng {day.date.getMonth() + 1} · {day.date.getFullYear()}
         </span>
       </div>
-      <div className="gospel-box">
-        <div className="gospel-row">
-          <p className="gospel-title">Bài đọc Tin Mừng</p>
-          <p className="gospel-text">{day.gospel}</p>
+      <div className="today-body">
+        <p className="eyebrow">Hôm nay</p>
+        <h2 className="today-title">{convertWeekOrdinalToRoman(day.title)}</h2>
+        <div className="day-meta">
+          <RankBadge rank={day.rank} />
+          <Vestment vestment={day.vestment} />
         </div>
-      </div>
-    </article>
-  );
-};
-
-const MiniCard = ({ day, isToday }) => {
-  const vestmentMeta = getVestmentMeta(day.vestment);
-
-  return (
-    <article className={getCardClass("mini-card", day, isToday ? "is-today" : "")}>
-      <div className="mini-top">
-        <div className="mini-date-wrap">
-          <DateTile date={day.date} />
-          <div className="mini-date">{day.weekday}</div>
-        </div>
-        <RankBadge rank={day.rank} />
-      </div>
-      <p className="mini-title">{convertWeekOrdinalToRoman(day.title)}</p>
-      <div className="mini-meta">
-        <span className="mini-meta-item">
-          <span aria-hidden="true">👕</span>
-          <span className={`vestment-dot ${vestmentMeta.dotClass}`}></span>
-          {vestmentMeta.label.replace("Áo lễ: ", "")}
-        </span>
-        <span className="mini-meta-item right">
-          <span aria-hidden="true">📖</span>
+        <p className="today-gospel">
+          <small>Tin Mừng</small>
           {day.gospel}
-        </span>
+        </p>
       </div>
     </article>
   );
 };
 
-const UpcomingItem = ({ day, showDivider, isToday }) => (
-  <>
-    {showDivider && <div className="week-divider" aria-hidden="true"></div>}
-    <MiniCard day={day} isToday={isToday} />
-  </>
+const DayTile = ({ day }) => (
+  <article className={`card day-tile ${day.date.getDay() === 0 ? "is-sunday" : ""}`}>
+    <div className="day-tile-head">
+      <span className="day-tile-number">{day.date.getDate()}</span>
+      <span className="day-tile-weekday">{day.weekday}</span>
+    </div>
+    <h3>{convertWeekOrdinalToRoman(day.title)}</h3>
+    <div className="day-meta">
+      <RankBadge rank={day.rank} />
+      <Vestment vestment={day.vestment} />
+    </div>
+    <p className="day-gospel">Tin Mừng {day.gospel}</p>
+  </article>
 );
 
-const loadPeriod = async (filterValue) => {
-  const today = getToday();
+const DayRow = ({ day, isToday }) => {
+  const className = [
+    "day-row",
+    day.date.getDay() === 0 ? "is-sunday" : "",
+    day.date.getDay() === 1 ? "is-week-start" : "",
+    isToday ? "is-today" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-  if (filterValue === "week") {
-    const [todayDay, ...upcoming] = await getWeekData(today);
-    return { todayDay, days: upcoming, showWeekDividers: false, highlightIsoDate: "" };
-  }
-
-  const selectedMonth = Number(filterValue.replace("month-", ""));
-  const todayMonthOverrides = await fetchMonthOverrides(
-    today.getFullYear(),
-    today.getMonth() + 1,
+  return (
+    <li className={className}>
+      <span className="day-row-date">
+        <strong>{day.date.getDate()}</strong>
+        {day.weekday}
+      </span>
+      <span className="day-row-body">
+        <span className="day-row-title">{convertWeekOrdinalToRoman(day.title)}</span>
+        <span className="day-meta">
+          <RankBadge rank={day.rank} />
+          <Vestment vestment={day.vestment} />
+          <span className="day-gospel">{day.gospel}</span>
+        </span>
+      </span>
+    </li>
   );
-  const todayAutoData = buildDayData(today);
-  const todayOverride = todayMonthOverrides.get(todayAutoData.isoDate);
-  const todayDay = todayOverride
-    ? { ...todayAutoData, ...todayOverride }
-    : todayAutoData;
-  const monthData = await getMonthData(today.getFullYear(), selectedMonth);
-
-  return {
-    todayDay,
-    days: monthData,
-    showWeekDividers: true,
-    highlightIsoDate: todayAutoData.isoDate,
-  };
 };
 
-export const LichCongGiao = () => {
-  const { theme, toggleTheme } = useTheme();
-  const [filterValue, setFilterValue] = useState("week");
-  const [period, setPeriod] = useState(null);
+const MonthStepper = ({ month, onChange }) => (
+  <div className="month-stepper">
+    <button
+      type="button"
+      aria-label="Tháng trước"
+      disabled={month <= FIRST_MONTH}
+      onClick={() => onChange(month - 1)}
+    >
+      ‹
+    </button>
+    <span aria-live="polite">Tháng {month}</span>
+    <button
+      type="button"
+      aria-label="Tháng sau"
+      disabled={month >= LAST_MONTH}
+      onClick={() => onChange(month + 1)}
+    >
+      ›
+    </button>
+  </div>
+);
 
+const useWeek = () => {
+  const [week, setWeek] = useState(null);
   useEffect(() => {
     let cancelled = false;
-    loadPeriod(filterValue).then((nextPeriod) => {
-      if (!cancelled) setPeriod(nextPeriod);
+    getWeekData(getToday()).then((days) => {
+      if (!cancelled) setWeek(days);
     });
     return () => {
       cancelled = true;
     };
-  }, [filterValue]);
+  }, []);
+  return week;
+};
 
-  const isMonth = filterValue !== "week";
-  const sectionTitle = isMonth
-    ? `Các ngày trong tháng ${filterValue.replace("month-", "")}`
-    : "Các ngày tiếp theo trong tuần";
+const useMonth = (today, month) => {
+  const [monthDays, setMonthDays] = useState(null);
+  useEffect(() => {
+    if (!today || !month) return undefined;
+    let cancelled = false;
+    setMonthDays(null);
+    getMonthData(today.getFullYear(), month).then((days) => {
+      if (!cancelled) setMonthDays(days);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [today, month]);
+  return monthDays;
+};
+
+export const LichCongGiao = () => {
+  // Null until mounted so date-based output never mismatches the prerendered HTML.
+  const [today, setToday] = useState(null);
+  const [mode, setMode] = useState("week");
+  const [month, setMonth] = useState(null);
+  const week = useWeek();
+  const monthDays = useMonth(today, mode === "month" ? month : null);
+
+  useEffect(() => {
+    const now = getToday();
+    setToday(now);
+    setMonth(now.getMonth() + 1);
+  }, []);
+
+  const todayDay = week ? week[0] : null;
+  const upcomingDays = week ? week.slice(1) : null;
+  const todayIsoDate = todayDay ? todayDay.isoDate : "";
+  const isMonth = mode === "month";
 
   return (
-    <div className="page">
-      <header className="top">
-        <div>
-          <h1 className="title">Lịch Công Giáo</h1>
-        </div>
-        <div className="tools">
-          <button
-            className={`theme ${theme === "moon" ? "day" : "moon"}`}
-            aria-label={
-              theme === "moon" ? "Chuyển sang chế độ sáng" : "Chuyển sang chế độ tối"
-            }
-            title="Đổi giao diện day/moon"
-            type="button"
-            onClick={toggleTheme}
-          ></button>
-        </div>
-      </header>
+    <div id="page" className="lcg">
+      <LcgNav links={NAV_LINKS} />
 
       <main>
-        <TodayCard day={period ? period.todayDay : null} />
-
-        <div className="section-head">
-          <h3 className={isMonth ? "section-title month-active" : "section-title"}>
-            {sectionTitle}
-          </h3>
-          <label htmlFor="period-filter" className="visually-hidden">
-            Chọn khoảng thời gian
-          </label>
-          <select
-            id="period-filter"
-            className="period-filter"
-            aria-label="Lọc tuần hoặc tháng"
-            value={filterValue}
-            onChange={(event) => setFilterValue(event.target.value)}
-          >
-            <option value="week">Tuần này</option>
-            {MONTHS.map((month) => (
-              <option key={month} value={`month-${month}`}>
-                Tháng {month}
-              </option>
-            ))}
-          </select>
-        </div>
-        <section className="upcoming-list" aria-live="polite">
-          {period ? (
-            period.days.map((day, index) => (
-              <UpcomingItem
-                key={day.isoDate}
-                day={day}
-                showDivider={
-                  period.showWeekDividers && index > 0 && day.date.getDay() === 1
-                }
-                isToday={day.isoDate === period.highlightIsoDate}
-              />
-            ))
-          ) : (
-            <div className="mini-card">Đang tải...</div>
-          )}
+        <section className="hero container">
+          <div className="hero-text">
+            <h1 className="hero-title">
+              Lịch Công giáo. <span>Lễ, màu áo lễ và Tin Mừng mỗi ngày.</span>
+            </h1>
+          </div>
         </section>
 
-        <aside className="legend">
-          Màu mức độ phụng vụ:
-          <div className="legend-row">
-            {["feria", "feast", "memorial", "solemn"].map((rank) => (
-              <span key={rank} className="legend-chip">
-                <span className={`badge ${RANK_META[rank].badgeClass}`}>
-                  {RANK_META[rank].label}
-                </span>
-              </span>
-            ))}
+        <section className="container" id="hom-nay">
+          <TodayCard day={todayDay} />
+        </section>
+
+        <section className="shelf" id="lich">
+          <div className="container">
+            <div className="shelf-head">
+              <ShelfHeading
+                title={isMonth ? `Tháng ${month || ""}.` : "Tuần này."}
+                subtitle={isMonth ? "Từng ngày trong tháng." : "Sáu ngày tiếp theo."}
+              />
+              <div className="lcg-controls">
+                {isMonth && month && <MonthStepper month={month} onChange={setMonth} />}
+                <div className="segmented" role="tablist" aria-label="Chọn khoảng thời gian">
+                  {MODES.map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={item.id === mode}
+                      className={item.id === mode ? "active" : undefined}
+                      onClick={() => setMode(item.id)}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {isMonth ? (
+              <ol className="card day-list" aria-busy={!monthDays}>
+                {monthDays ? (
+                  monthDays.map((day) => (
+                    <DayRow key={day.isoDate} day={day} isToday={day.isoDate === todayIsoDate} />
+                  ))
+                ) : (
+                  <li className="day-row is-loading">Đang tải...</li>
+                )}
+              </ol>
+            ) : (
+              <div className="day-grid" aria-busy={!upcomingDays}>
+                {upcomingDays ? (
+                  upcomingDays.map((day) => <DayTile key={day.isoDate} day={day} />)
+                ) : (
+                  <p className="card day-tile is-loading">Đang tải...</p>
+                )}
+              </div>
+            )}
           </div>
-        </aside>
+        </section>
+
+        <section className="shelf" id="chu-giai">
+          <div className="container">
+            <ShelfHeading title="Chú giải." subtitle="Bậc lễ và màu áo lễ." />
+            <div className="legend-grid">
+              <div className="card legend-card">
+                <p className="eyebrow">Bậc lễ</p>
+                <ul>
+                  {RANK_ORDER.map((rank) => (
+                    <li key={rank}>
+                      <span className={`badge ${RANK_META[rank].badgeClass}`}>
+                        {RANK_META[rank].label}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="card legend-card">
+                <p className="eyebrow">Màu áo lễ</p>
+                <ul>
+                  {VESTMENT_ORDER.map((vestment) => (
+                    <li key={vestment}>
+                      <Vestment vestment={vestment} />
+                      <span className="legend-use">{VESTMENT_USES[vestment]}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="shelf" id="ung-dung">
+          <div className="container">
+            <ShelfHeading title="Ứng dụng." subtitle="Sắp có trên iPhone và iPad." />
+            <div className="card app-card">
+              <div className="app-card-text">
+                <p className="eyebrow">Lịch Công giáo cho iOS</p>
+                <h3>Miễn phí. Không quảng cáo. Không cần tài khoản.</h3>
+                <ul>
+                  {APP_FEATURES.map((feature) => (
+                    <li key={feature}>{feature}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="app-card-links">
+                <a href={PRIVACY_PATH}>Chính sách quyền riêng tư ›</a>
+                <a href={SUPPORT_PATH}>Hỗ trợ và góp ý ›</a>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
-      <footer className="footer">
-        Dữ liệu lịch hiển thị tham khảo để đọc nhanh hằng ngày •{" "}
-        <span>{CURRENT_YEAR}</span>
-      </footer>
+      <LcgFooter>Lịch để tham khảo nhanh hằng ngày.</LcgFooter>
     </div>
   );
 };

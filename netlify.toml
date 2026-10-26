@@ -11,3 +11,14 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# The iOS app links to these extensionless URLs (AppLinks.swift); don't rely on Netlify's pretty URLs.
+[[redirects]]
+  from = "/lich-cong-giao/privacy"
+  to = "/lich-cong-giao/privacy.html"
+  status = 200
+
+[[redirects]]
+  from = "/lich-cong-giao/support"
+  to = "/lich-cong-giao/support.html"
+  status = 200

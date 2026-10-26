@@ -3,62 +3,98 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lịch Công Giáo | Uy Pham</title>
+    <title>Lịch Công Giáo Hôm Nay • Lễ, Màu Áo Lễ, Tin Mừng • Uy Pham</title>
     <meta
       name="description"
-      content="Lịch Công giáo dạng mobile-first, có chế độ day/moon, hiển thị ngày lễ, màu áo lễ và bài đọc Tin Mừng trong tuần."
+      content="Lịch Công giáo Việt Nam hôm nay: tên lễ, bậc lễ, màu áo lễ và đoạn Tin Mừng mỗi ngày, xem theo tuần hoặc theo tháng."
     />
+    <meta name="author" content="Uy Pham" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="theme-color" content="#f7f6f2" />
+    <meta name="theme-color" content="#f5f5f7" />
     <link rel="canonical" href="https://uypham.com/lich-cong-giao.html" />
 
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Uy Pham" />
     <meta property="og:locale" content="vi_VN" />
     <meta property="og:url" content="https://uypham.com/lich-cong-giao.html" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Lịch Công Giáo • Uy Pham" />
+    <meta property="og:title" content="Lịch Công Giáo Hôm Nay • Uy Pham" />
     <meta
       property="og:description"
-      content="Trang lịch Công giáo giao diện gọn, dễ xem, có chế độ day/moon."
+      content="Lịch Công giáo Việt Nam hôm nay: tên lễ, bậc lễ, màu áo lễ và đoạn Tin Mừng mỗi ngày, xem theo tuần hoặc theo tháng."
     />
     <meta property="og:image" content="https://uypham.com/images/feature.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Lịch Công Giáo • Uy Pham" />
+    <meta name="twitter:title" content="Lịch Công Giáo Hôm Nay • Uy Pham" />
     <meta
       name="twitter:description"
-      content="Lịch Công giáo với giao diện mobile-first và chuyển đổi day/moon."
+      content="Lịch Công giáo Việt Nam hôm nay: tên lễ, bậc lễ, màu áo lễ và đoạn Tin Mừng mỗi ngày, xem theo tuần hoặc theo tháng."
     />
-    <meta
-      name="twitter:image"
-      content="https://uypham.com/images/feature.jpg"
-    />
+    <meta name="twitter:image" content="https://uypham.com/images/feature.jpg" />
 
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://uypham.com/lich-cong-giao.html#webpage",
+            "url": "https://uypham.com/lich-cong-giao.html",
+            "name": "Lịch Công Giáo Hôm Nay",
+            "description": "Lịch Công giáo Việt Nam hôm nay: tên lễ, bậc lễ, màu áo lễ và đoạn Tin Mừng mỗi ngày, xem theo tuần hoặc theo tháng.",
+            "inLanguage": "vi",
+            "isPartOf": {
+              "@id": "https://uypham.com/#website"
+            },
+            "author": {
+              "@id": "https://uypham.com/#person"
+            },
+            "breadcrumb": {
+              "@id": "https://uypham.com/lich-cong-giao.html#breadcrumb"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Uy Pham",
+                "item": "https://uypham.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Lịch Công giáo",
+                "item": "https://uypham.com/lich-cong-giao.html"
+              }
+            ],
+            "@id": "https://uypham.com/lich-cong-giao.html#breadcrumb"
+          }
+        ]
+      }
+    </script>
+
+    <!-- ICONS -->
+    <link rel="icon" type="image/png" href="/images/lcg/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/images/lcg/favicon.svg" />
+    <link rel="shortcut icon" href="/images/lcg/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/lcg/apple-touch-icon.png" />
+    <link rel="manifest" href="/images/lcg/site.webmanifest" />
+
+    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
     />
-
-    <link
-      rel="icon"
-      type="image/png"
-      href="/images/lcg/favicon-96x96.png"
-      sizes="96x96"
-    />
-    <link rel="icon" type="image/svg+xml" href="/images/lcg/favicon.svg" />
-    <link rel="shortcut icon" href="/images/lcg/favicon.ico" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/images/lcg/apple-touch-icon.png"
-    />
-    <link rel="manifest" href="/images/lcg/site.webmanifest" />
   </head>
-  <body class="day">
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/pages/lich-cong-giao/main.jsx"></script>
   </body>

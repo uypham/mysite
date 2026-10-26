@@ -32,6 +32,8 @@ export default defineConfig({
         notFound: resolve(root, "404.html"),
         giaVang: resolve(root, "gia-vang.html"),
         lichCongGiao: resolve(root, "lich-cong-giao.html"),
+        lichCongGiaoPrivacy: resolve(root, "lich-cong-giao/privacy.html"),
+        lichCongGiaoSupport: resolve(root, "lich-cong-giao/support.html"),
       },
     },
   },
