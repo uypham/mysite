@@ -53,6 +53,13 @@ a:hover {
   color: var(--gray);
   letter-spacing: -0.02em;
 }
+/* Avoid orphan words in headings; old Safari ignores it. */
+.title,
+.hero-title,
+.shelf-heading,
+.tile h3 {
+  text-wrap: balance;
+}
 .title span {
   color: var(--base);
 }

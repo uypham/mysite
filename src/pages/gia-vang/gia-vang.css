@@ -5,6 +5,8 @@
   --hairline: #d2d2d7;
   --row-hover: #f5f5f7;
   --nav-bg: rgba(245, 245, 247, 0.8);
+  --nav-height: 52px;
+  --anchor-offset: calc(var(--nav-height) + 20px);
 }
 body {
   -webkit-transition: background-color 0.3s, color 0.3s;
@@ -36,7 +38,7 @@ body {
 .market-nav-inner {
   display: flex;
   align-items: center;
-  height: 52px;
+  height: var(--nav-height);
 }
 .market-brand {
   margin-right: auto;
@@ -81,8 +83,10 @@ body {
 .market .hero {
   padding-top: 48px;
 }
+/* Keep section titles clear of the sticky nav; scroll-snap-margin-top is the Safari 11-14.4 name. */
 .market .shelf {
-  scroll-margin-top: 60px;
+  scroll-snap-margin-top: var(--anchor-offset);
+  scroll-margin-top: var(--anchor-offset);
 }
 .live-dot {
   display: inline-block;
@@ -142,6 +146,7 @@ body {
 }
 .summary-card h3 {
   margin: 0;
+  text-wrap: balance;
   font-size: 26px;
   line-height: 1.15;
   font-weight: 600;

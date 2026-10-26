@@ -339,7 +339,7 @@ export const GiaVang = () => {
       <section className="hero container">
         <div className="hero-text">
           <h1 className="hero-title">
-            Giá vàng. <span>Cập nhật trực tiếp.</span>
+            Giá vàng. <span className="nowrap">Cập nhật trực tiếp.</span>
           </h1>
           <p className="hero-meta">
             <span className="live-dot" aria-hidden="true" />
