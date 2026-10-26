@@ -389,12 +389,62 @@ body.moon .market .footer {
     font-size: 6.4vw;
   }
 }
-@media screen and (max-width: 834px) {
-  .summary-card {
-    width: calc(50% - var(--gap));
+@media screen and (max-width: 1024px) {
+  .market {
+    --gap: 16px;
   }
-  .summary-card.gradient {
-    width: calc(100% - var(--gap));
+  .market .hero {
+    padding-top: 28px;
+    padding-bottom: 16px;
+  }
+  .market .hero-text {
+    margin-bottom: 0;
+  }
+  .market .hero-meta {
+    margin-top: 8px;
+    font-size: 15px;
+  }
+  .summary-grid {
+    margin-top: 0;
+  }
+  .summary-card {
+    min-height: 0;
+    padding: 20px;
+  }
+  .summary-card h3 {
+    font-size: 19px;
+  }
+  .quote {
+    padding-top: 14px;
+  }
+  .quote strong {
+    font-size: 20px;
+  }
+  .market .shelf {
+    margin-top: 16px;
+  }
+  .market .shelf-heading {
+    font-size: 24px;
+  }
+  .chart-card,
+  .table-card,
+  .news-card {
+    margin-top: 12px;
+  }
+  .chart-card {
+    height: 380px;
+    padding: 6px;
+  }
+  .table-card,
+  .news-card {
+    padding: 4px 20px;
+  }
+  .note-card {
+    padding: 20px;
+    font-size: 17px;
+  }
+  .market .footer {
+    margin-top: 32px;
   }
 }
 @media screen and (max-width: 600px) {
@@ -402,38 +452,45 @@ body.moon .market .footer {
     margin-left: 14px;
   }
   .market .hero {
-    padding-top: 32px;
+    padding-top: 20px;
+    padding-bottom: 12px;
   }
   .summary-card,
   .summary-card.gradient {
     width: calc(100% - var(--gap));
-    min-height: 0;
-    padding: 24px;
+    margin-bottom: 12px;
+    padding: 16px 18px;
   }
-  .summary-card h3 {
-    font-size: 22px;
+  .summary-card .eyebrow {
+    margin-bottom: 4px;
+  }
+  .quote {
+    padding-top: 10px;
+  }
+  .market .shelf-heading {
+    font-size: 21px;
   }
   .shelf-head .segmented {
     margin-top: 12px;
   }
   .chart-card {
-    height: 360px;
-    padding: 6px;
+    height: 340px;
   }
   .table-card,
   .news-card {
-    padding: 4px 18px;
+    padding: 2px 14px;
   }
   .price-table {
     font-size: 13px;
   }
   .price-table th,
   .price-table td {
-    padding: 12px 8px;
+    padding: 10px 8px;
   }
-  .note-card {
-    padding: 24px;
-    font-size: 17px;
+  .news-card summary {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 16px;
   }
 }
 @media screen and (max-width: 380px) {
