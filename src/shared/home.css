@@ -11,13 +11,12 @@
   --font: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica,
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   --radius: 18px;
-  --radius-lg: 28px;
   --gap: 20px;
   --xs: 430px;
   --lg: 1080px;
   --min: 0;
-  --shadow: 2px 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 2px 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow: 2px 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 2px 4px 16px rgba(0, 0, 0, 0.1);
   --section-gap: 70px;
 }
 body {
@@ -202,7 +201,7 @@ a:hover {
   min-height: 300px;
   margin-right: var(--gap);
   padding: 30px;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius);
   background-color: var(--white);
   color: var(--base);
   box-shadow: var(--shadow);
@@ -264,7 +263,6 @@ a:hover {
 }
 .tile.contact h3 {
   font-size: 19px;
-  word-break: break-word;
 }
 .tile-link {
   margin-top: auto;
@@ -284,7 +282,7 @@ a:hover {
   min-height: 180px;
   margin: 0 var(--gap) var(--gap) 0;
   padding: 30px;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius);
   background-color: var(--white);
   box-shadow: var(--shadow);
   font-size: 21px;

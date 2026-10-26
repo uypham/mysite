@@ -8,6 +8,7 @@ const CURRENT_YEAR = new Date().getFullYear();
 const YEARS_OF_EXPERIENCE = CURRENT_YEAR - CAREER_START_YEAR;
 
 const EMAIL = "uyphamvuong@gmail.com";
+const [EMAIL_USER, EMAIL_DOMAIN] = EMAIL.split("@");
 const PHONE = "+84934770926";
 const LINKEDIN_URL = "https://www.linkedin.com/in/uypham/";
 
@@ -86,7 +87,17 @@ const SKILLS = [
 ];
 
 const CONTACTS = [
-  { label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
+  {
+    label: "Email",
+    // Break only before "@" on narrow tiles, never mid-word.
+    value: (
+      <>
+        {EMAIL_USER}
+        <wbr />@{EMAIL_DOMAIN}
+      </>
+    ),
+    href: `mailto:${EMAIL}`,
+  },
   { label: "Phone", value: PHONE, href: `tel:${PHONE}` },
   { label: "LinkedIn", value: "in/uypham", href: LINKEDIN_URL, external: true },
   { label: "Contact card", value: "Add to contacts", href: "/uy-vcard.vcf", download: true },
