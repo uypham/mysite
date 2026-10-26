@@ -3,105 +3,201 @@ import advertisementSupportingIcon from "./icons/advertisement-supporting.png";
 import codingFreelancerIcon from "./icons/coding-freelancer.png";
 import findingResourcesIcon from "./icons/finding-resources.png";
 
-const SKILLS = [
-  "14+ years of expertise developing web applications using HTML5, CSS3, and JavaScript.",
-  "Good expertise with JavaScript frameworks/libraries such as ReactJS, NextJS, Gatsby, etc.",
-  "Experience with AI models such as ChatGPT 4.0o and Gemini, among others.",
-  "Experience with JSON-based RESTful APIs and headless ideas.",
-  "Experience with PHP, NodeJs, C#, Laravel, CodeIgniter, and other programming languages.",
-  "Understanding object-oriented programming and design.",
-  "Service Design Thinking",
+const CAREER_START_YEAR = 2011;
+const CURRENT_YEAR = new Date().getFullYear();
+const YEARS_OF_EXPERIENCE = CURRENT_YEAR - CAREER_START_YEAR;
+
+const EMAIL = "uyphamvuong@gmail.com";
+const PHONE = "+84934770926";
+const LINKEDIN_URL = "https://www.linkedin.com/in/uypham/";
+
+const SERVICES = [
+  {
+    id: "websites",
+    title: "Websites",
+    icon: websiteBuildingIcon,
+    eyebrow: "Build",
+    heading: "Websites that feel fast and look sharp.",
+    description:
+      "Small and medium sites built on modern stacks, standards-first and ready for every screen.",
+  },
+  {
+    id: "ads",
+    title: "Ads",
+    icon: advertisementSupportingIcon,
+    eyebrow: "Grow",
+    heading: "Ads that reach the right people.",
+    description:
+      "Setup and tuning for Facebook and Google campaigns, from tracking pixels to landing pages.",
+  },
+  {
+    id: "freelance",
+    title: "Freelance",
+    icon: codingFreelancerIcon,
+    eyebrow: "Ship",
+    heading: "Projects delivered on your timeline.",
+    description:
+      "Pick a scope, agree on a date, and get working software with clear updates along the way.",
+  },
+  {
+    id: "teams",
+    title: "Teams",
+    icon: findingResourcesIcon,
+    eyebrow: "Scale",
+    heading: "The right people for the job.",
+    description:
+      "Help finding developers, shaping teams and kicking off new projects with a solid plan.",
+  },
 ];
 
-const WORKS = [
+const SKILLS = [
   {
-    title: "Website Building",
-    icon: websiteBuildingIcon,
-    description:
-      "Build small and medium websites with the latest technologies according to W3C standards",
+    eyebrow: "Experience",
+    heading: `${YEARS_OF_EXPERIENCE}+ years on the web.`,
+    description: `Crafting web apps with HTML5, CSS3 and JavaScript since ${CAREER_START_YEAR}.`,
+    tone: "dark",
   },
   {
-    title: "Advertisement Supporting",
-    icon: advertisementSupportingIcon,
-    description: "Support for advertising on Facebook, Google platforms",
+    eyebrow: "Frontend",
+    heading: "React, Next.js and Gatsby.",
+    description: "Modern interfaces that load quickly and stay easy to maintain.",
   },
   {
-    title: "Coding Freelancer",
-    icon: codingFreelancerIcon,
-    description: "Execute projects on demand based on timeline",
+    eyebrow: "AI",
+    heading: "AI built into real products.",
+    description: "Hands-on with ChatGPT, Gemini, Claude and friends, from prompt to production.",
+    tone: "gradient",
   },
   {
-    title: "Finding Resources",
-    icon: findingResourcesIcon,
-    description: "Support to find members, build teams, projects",
+    eyebrow: "Backend",
+    heading: "APIs and headless, done right.",
+    description: "JSON REST APIs and headless setups that keep content and code apart.",
+  },
+  {
+    eyebrow: "Full stack",
+    heading: "Node.js, PHP, Laravel, C#.",
+    description: "Comfortable across the stack, including CodeIgniter and other frameworks.",
+  },
+  {
+    eyebrow: "Craft",
+    heading: "Design thinking, solid OOP.",
+    description: "Service design thinking and object-oriented design behind every decision.",
   },
 ];
+
+const CONTACTS = [
+  { label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
+  { label: "Phone", value: PHONE, href: `tel:${PHONE}` },
+  { label: "LinkedIn", value: "in/uypham", href: LINKEDIN_URL, external: true },
+  { label: "Contact card", value: "Add to contacts", href: "/uy-vcard.vcf", download: true },
+];
+
+const ShelfHeading = ({ title, subtitle }) => (
+  <h2 className="shelf-heading">
+    {title} <span>{subtitle}</span>
+  </h2>
+);
 
 export const Home = () => (
-  <div id="page">
-    <section className="section">
-      <div className="container">
-        <div className="avatar shadow">
-          <img
-            src="/images/avatar.jpeg"
-            width="500"
-            height="500"
-            alt="Uy's face"
-            title="Uy's avatar"
-          />
-        </div>
-        <h1 className="title lg">
-          <span>Hi, I'm Uy</span> - <br />a developer from Ho Chi Minh City.
+  <div id="page" className="store">
+    <header className="hero container">
+      <div className="hero-text">
+        <h1 className="hero-title">
+          Uy Pham. <span>The developer behind web products people love.</span>
         </h1>
-        <ul className="list">
-          {SKILLS.map((skill) => (
-            <li key={skill}>{skill}</li>
-          ))}
-        </ul>
+        <p className="hero-meta">
+          {YEARS_OF_EXPERIENCE} years of craft, based in Ho Chi Minh City.
+        </p>
       </div>
-    </section>
-    <section className="section my-work">
-      <div className="container">
-        <h2 className="title">
-          <span>My works</span> will be here.
-        </h2>
-        <div className="flex">
-          {WORKS.map((work) => (
-            <article key={work.title} className="card white split-4">
-              <img
-                width="42"
-                height="42"
-                alt={work.title}
-                title={work.title}
-                src={work.icon}
-              />
-              <h3>{work.title}</h3>
-              <p>{work.description}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-    <section className="section white gap bottom">
-      <div className="container">
-        <h2 className="title mb">
-          <span>Get in touch</span> at{" "}
-          <a href="mailto:uyphamvuong@gmail.com">uyphamvuong@gmail.com</a>
-          <br />
-          or <a href="tel:+84934770926">+84934770926</a> or{" "}
-          <a
-            href="https://www.linkedin.com/in/uypham/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            LinkedIn
-          </a>{" "}
-          or{" "}
-          <a href="/uy-vcard.vcf" download className="vcard">
-            +Add To Contact
+      <aside className="hero-aside">
+        <img
+          className="hero-avatar"
+          src="/images/avatar.jpeg"
+          width="500"
+          height="500"
+          alt="Uy's face"
+          title="Uy's avatar"
+        />
+        <div className="hero-links">
+          <span>Need a hand with your next project?</span>
+          <a href={`mailto:${EMAIL}`}>Talk to me ›</a>
+          <a href="/uy-vcard.vcf" download>
+            Add to contacts ›
           </a>
-        </h2>
+        </div>
+      </aside>
+    </header>
+
+    <nav className="chips container" aria-label="Services">
+      {SERVICES.map((service) => (
+        <a key={service.id} className="chip" href={`#${service.id}`}>
+          <img width="52" height="52" alt="" src={service.icon} />
+          <span>{service.title}</span>
+        </a>
+      ))}
+      <a className="chip" href="#contact">
+        <span className="chip-glyph" aria-hidden="true">
+          @
+        </span>
+        <span>Contact</span>
+      </a>
+    </nav>
+
+    <section className="shelf">
+      <div className="container">
+        <ShelfHeading title="The latest." subtitle="What I bring to every project." />
+      </div>
+      <div className="shelf-scroller">
+        {SKILLS.map((skill) => (
+          <article key={skill.eyebrow} className={`tile ${skill.tone || ""}`}>
+            <p className="eyebrow">{skill.eyebrow}</p>
+            <h3>{skill.heading}</h3>
+            <p>{skill.description}</p>
+          </article>
+        ))}
       </div>
     </section>
+
+    <section className="shelf">
+      <div className="container">
+        <ShelfHeading title="Services." subtitle="Pick what you need, skip what you don't." />
+      </div>
+      <div className="shelf-scroller">
+        {SERVICES.map((service) => (
+          <article key={service.id} id={service.id} className="tile service">
+            <p className="eyebrow">{service.eyebrow}</p>
+            <h3>{service.heading}</h3>
+            <p>{service.description}</p>
+            <img width="64" height="64" alt={service.title} src={service.icon} />
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section className="shelf" id="contact">
+      <div className="container">
+        <ShelfHeading title="Help is here." subtitle="Whenever and however you need it." />
+      </div>
+      <div className="shelf-scroller">
+        {CONTACTS.map((contact) => (
+          <a
+            key={contact.label}
+            className="tile contact"
+            href={contact.href}
+            target={contact.external ? "_blank" : undefined}
+            rel={contact.external ? "noreferrer" : undefined}
+            download={contact.download}
+          >
+            <p className="eyebrow">{contact.label}</p>
+            <h3>{contact.value}</h3>
+            <span className="tile-link">Open ›</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <footer className="footer container">
+      © {CURRENT_YEAR} Uy Pham. Made in Ho Chi Minh City.
+    </footer>
   </div>
 );
