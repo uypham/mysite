@@ -1,6 +1,4 @@
-User-agent: * 
-Disallow: /*_escaped_fragment_
-Disallow: /*fb_comment_id
-Disallow: /*ArticleID 
-Disallow: /*tagid 
+User-agent: *
 Allow: /
+
+Sitemap: https://uypham.com/sitemap.xml

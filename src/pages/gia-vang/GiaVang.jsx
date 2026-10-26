@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { CURRENT_YEAR } from "../../shared/constants.js";
 import { useTheme } from "../../shared/useTheme.js";
 import {
   TONG_HOP_WSS_URL,
@@ -69,8 +70,10 @@ const buildChartConfig = (symbol, theme) => ({
 });
 
 const useNow = () => {
-  const [now, setNow] = useState(() => new Date());
+  // Null until mounted so the clock never mismatches the prerendered HTML.
+  const [now, setNow] = useState(null);
   useEffect(() => {
+    setNow(new Date());
     const timer = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
@@ -336,111 +339,115 @@ export const GiaVang = () => {
         </div>
       </header>
 
-      <section className="hero container">
-        <div className="hero-text">
-          <h1 className="hero-title">
-            Giá vàng. <span>Cập nhật trực tiếp.</span>
-          </h1>
-          <p className="hero-meta">
-            <span className="live-dot" aria-hidden="true" />
-            Trực tiếp ·{" "}
-            <span className="nowrap">{now.toLocaleDateString("vi-VN", FORMAT_DATE_OPTIONS)}</span>
-          </p>
-        </div>
-      </section>
+      <main>
+        <section className="hero container">
+          <div className="hero-text">
+            <h1 className="hero-title">
+              Giá vàng. <span>Cập nhật trực tiếp.</span>
+            </h1>
+            <p className="hero-meta">
+              <span className="live-dot" aria-hidden="true" />
+              Trực tiếp ·{" "}
+              <span className="nowrap">
+                {now ? now.toLocaleDateString("vi-VN", FORMAT_DATE_OPTIONS) : "Đang cập nhật..."}
+              </span>
+            </p>
+          </div>
+        </section>
 
-      <section className="container">
-        <div className="summary-grid">
-          <SummaryCard
-            anchor="gia-vang"
-            eyebrow="Vàng"
-            label="Vàng 999.9"
-            tone="gradient"
-            section={market.gold}
-          />
-          <SummaryCard
-            anchor="gia-bac"
-            eyebrow="Bạc"
-            label="Bạc Phú Quý 1kg"
-            section={market.silver}
-          />
-          <SummaryCard
-            anchor="gia-ngoai-te"
-            eyebrow="Ngoại tệ"
-            label="USD"
-            tone="dark"
-            section={market.currency}
-          />
-        </div>
-      </section>
+        <section className="container">
+          <div className="summary-grid">
+            <SummaryCard
+              anchor="gia-vang"
+              eyebrow="Vàng"
+              label="Vàng 999.9"
+              tone="gradient"
+              section={market.gold}
+            />
+            <SummaryCard
+              anchor="gia-bac"
+              eyebrow="Bạc"
+              label="Bạc Phú Quý 1kg"
+              section={market.silver}
+            />
+            <SummaryCard
+              anchor="gia-ngoai-te"
+              eyebrow="Ngoại tệ"
+              label="USD"
+              tone="dark"
+              section={market.currency}
+            />
+          </div>
+        </section>
 
-      <section className="shelf">
-        <div className="container">
-          <div className="shelf-head">
-            <ShelfHeading title="Biểu đồ." subtitle={`Thế giới ${activeChart.caption}.`} />
-            <div className="segmented" role="tablist" aria-label="Chọn biểu đồ">
-              {CHARTS.map((chart) => (
-                <button
-                  key={chart.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={chart.id === chartId}
-                  className={chart.id === chartId ? "active" : undefined}
-                  onClick={() => setChartId(chart.id)}
-                >
-                  {chart.label}
-                </button>
-              ))}
+        <section className="shelf">
+          <div className="container">
+            <div className="shelf-head">
+              <ShelfHeading title="Biểu đồ." subtitle={`Thế giới ${activeChart.caption}.`} />
+              <div className="segmented" role="tablist" aria-label="Chọn biểu đồ">
+                {CHARTS.map((chart) => (
+                  <button
+                    key={chart.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={chart.id === chartId}
+                    className={chart.id === chartId ? "active" : undefined}
+                    onClick={() => setChartId(chart.id)}
+                  >
+                    {chart.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="chart-card">
+              <TradingViewChart id="chart" symbol={activeChart.symbol} theme={theme} />
             </div>
           </div>
-          <div className="chart-card">
-            <TradingViewChart id="chart" symbol={activeChart.symbol} theme={theme} />
+        </section>
+
+        <section className="shelf" id="gia-vang">
+          <div className="container">
+            <ShelfHeading title="Vàng." subtitle="Giá mua bán tại các tiệm lớn." />
+            <TableCard section={market.gold} />
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="shelf" id="gia-vang">
-        <div className="container">
-          <ShelfHeading title="Vàng." subtitle="Giá mua bán tại các tiệm lớn." />
-          <TableCard section={market.gold} />
-        </div>
-      </section>
-
-      <section className="shelf" id="gia-bac">
-        <div className="container">
-          <ShelfHeading title="Bạc." subtitle="Thỏi, miếng và trang sức." />
-          <TableCard section={market.silver} />
-        </div>
-      </section>
-
-      <section className="shelf" id="gia-ngoai-te">
-        <div className="container">
-          <ShelfHeading title="Ngoại tệ." subtitle="Tỷ giá mua bán hôm nay." />
-          <TableCard section={market.currency} />
-        </div>
-      </section>
-
-      <section className="shelf" id="tin-tuc">
-        <div className="container">
-          <ShelfHeading title="Tin tức." subtitle="Vàng và kim loại quý." />
-          <div className="news-card">
-            <NewsList news={news} />
+        <section className="shelf" id="gia-bac">
+          <div className="container">
+            <ShelfHeading title="Bạc." subtitle="Thỏi, miếng và trang sức." />
+            <TableCard section={market.silver} />
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="shelf">
-        <div className="container">
-          <p className="note-card">
-            <span className="vcard">#fromUy with love ♥️</span> Điện thoại của mình quá cũ
-            không mở được trang vàng 247, nên mình lấy dữ liệu từ API của họ để xem giá cho
-            dễ thôi, chứ cũng không có ý định làm trang web về giá vàng đâu :D
-          </p>
-        </div>
-      </section>
+        <section className="shelf" id="gia-ngoai-te">
+          <div className="container">
+            <ShelfHeading title="Ngoại tệ." subtitle="Tỷ giá mua bán hôm nay." />
+            <TableCard section={market.currency} />
+          </div>
+        </section>
+
+        <section className="shelf" id="tin-tuc">
+          <div className="container">
+            <ShelfHeading title="Tin tức." subtitle="Vàng và kim loại quý." />
+            <div className="news-card">
+              <NewsList news={news} />
+            </div>
+          </div>
+        </section>
+
+        <section className="shelf">
+          <div className="container">
+            <p className="note-card">
+              <span className="vcard">#fromUy with love ♥️</span> Điện thoại của mình quá cũ
+              không mở được trang vàng 247, nên mình lấy dữ liệu từ API của họ để xem giá cho
+              dễ thôi, chứ cũng không có ý định làm trang web về giá vàng đâu :D
+            </p>
+          </div>
+        </section>
+      </main>
 
       <footer className="footer container">
-        © {now.getFullYear()} Uy Pham. Dữ liệu từ vang247, PNJ, CafeF, BIDV và Vietstock.
+        © {CURRENT_YEAR} Uy Pham. Dữ liệu từ vang247, PNJ, CafeF, BIDV và Vietstock.
       </footer>
     </div>
   );

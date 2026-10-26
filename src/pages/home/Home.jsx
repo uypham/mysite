@@ -1,10 +1,6 @@
-import websiteBuildingIcon from "./icons/website-building.png";
-import advertisementSupportingIcon from "./icons/advertisement-supporting.png";
-import codingFreelancerIcon from "./icons/coding-freelancer.png";
-import findingResourcesIcon from "./icons/finding-resources.png";
+import { CURRENT_YEAR } from "../../shared/constants.js";
 
 const CAREER_START_YEAR = 2011;
-const CURRENT_YEAR = new Date().getFullYear();
 const YEARS_OF_EXPERIENCE = CURRENT_YEAR - CAREER_START_YEAR;
 
 const EMAIL = "uyphamvuong@gmail.com";
@@ -16,7 +12,7 @@ const SERVICES = [
   {
     id: "websites",
     title: "Websites",
-    icon: websiteBuildingIcon,
+    icon: "/images/home/website-building.png",
     eyebrow: "Build",
     heading: "Websites that feel fast and look sharp.",
     description:
@@ -25,7 +21,7 @@ const SERVICES = [
   {
     id: "ads",
     title: "Ads",
-    icon: advertisementSupportingIcon,
+    icon: "/images/home/advertisement-supporting.png",
     eyebrow: "Grow",
     heading: "Ads that reach the right people.",
     description:
@@ -34,7 +30,7 @@ const SERVICES = [
   {
     id: "freelance",
     title: "Freelance",
-    icon: codingFreelancerIcon,
+    icon: "/images/home/coding-freelancer.png",
     eyebrow: "Ship",
     heading: "Projects delivered on your timeline.",
     description:
@@ -43,7 +39,7 @@ const SERVICES = [
   {
     id: "teams",
     title: "Teams",
-    icon: findingResourcesIcon,
+    icon: "/images/home/finding-resources.png",
     eyebrow: "Scale",
     heading: "The right people for the job.",
     description:
@@ -118,116 +114,118 @@ const ShelfHeading = ({ title, subtitle }) => (
 
 export const Home = () => (
   <div id="page" className="store">
-    <header className="hero container">
-      <div className="hero-text">
-        <h1 className="hero-title">
-          Uy Pham. <span>The developer behind web products people love.</span>
-        </h1>
-        <p className="hero-meta">
-          {YEARS_OF_EXPERIENCE} years of craft, based in Ho Chi Minh City.
-        </p>
-      </div>
-      <aside className="hero-aside">
-        <img
-          className="hero-avatar"
-          src="/images/avatar.jpeg"
-          width="500"
-          height="500"
-          alt="Uy's face"
-          title="Uy's avatar"
-        />
-        <div className="hero-links">
-          <span>Need a hand with your next project?</span>
-          <a href={`mailto:${EMAIL}`}>Talk to me ›</a>
-          <a href="/uy-vcard.vcf" download>
-            Add to contacts ›
-          </a>
+    <main>
+      <header className="hero container">
+        <div className="hero-text">
+          <h1 className="hero-title">
+            Uy Pham. <span>The developer behind web products people love.</span>
+          </h1>
+          <p className="hero-meta">
+            {YEARS_OF_EXPERIENCE} years of craft, based in Ho Chi Minh City.
+          </p>
         </div>
-      </aside>
-    </header>
+        <aside className="hero-aside">
+          <img
+            className="hero-avatar"
+            src="/images/avatar.jpeg"
+            width="500"
+            height="500"
+            alt="Portrait of Uy Pham, web developer in Ho Chi Minh City"
+            fetchPriority="high"
+          />
+          <div className="hero-links">
+            <span>Need a hand with your next project?</span>
+            <a href={`mailto:${EMAIL}`}>Talk to me ›</a>
+            <a href="/uy-vcard.vcf" download>
+              Add to contacts ›
+            </a>
+          </div>
+        </aside>
+      </header>
 
-    <nav className="chips container" aria-label="Services">
-      {SERVICES.map((service) => (
-        <a key={service.id} className="chip" href={`#${service.id}`}>
-          <img width="52" height="52" alt="" src={service.icon} />
-          <span>{service.title}</span>
-        </a>
-      ))}
-      <a className="chip" href="#contact">
-        <span className="chip-glyph" aria-hidden="true">
-          @
-        </span>
-        <span>Contact</span>
-      </a>
-    </nav>
-
-    <section className="shelf">
-      <div className="container">
-        <ShelfHeading title="The latest." subtitle="What I bring to every project." />
-      </div>
-      <div className="shelf-scroller">
-        {SKILLS.map((skill) => (
-          <article key={skill.eyebrow} className={`tile ${skill.tone || ""}`}>
-            <p className="eyebrow">{skill.eyebrow}</p>
-            <h3>{skill.heading}</h3>
-            <p>{skill.description}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section className="shelf">
-      <div className="container">
-        <ShelfHeading title="Services." subtitle="Pick what you need, skip what you don't." />
-      </div>
-      <div className="shelf-scroller">
+      <nav className="chips container" aria-label="Services">
         {SERVICES.map((service) => (
-          <article key={service.id} id={service.id} className="tile service">
-            <p className="eyebrow">{service.eyebrow}</p>
-            <h3>{service.heading}</h3>
-            <p>{service.description}</p>
-            <img width="64" height="64" alt={service.title} src={service.icon} />
-          </article>
+          <a key={service.id} className="chip" href={`#${service.id}`}>
+            <img width="52" height="52" alt="" src={service.icon} />
+            <span>{service.title}</span>
+          </a>
         ))}
-      </div>
-    </section>
+        <a className="chip" href="#contact">
+          <span className="chip-glyph" aria-hidden="true">
+            @
+          </span>
+          <span>Contact</span>
+        </a>
+      </nav>
 
-    <section className="shelf">
-      <div className="container">
-        <ShelfHeading title="The Uy difference." subtitle="Even more reasons to work with me." />
-        <div className="perks">
-          {PERKS.map((perk) => (
-            <p key={perk.highlight} className="perk">
-              {perk.lead}
-              <span className={perk.tone}>{perk.highlight}</span>
-              {perk.rest}
-            </p>
+      <section className="shelf">
+        <div className="container">
+          <ShelfHeading title="The latest." subtitle="What I bring to every project." />
+        </div>
+        <div className="shelf-scroller">
+          {SKILLS.map((skill) => (
+            <article key={skill.eyebrow} className={`tile ${skill.tone || ""}`}>
+              <p className="eyebrow">{skill.eyebrow}</p>
+              <h3>{skill.heading}</h3>
+              <p>{skill.description}</p>
+            </article>
           ))}
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section className="shelf" id="contact">
-      <div className="container">
-        <ShelfHeading title="Help is here." subtitle="Whenever and however you need it." />
-      </div>
-      <div className="shelf-scroller">
-        {CONTACTS.map((contact) => (
-          <a
-            key={contact.label}
-            className="tile contact"
-            href={contact.href}
-            target={contact.external ? "_blank" : undefined}
-            rel={contact.external ? "noreferrer" : undefined}
-            download={contact.download}
-          >
-            <p className="eyebrow">{contact.label}</p>
-            <h3>{contact.value}</h3>
-            <span className="tile-link">Open ›</span>
-          </a>
-        ))}
-      </div>
-    </section>
+      <section className="shelf">
+        <div className="container">
+          <ShelfHeading title="Services." subtitle="Pick what you need, skip what you don't." />
+        </div>
+        <div className="shelf-scroller">
+          {SERVICES.map((service) => (
+            <article key={service.id} id={service.id} className="tile service">
+              <p className="eyebrow">{service.eyebrow}</p>
+              <h3>{service.heading}</h3>
+              <p>{service.description}</p>
+              <img width="64" height="64" alt="" src={service.icon} />
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="shelf">
+        <div className="container">
+          <ShelfHeading title="The Uy difference." subtitle="Even more reasons to work with me." />
+          <div className="perks">
+            {PERKS.map((perk) => (
+              <p key={perk.highlight} className="perk">
+                {perk.lead}
+                <span className={perk.tone}>{perk.highlight}</span>
+                {perk.rest}
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="shelf" id="contact">
+        <div className="container">
+          <ShelfHeading title="Help is here." subtitle="Whenever and however you need it." />
+        </div>
+        <div className="shelf-scroller">
+          {CONTACTS.map((contact) => (
+            <a
+              key={contact.label}
+              className="tile contact"
+              href={contact.href}
+              target={contact.external ? "_blank" : undefined}
+              rel={contact.external ? "noreferrer" : undefined}
+              download={contact.download}
+            >
+              <p className="eyebrow">{contact.label}</p>
+              <h3>{contact.value}</h3>
+              <span className="tile-link">Open ›</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    </main>
 
     <footer className="footer container">
       © {CURRENT_YEAR} Uy Pham. Made in Ho Chi Minh City.

@@ -1,10 +1,14 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 
 export const mount = (Page) => {
-  createRoot(document.getElementById("root")).render(
+  const container = document.getElementById("root");
+  const page = (
     <StrictMode>
       <Page />
-    </StrictMode>,
+    </StrictMode>
   );
+  // Built pages ship prerendered markup (scripts/prerender.js); dev serves an empty root.
+  if (container.hasChildNodes()) hydrateRoot(container, page);
+  else createRoot(container).render(page);
 };

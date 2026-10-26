@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "vite build && node scripts/check-legacy-syntax.js",
+    "build": "vite build && node scripts/prerender.js && node scripts/check-legacy-syntax.js",
     "preview": "vite preview",
     "clean": "rm -rf node_modules dist"
   },

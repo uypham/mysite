@@ -28,7 +28,7 @@ const findForbiddenSyntax = (code) => {
 const htmlFiles = readdirSync(distDir).filter((name) => name.endsWith(".html"));
 const inlineScripts = htmlFiles.flatMap((name) => {
   const html = readFileSync(join(distDir, name), "utf8");
-  const scripts = [...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)];
+  const scripts = [...html.matchAll(/<script(?![^>]*\b(?:src=|type="application\/ld\+json"))[^>]*>([\s\S]*?)<\/script>/g)];
   return scripts.map((match, index) => ({ label: `${name} <script #${index}>`, code: match[1] }));
 });
 const jsFiles = listJsFiles(distDir).map((file) => ({

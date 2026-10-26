@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CURRENT_YEAR } from "../../shared/constants.js";
 import { useTheme } from "../../shared/useTheme.js";
 import {
   RANK_META,
@@ -256,7 +257,7 @@ export const LichCongGiao = () => {
 
       <footer className="footer">
         Dữ liệu lịch hiển thị tham khảo để đọc nhanh hằng ngày •{" "}
-        <span>{new Date().getFullYear()}</span>
+        <span>{CURRENT_YEAR}</span>
       </footer>
     </div>
   );

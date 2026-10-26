@@ -8,7 +8,12 @@ const readStoredTheme = () => {
 };
 
 export const useTheme = () => {
-  const [theme, setTheme] = useState(readStoredTheme);
+  // Start from "day" so the first client render matches the prerendered HTML.
+  const [theme, setTheme] = useState("day");
+
+  useEffect(() => {
+    setTheme(readStoredTheme());
+  }, []);
 
   useEffect(() => {
     document.body.classList.remove(...THEMES);
